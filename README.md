@@ -17,3 +17,8 @@ The main purposes of this repository are:
 1. To serve as a personal learning environment for AWS services
 2. To document my experiments and findings
 3. To prepare for implementing AWS services in future projects
+
+## Call to action
+⭐ Do you find this project usefull? Please consider giving it a star on GitHub!
+
+💖 Made with dedication to help fellow developers. Your support means the world!
