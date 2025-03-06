@@ -56,12 +56,29 @@ def s3_upload(s3_location):
 bucket_name = 'mainbucketrockhight5461'
 s3_folder = 'test/knowledge-bases/pdffiles/'
 s3_folder_uri = 's3://' + bucket_name + '/' + s3_folder 
-print(s3uri)
 
 # first we test the function
 s3_uri = "s3://mainbucketrockhight5461/test/knowledge-bases/pdffiles/00627fcf4add0ded.pdf"
 response = s3_upload(s3_uri)
 print(response)
+
+
+def append_to_file(filename, content):
+    """
+    Appends a string to a file. If the file doesn't exist, it creates it.
+    
+    :param filename: The name of the file to append to
+    :param content: The string content to append
+    """
+    try:
+        with open(filename, 'a') as file:
+            file.write(content)
+        print(f"Successfully appended content to {filename}")
+    except IOError as e:
+        print(f"An error occurred while appending to the file: {e}")
+
+# Example usage:
+# append_to_file('example.txt', 'This is some content to append.\n')
 
 def traverse_s3_folder(bucket_name, folder_path):
     s3 = boto3.client('s3')
