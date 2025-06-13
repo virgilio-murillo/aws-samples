@@ -2,3 +2,5 @@ config.py
 env
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+sagemaker/how-to-use-inference-recommender/envi
+sagemaker/how-to-use-inference-recommender/model/1
