@@ -1,0 +1,12 @@
+{
+  "ExecutionRole": "arn:aws:iam::794038231401:role/service-role/SageMaker-ExecutionRole-20250401T103257",
+  "JupyterLabAppSettings": {
+    "CustomImages": [
+      {
+        "ImageName": "my-jupyterlab-image",
+        "ImageVersionNumber": 1,
+        "AppImageConfigName": "my-jupyterlab-config"
+      }
+    ]
+  }
+}
