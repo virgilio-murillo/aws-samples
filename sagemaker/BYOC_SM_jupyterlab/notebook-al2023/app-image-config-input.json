@@ -1,0 +1,10 @@
+{
+  "AppImageConfigName": "my-custom-image-config2",
+    "JupyterLabAppImageConfig": { 
+        "FileSystemConfig": { 
+            "MountPath": "/home/sagemaker-user",
+            "DefaultUid": 1000,
+            "DefaultGid": 100
+      }
+   }
+}
