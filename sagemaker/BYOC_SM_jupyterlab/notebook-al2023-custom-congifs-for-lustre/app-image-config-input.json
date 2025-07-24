@@ -1,0 +1,10 @@
+{
+  "AppImageConfigName": "custom-image-sudo-nkernel-config2",
+    "JupyterLabAppImageConfig": { 
+        "FileSystemConfig": { 
+            "MountPath": "/home/sagemaker-user",
+            "DefaultUid": 1000,
+            "DefaultGid": 100
+      }
+   }
+}
