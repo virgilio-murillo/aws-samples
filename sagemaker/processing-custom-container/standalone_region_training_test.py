@@ -234,6 +234,7 @@ def train_inference_region_level():
     parser.add_argument("--dataset_date", dest="dataset_date", type=str, default=NONE_VALUE)
     parser.add_argument("--input_path", dest="input_path", type=str, default="./input")
     parser.add_argument("--output_path", dest="output_path", type=str, default="./output")
+    parser.add_argument("--input_file", dest="input_file", type=str, default=None, help="Path to input parquet file")
     args, _ = parser.parse_known_args()
     logger.info(f"Running region-level breach model for dataset date: {args.dataset_date}")
 
@@ -241,16 +242,15 @@ def train_inference_region_level():
     os.makedirs(args.output_path, exist_ok=True)
     
     # Hardcoded input file path
-    # Handle both local and SageMaker paths
-    sagemaker_input_path = "/opt/ml/processing/input/data.parquet"
-    local_input_path = "./synthetic_data.parquet"
-    
-    if os.path.exists(sagemaker_input_path):
-        input_file_path = sagemaker_input_path
-    elif os.path.exists(local_input_path):
-        input_file_path = local_input_path
+    # Handle input file path
+    if args.input_file:
+        input_file_path = args.input_file
+    elif os.path.exists("/opt/ml/processing/input/data.parquet"):
+        input_file_path = "/opt/ml/processing/input/data.parquet"
+    elif os.path.exists("./synthetic_data.parquet"):
+        input_file_path = "./synthetic_data.parquet"
     else:
-        raise FileNotFoundError("No input data found. Expected either /opt/ml/processing/input/data.parquet or ./synthetic_data.parquet")
+        raise FileNotFoundError("No input file specified. Use --input_file or ensure data exists at expected locations")
     # Create output directory if it doesn't exist
     os.makedirs(args.output_path, exist_ok=True)
     output_file_path = os.path.join(args.output_path, IRIS_REGION_LEVEL_BREACH_OUTPUT_FILENAME + PARQUET_EXTENSION)
