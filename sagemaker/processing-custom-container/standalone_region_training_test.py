@@ -241,8 +241,10 @@ def train_inference_region_level():
     os.makedirs(args.output_path, exist_ok=True)
     
     # Hardcoded input file path
-    input_file_path = "/opt/ml/processing/input/data.parquet"
-    output_file_path = "/opt/ml/processing/output/" + IRIS_REGION_LEVEL_BREACH_OUTPUT_FILENAME + PARQUET_EXTENSION
+    input_file_path = "./synthetic_data.parquet"
+    # Create output directory if it doesn't exist
+    os.makedirs(args.output_path, exist_ok=True)
+    output_file_path = os.path.join(args.output_path, IRIS_REGION_LEVEL_BREACH_OUTPUT_FILENAME + PARQUET_EXTENSION)
 
     df = pd.read_parquet(input_file_path)
     logger.info(f"Input dataframe shape: {df.shape}")
