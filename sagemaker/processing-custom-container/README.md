@@ -75,8 +75,19 @@ The processing job generates a Parquet file with breach detection results:
 
 ## Local Testing
 
-Test the Docker container locally before deploying:
+### Option 1: Direct Python Execution
+```bash
+# Install dependencies
+pip install pandas joblib numpy rrcf scipy pyarrow swifter
 
+# Copy sample data to current directory
+cp original-customer-files/part-00000-*.parquet .
+
+# Run the script directly
+python standalone_region_training_test.py --dataset_date "2025-11-08" --output_path "./output"
+```
+
+### Option 2: Docker Container Testing
 ```bash
 # Build the container
 docker buildx build --platform linux/amd64 -t sagemaker-processing-test .
