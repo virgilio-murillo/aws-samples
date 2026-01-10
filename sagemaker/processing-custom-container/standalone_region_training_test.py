@@ -241,7 +241,16 @@ def train_inference_region_level():
     os.makedirs(args.output_path, exist_ok=True)
     
     # Hardcoded input file path
-    input_file_path = "./synthetic_data.parquet"
+    # Handle both local and SageMaker paths
+    sagemaker_input_path = "/opt/ml/processing/input/data.parquet"
+    local_input_path = "./synthetic_data.parquet"
+    
+    if os.path.exists(sagemaker_input_path):
+        input_file_path = sagemaker_input_path
+    elif os.path.exists(local_input_path):
+        input_file_path = local_input_path
+    else:
+        raise FileNotFoundError("No input data found. Expected either /opt/ml/processing/input/data.parquet or ./synthetic_data.parquet")
     # Create output directory if it doesn't exist
     os.makedirs(args.output_path, exist_ok=True)
     output_file_path = os.path.join(args.output_path, IRIS_REGION_LEVEL_BREACH_OUTPUT_FILENAME + PARQUET_EXTENSION)
