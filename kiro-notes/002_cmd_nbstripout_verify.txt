@@ -1,0 +1,74 @@
+Dry run: would have stripped ./bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+HAS_OUTPUT: ./bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+Dry run: would have stripped ./bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+HAS_OUTPUT: ./bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+Dry run: would have stripped ./bedrock/agent-runtime/invoke_agent_stream.ipynb
+HAS_OUTPUT: ./bedrock/agent-runtime/invoke_agent_stream.ipynb
+Dry run: would have stripped ./bedrock/agent-runtime/invoke_agent.ipynb
+HAS_OUTPUT: ./bedrock/agent-runtime/invoke_agent.ipynb
+Dry run: would have stripped ./bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+HAS_OUTPUT: ./bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+Dry run: would have stripped ./bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+HAS_OUTPUT: ./bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+Dry run: would have stripped ./bedrock/common-errors/RAG_with_query_decomposition.ipynb
+HAS_OUTPUT: ./bedrock/common-errors/RAG_with_query_decomposition.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/100_limit.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/100_limit.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/bedrock_agent.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/bedrock_agent.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/bedrock-quickstart.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/bedrock-quickstart.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/conversation_examples.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/conversation_examples.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/cross-region-inference.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/cross-region-inference.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/csutom_data_source_2.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/csutom_data_source_2.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/custom_datasource.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/custom_datasource.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+Dry run: would have stripped ./bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+HAS_OUTPUT: ./bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+Dry run: would have stripped ./bedrock/model-import/import_IBM_granite.ipynb
+HAS_OUTPUT: ./bedrock/model-import/import_IBM_granite.ipynb
+Dry run: would have stripped ./bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+HAS_OUTPUT: ./bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+Dry run: would have stripped ./bedrock/testing/cross-region-inference.ipynb
+HAS_OUTPUT: ./bedrock/testing/cross-region-inference.ipynb
+Dry run: would have stripped ./bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+HAS_OUTPUT: ./bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+Dry run: would have stripped ./datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+HAS_OUTPUT: ./datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+Dry run: would have stripped ./datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+HAS_OUTPUT: ./datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+Dry run: would have stripped ./glue/pyspark-tutorial-glue.ipynb
+HAS_OUTPUT: ./glue/pyspark-tutorial-glue.ipynb
+Dry run: would have stripped ./notebooks/getting_started.ipynb
+HAS_OUTPUT: ./notebooks/getting_started.ipynb
+Dry run: would have stripped ./opensearch/create-resources/AOSS_resource_creation.ipynb
+HAS_OUTPUT: ./opensearch/create-resources/AOSS_resource_creation.ipynb
+Dry run: would have stripped ./sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+HAS_OUTPUT: ./sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+Dry run: would have stripped ./sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+HAS_OUTPUT: ./sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+Dry run: would have stripped ./sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+HAS_OUTPUT: ./sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+Dry run: would have stripped ./sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+HAS_OUTPUT: ./sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+Dry run: would have stripped ./sagemaker/inference-recommender/inference_recommender.ipynb
+HAS_OUTPUT: ./sagemaker/inference-recommender/inference_recommender.ipynb
+Dry run: would have stripped ./sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+HAS_OUTPUT: ./sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+Dry run: would have stripped ./sagemaker/retail_sales_prediction.ipynb
+HAS_OUTPUT: ./sagemaker/retail_sales_prediction.ipynb
+Dry run: would have stripped ./sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+HAS_OUTPUT: ./sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+Dry run: would have stripped ./sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+HAS_OUTPUT: ./sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+Dry run: would have stripped ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+HAS_OUTPUT: ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+Dry run: would have stripped ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+HAS_OUTPUT: ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb

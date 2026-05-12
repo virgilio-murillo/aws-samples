@@ -1,14 +1,12 @@
 from strands import Agent, tool
 from strands_tools import calculator # Import the calculator tool
-import argparse
-import json
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from strands.models import BedrockModel
 import boto3
 
 app = BedrockAgentCoreApp()
 
-# Create a custom tool 
+# Create a custom tool
 @tool
 def list_running_ec2_instances():
     """List running EC2 instances in us-east-1"""

@@ -1,0 +1,13 @@
+@page { size: A4; margin: 2cm; }
+body { font-family: -apple-system, Helvetica Neue, sans-serif; font-size: 11pt; line-height: 1.5; color: #1a1a1a; }
+h1 { color: #232f3e; font-size: 22pt; margin-top: 0; }
+h2 { color: #0073bb; border-bottom: 2px solid #0073bb; padding-bottom: 4px; font-size: 16pt; }
+h3 { color: #232f3e; font-size: 13pt; }
+img { max-width: 100%; height: auto; display: block; margin: 12px auto; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 9pt; table-layout: fixed; word-wrap: break-word; }
+th { background-color: #232f3e; color: white; padding: 6px 8px; text-align: left; word-wrap: break-word; }
+td { border: 1px solid #ddd; padding: 5px 7px; word-wrap: break-word; overflow-wrap: break-word; }
+tr:nth-child(even) { background-color: #f8f8f8; }
+code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-size: 9pt; word-break: break-all; }
+pre { background: #1a1a2e; color: #e0e0e0; padding: 12px; border-radius: 6px; font-size: 8.5pt; white-space: pre-wrap; word-break: break-word; }
+blockquote { border-left: 4px solid #0073bb; margin: 12px 0; padding: 8px 16px; background: #f0f7fc; }

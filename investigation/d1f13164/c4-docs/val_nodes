@@ -1,0 +1,9 @@
+20:36:15|Starting validation
+20:36:29|Reading findings file
+20:36:44|Verifying repo structure
+20:37:24|Checking notebook counts
+20:37:44|Verifying AWS docs
+20:38:16|Verifying tool claims
+20:39:31|Checking nbstripout docs
+20:40:00|Writing validated file
+20:41:12|Validation complete

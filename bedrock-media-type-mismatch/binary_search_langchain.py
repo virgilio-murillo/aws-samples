@@ -3,7 +3,7 @@ Tests whether the mismatch error reproduces across different versions.
 If ALL versions reproduce it → server-side Bedrock change.
 If only newer versions → client-side langchain change.
 """
-import subprocess, sys, json
+import subprocess
 
 VENV_PIP = "./kiro-test/venv/bin/pip"
 VENV_PYTHON = "./kiro-test/venv/bin/python"
@@ -50,7 +50,7 @@ results = []
 for ver in VERSIONS:
     print(f"\n{'='*60}")
     print(f"Testing langchain-aws=={ver}")
-    
+
     # Install specific version
     install = subprocess.run(
         [VENV_PIP, "install", f"langchain-aws=={ver}", "-q", "--force-reinstall"],
@@ -60,10 +60,10 @@ for ver in VERSIONS:
         print(f"  INSTALL FAILED: {install.stderr[-200:]}")
         results.append({"version": ver, "result": "INSTALL_FAILED"})
         continue
-    
+
     # Also ensure Pillow is installed
     subprocess.run([VENV_PIP, "install", "Pillow", "-q"], capture_output=True, timeout=60)
-    
+
     # Run test
     test = subprocess.run(
         [VENV_PYTHON, "-c", TEST_SCRIPT],
@@ -71,7 +71,7 @@ for ver in VERSIONS:
     )
     output = test.stdout.strip()
     print(f"  Output: {output}")
-    
+
     # Parse result
     for line in output.split("\n"):
         if line.startswith("RESULT:"):

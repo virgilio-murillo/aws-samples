@@ -1,0 +1,806 @@
+Not all mcp servers loaded. Configure non-interactive timeout with q settings mcp.noInteractiveTimeout
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 3.12s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[0m[0mReading file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md[0m, all lines[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m12496 bytes[0m from /Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md
+[38;5;244m - Completed in 1.629s[0m
+[38;5;12m[1m [1.1][0m[0m
+[?25l[0m[38;5;141m> [0mGood, I have the full report. Now let me start generating the visual report with diagrams.[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Reading Investigation Report" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.792s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat > /tmp/diagram1.py << 'EOF'
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+import matplotlib.patheffects as pe
+
+fig, ax = plt.subplots(1, 1, figsize=(14, 9))
+fig.patch.set_facecolor('#1a1a2e')
+ax.set_facecolor('#1a1a2e')
+ax.set_xlim(0, 14)
+ax.set_ylim(0, 9)
+ax.axis('off')
+
+ax.text(7, 8.5, 'CI/CD Architecture: 3-Tier Pipeline', fontsize=16, fontweight='bold',
+        color='white', ha='center', va='center')
+
+# Tier labels
+tiers = [
+    ('TIER 1', 'GitHub Actions\nubuntu-latest', '#3498db', 1.0, 6.8),
+    ('TIER 2', 'EC2 Self-Hosted\nUbuntu + Arch Linux', '#9b59b6', 5.5, 6.8),
+    ('TIER 3', 'macOS Local\nMakefile Only', '#27ae60', 10.0, 6.8),
+]
+
+for label, subtitle, color, x, y in tiers:
+    box = FancyBboxPatch((x-1.3, y-0.5), 2.6, 1.0, boxstyle='round,pad=0.15',
+                          facecolor=color, edgecolor='white', lw=1.5)
+    ax.add_patch(box)
+    ax.text(x, y+0.15, label, fontsize=11, fontweight='bold', color='white', ha='center', va='center')
+    ax.text(x, y-0.2, subtitle, fontsize=8, color='white', ha='center', va='center')
+
+# Arrows between tiers
+ax.annotate('', xy=(4.2, 7.1), xytext=(2.3, 7.1),
+            arrowprops=dict(arrowstyle='-|>', color='#00d4ff', lw=2))
+ax.annotate('', xy=(8.7, 7.1), xytext=(6.8, 7.1),
+            arrowprops=dict(arrowstyle='-|>', color='#00d4ff', lw=2))
+
+# Tier 1 steps
+t1_steps = [
+    ('Checkout', '#2c3e50', 0.3, 5.5),
+    ('Setup Python 3.11', '#2c3e50', 0.3, 4.7),
+    ('pip install\nrequirements-ci.txt', '#2c3e50', 0.3, 3.8),
+    ('nbstripout --verify\n(check outputs stripped)', '#e74c3c', 0.3, 2.8),
+    ('ruff check .\n(lint notebooks + .py)', '#f39c12', 0.3, 1.9),
+    ('validate_notebooks.py\n(JSON schema check)', '#27ae60', 0.3, 1.0),
+]
+
+for text, color, x, y in t1_steps:
+    box = FancyBboxPatch((x, y-0.35), 2.4, 0.7, boxstyle='round,pad=0.1',
+                          facecolor=color, edgecolor='white', lw=1)
+    ax.add_patch(box)
+    ax.text(x+1.2, y, text, fontsize=7.5, color='white', ha='center', va='center')
+
+# Arrows in tier 1
+for i in range(len(t1_steps)-1):
+    y1 = t1_steps[i][3] - 0.35
+    y2 = t1_steps[i+1][3] + 0.35
+    ax.annotate('', xy=(1.5, y2), xytext=(1.5, y1),
+                arrowprops=dict(arrowstyle='-|>', color='#aaaaaa', lw=1.2))
+
+# Tier 2 steps
+t2_steps = [
+    ('Start EC2 Runner\n(machulav/ec2-github-runner@v2)', '#2c3e50', 4.8, 5.5),
+    ('Ubuntu EC2\napt-get + pytest --nbmake', '#3498db', 4.8, 4.5),
+    ('Arch Linux (Docker)\narchlinux:latest container', '#9b59b6', 4.8, 3.5),
+    ('Exclude glue/\n(glue_pyspark kernel)', '#e74c3c', 4.8, 2.5),
+    ('Stop EC2 Runner\n(always: true)', '#2c3e50', 4.8, 1.5),
+]
+
+for text, color, x, y in t2_steps:
+    box = FancyBboxPatch((x, y-0.35), 2.4, 0.7, boxstyle='round,pad=0.1',
+                          facecolor=color, edgecolor='white', lw=1)
+    ax.add_patch(box)
+    ax.text(x+1.2, y, text, fontsize=7.5, color='white', ha='center', va='center')
+
+for i in range(len(t2_steps)-1):
+    y1 = t2_steps[i][3] - 0.35
+    y2 = t2_steps[i+1][3] + 0.35
+    ax.annotate('', xy=(6.0, y2), xytext=(6.0, y1),
+                arrowprops=dict(arrowstyle='-|>', color='#aaaaaa', lw=1.2))
+
+# Tier 3 steps
+t3_steps = [
+    ('make lint\n(ruff check .)', '#f39c12', 9.3, 5.5),
+    ('make validate\n(validate_notebooks.py)', '#27ae60', 9.3, 4.5),
+    ('make strip-check\n(nbstripout --verify)', '#e74c3c', 9.3, 3.5),
+    ('make test-mac\n(all 3 above + nbmake)', '#3498db', 9.3, 2.5),
+    ('Local only — no\nGitHub minutes used', '#2c3e50', 9.3, 1.5),
+]
+
+for text, color, x, y in t3_steps:
+    box = FancyBboxPatch((x, y-0.35), 2.4, 0.7, boxstyle='round,pad=0.1',
+                          facecolor=color, edgecolor='white', lw=1)
+    ax.add_patch(box)
+    ax.text(x+1.2, y, text, fontsize=7.5, color='white', ha='center', va='center')
+
+for i in range(len(t3_steps)-1):
+    y1 = t3_steps[i][3] - 0.35
+    y2 = t3_steps[i+1][3] + 0.35
+    ax.annotate('', xy=(10.5, y2), xytext=(10.5, y1),
+                arrowprops=dict(arrowstyle='-|>', color='#aaaaaa', lw=1.2))
+
+plt.savefig('/Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_pipeline.png',
+            dpi=150, bbox_inches='tight', facecolor='#1a1a2e')
+plt.close()
+print("done")
+EOF
+python3 /tmp/diagram1.py[0m[38;5;244m (using tool: shell)[0m
+
+done
+[38;5;244m - Completed in 2.587s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Pipeline Diagram Done" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes
+cat > /tmp/diagram2.py << 'EOF'
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch, Wedge
+import numpy as np
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+fig.patch.set_facecolor('#1a1a2e')
+
+# Left: Notebook distribution bar chart
+ax1 = axes[0]
+ax1.set_facecolor('#1a1a2e')
+
+dirs = ['bedrock', 'sagemaker', 'bedrock-\nagentcore', 'datazone', 'notebooks', 'opensearch', 'glue']
+counts = [19, 13, 2, 2, 2, 1, 1]
+colors = ['#3498db', '#9b59b6', '#27ae60', '#f39c12', '#e74c3c', '#00d4ff', '#e67e22']
+
+bars = ax1.barh(dirs, counts, color=colors, edgecolor='white', linewidth=0.8)
+ax1.set_facecolor('#1a1a2e')
+ax1.tick_params(colors='white', labelsize=9)
+ax1.spines['bottom'].set_color('#555')
+ax1.spines['left'].set_color('#555')
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+ax1.set_xlabel('Notebooks', color='white', fontsize=10)
+ax1.set_title('Notebook Distribution (40 total)', color='white', fontsize=12, fontweight='bold', pad=10)
+
+for bar, count in zip(bars, counts):
+    ax1.text(bar.get_width() + 0.2, bar.get_y() + bar.get_height()/2,
+             str(count), color='white', va='center', fontsize=9)
+
+# Right: Kernel distribution pie
+ax2 = axes[1]
+ax2.set_facecolor('#1a1a2e')
+
+kernels = ['python3\n(17)', 'conda_python3\n(10)', 'conda_tensorflow2\n(7)', 'conda_pytorch\n(4)', 'glue_pyspark\n(1)', 'none\n(1)']
+sizes = [17, 10, 7, 4, 1, 1]
+kcolors = ['#3498db', '#27ae60', '#f39c12', '#9b59b6', '#e74c3c', '#95a5a6']
+explode = [0.05]*6
+
+wedges, texts, autotexts = ax2.pie(sizes, labels=kernels, colors=kcolors, explode=explode,
+                                    autopct='%1.0f%%', startangle=90,
+                                    textprops={'color': 'white', 'fontsize': 8},
+                                    wedgeprops={'edgecolor': 'white', 'linewidth': 1.2})
+for at in autotexts:
+    at.set_color('white')
+    at.set_fontsize(8)
+
+ax2.set_title('Kernelspec Distribution', color='white', fontsize=12, fontweight='bold', pad=10)
+
+plt.tight_layout(pad=2)
+plt.savefig('/Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_repo_stats.png',
+            dpi=150, bbox_inches='tight', facecolor='#1a1a2e')
+plt.close()
+print("done")
+EOF
+python3 /tmp/diagram2.py[0m[38;5;244m (using tool: shell)[0m
+
+done
+[38;5;244m - Completed in 2.644s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Repo Stats Diagram Done" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes
+cat > /tmp/diagram3.py << 'EOF'
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+fig, ax = plt.subplots(figsize=(13, 8))
+fig.patch.set_facecolor('#1a1a2e')
+ax.set_facecolor('#1a1a2e')
+ax.set_xlim(0, 13)
+ax.set_ylim(0, 8)
+ax.axis('off')
+
+ax.text(6.5, 7.6, 'nbstripout --verify vs --dry-run: Critical Distinction', fontsize=14,
+        fontweight='bold', color='white', ha='center')
+
+# Two columns
+for col, (title, flag, color, exit_code, ci_ok, desc_lines) in enumerate([
+    ('WRONG for CI', '--dry-run', '#e74c3c', 'Always exits 0', 'NO',
+     ['Prints what would change', 'Never fails the pipeline', 'Silent pass even with outputs', 'Useless for enforcement']),
+    ('CORRECT for CI', '--verify', '#27ae60', 'Non-zero if changes needed', 'YES',
+     ['Implies --dry-run behavior', 'Exits non-zero when outputs found', 'Fails CI as intended', 'Enforces clean commits']),
+]):
+    x = 1.0 + col * 6.5
+
+    # Header box
+    hbox = FancyBboxPatch((x, 6.5), 5.5, 0.9, boxstyle='round,pad=0.15',
+                           facecolor=color, edgecolor='white', lw=2)
+    ax.add_patch(hbox)
+    ax.text(x+2.75, 7.05, title, fontsize=13, fontweight='bold', color='white', ha='center', va='center')
+
+    # Flag box
+    fbox = FancyBboxPatch((x, 5.6), 5.5, 0.7, boxstyle='round,pad=0.1',
+                           facecolor='#2c3e50', edgecolor=color, lw=2)
+    ax.add_patch(fbox)
+    ax.text(x+2.75, 5.95, f'nbstripout {flag}', fontsize=12, color='#00d4ff',
+            ha='center', va='center', fontfamily='monospace')
+
+    # Exit code
+    ebox = FancyBboxPatch((x, 4.8), 5.5, 0.65, boxstyle='round,pad=0.1',
+                           facecolor='#16213e', edgecolor='#555', lw=1)
+    ax.add_patch(ebox)
+    ax.text(x+2.75, 5.125, f'Exit code: {exit_code}', fontsize=10, color=color,
+            ha='center', va='center', fontweight='bold')
+
+    # CI badge
+    badge_color = '#27ae60' if ci_ok == 'YES' else '#e74c3c'
+    badge = FancyBboxPatch((x+1.5, 4.1), 2.5, 0.55, boxstyle='round,pad=0.1',
+                            facecolor=badge_color, edgecolor='white', lw=1.5)
+    ax.add_patch(badge)
+    ax.text(x+2.75, 4.375, f'CI Enforcement: {ci_ok}', fontsize=10, color='white',
+            ha='center', va='center', fontweight='bold')
+
+    # Description bullets
+    for i, line in enumerate(desc_lines):
+        y = 3.5 - i * 0.55
+        ax.text(x+0.3, y, f'• {line}', fontsize=9, color='#cccccc', va='center')
+
+# Bottom note
+note_box = FancyBboxPatch((0.5, 0.2), 12, 0.6, boxstyle='round,pad=0.1',
+                           facecolor='#16213e', edgecolor='#00d4ff', lw=1.5)
+ax.add_patch(note_box)
+ax.text(6.5, 0.5, 'Source: Debian manpage — confirmed by 3 independent investigation streams',
+        fontsize=9, color='#00d4ff', ha='center', va='center')
+
+plt.savefig('/Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_nbstripout.png',
+            dpi=150, bbox_inches='tight', facecolor='#1a1a2e')
+plt.close()
+print("done")
+EOF
+python3 /tmp/diagram3.py[0m[38;5;244m (using tool: shell)[0m
+
+done
+[38;5;244m - Completed in 2.573s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|nbstripout Diagram Done" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes
+cat > /tmp/diagram4.py << 'EOF'
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+
+fig, ax = plt.subplots(figsize=(14, 9))
+fig.patch.set_facecolor('#1a1a2e')
+ax.set_facecolor('#1a1a2e')
+ax.set_xlim(0, 14)
+ax.set_ylim(0, 9)
+ax.axis('off')
+
+ax.text(7, 8.6, 'Files to Create: Repository Structure', fontsize=15, fontweight='bold',
+        color='white', ha='center')
+
+# File tree on left
+tree_items = [
+    (0.3, 7.8, 'aws-samples/', '#00d4ff', 11, True),
+    (0.7, 7.2, '.github/', '#f39c12', 10, True),
+    (1.1, 6.6, 'workflows/', '#f39c12', 10, True),
+    (1.5, 6.0, 'ci.yml', '#27ae60', 9, False),
+    (1.5, 5.4, 'ec2-integration.yml', '#9b59b6', 9, False),
+    (0.7, 4.8, 'scripts/', '#f39c12', 10, True),
+    (1.1, 4.2, 'validate_notebooks.py', '#3498db', 9, False),
+    (0.7, 3.6, 'Makefile', '#e74c3c', 10, False),
+    (0.7, 3.0, 'pyproject.toml', '#e74c3c', 10, False),
+    (0.7, 2.4, 'requirements-ci.txt', '#e74c3c', 10, False),
+    (0.7, 1.8, '.pre-commit-config.yaml', '#95a5a6', 10, False),
+]
+
+for x, y, name, color, size, is_dir in tree_items:
+    prefix = '[DIR] ' if is_dir else '[FILE] '
+    ax.text(x, y, prefix + name, fontsize=size, color=color, va='center',
+            fontfamily='monospace', fontweight='bold' if is_dir else 'normal')
+
+# Connector lines
+ax.plot([0.55, 0.55], [1.8, 7.2], color='#444', lw=1)
+ax.plot([0.95, 0.95], [4.2, 6.6], color='#444', lw=1)
+ax.plot([1.35, 1.35], [5.4, 6.0], color='#444', lw=1)
+
+# Right side: file content summaries
+summaries = [
+    (7.0, 7.8, 'ci.yml', '#27ae60',
+     ['Trigger: push + pull_request', 'Runner: ubuntu-latest', 'Steps: checkout, setup-python 3.11',
+      'pip install requirements-ci.txt', 'nbstripout --verify (all .ipynb)', 'ruff-action@v3 check .', 'validate_notebooks.py']),
+    (7.0, 4.5, 'ec2-integration.yml', '#9b59b6',
+     ['Trigger: push to main', 'Uses: machulav/ec2-github-runner@v2', 'Ubuntu EC2: apt + pytest --nbmake',
+      'Arch Linux: Docker archlinux:latest', 'Excludes: glue/ directory', 'Always stops runner (cleanup)']),
+    (7.0, 1.8, 'Makefile targets', '#e74c3c',
+     ['make lint  ->  ruff check .', 'make validate  ->  validate_notebooks.py',
+      'make strip-check  ->  nbstripout --verify', 'make test-mac  ->  all 3 above + nbmake']),
+]
+
+for x, y, title, color, lines in summaries:
+    height = len(lines) * 0.42 + 0.6
+    box = FancyBboxPatch((x-0.2, y-height+0.3), 6.8, height, boxstyle='round,pad=0.15',
+                          facecolor='#16213e', edgecolor=color, lw=1.5)
+    ax.add_patch(box)
+    ax.text(x+3.2, y-height+0.3+height-0.25, title, fontsize=10, fontweight='bold',
+            color=color, ha='center', va='center')
+    for i, line in enumerate(lines):
+        ax.text(x+0.1, y-height+0.3+height-0.65-i*0.42, f'  {line}', fontsize=8,
+                color='#cccccc', va='center', fontfamily='monospace')
+
+plt.savefig('/Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_files.png',
+            dpi=150, bbox_inches='tight', facecolor='#1a1a2e')
+plt.close()
+print("done")
+EOF
+python3 /tmp/diagram4.py[0m[38;5;244m (using tool: shell)[0m
+
+done
+[38;5;244m - Completed in 3.272s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Files Structure Diagram Done" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes
+ls -la /Users/murivirg/work/github/aws-samples/investigation/d1f13164/*.png[0m[38;5;244m (using tool: shell)[0m
+
+-rw-r--r--@ 1 murivirg  staff  121318 Mar 27 20:46 /Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_files.png
+-rw-r--r--@ 1 murivirg  staff   91660 Mar 27 20:46 /Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_nbstripout.png
+-rw-r--r--@ 1 murivirg  staff  133381 Mar 27 20:45 /Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_pipeline.png
+-rw-r--r--@ 1 murivirg  staff  147328 Mar 27 20:46 /Users/murivirg/work/github/aws-samples/investigation/d1f13164/diagram_repo_stats.png
+[38;5;244m - Completed in 1.706s[0m
+[38;5;12m[1m [1.7][0m[0m
+[?25l[0m[38;5;141m> [0mAll 4 diagrams verified. Now writing the full markdown report.[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_report.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mCI/CD for Jupyter Notebooks: aws-samples Implementation Guide[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mRepository:[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mvirgilio-murillo/aws-samples[38;2;163;190;140m`[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mDate:[38;2;235;203;139m**[38;2;192;197;206m 2026-03-27[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mInvestigation ID:[38;2;235;203;139m**[38;2;192;197;206m d1f13164[K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mExecutive Summary[K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe [38;2;163;190;140m`[38;2;163;190;140mvirgilio-murillo/aws-samples[38;2;163;190;140m`[38;2;192;197;206m repository contains [38;2;235;203;139m**[38;2;235;203;139m40 Jupyter notebooks[38;2;235;203;139m**[38;2;192;197;206m across 8 AWS service directories with [38;2;235;203;139m**[38;2;235;203;139mzero existing CI/CD infrastructure[38;2;235;203;139m**[38;2;192;197;206m — no [38;2;163;190;140m`[38;2;163;190;140m.github/[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m. A 3-tier pipeline is needed: GitHub Actions on [38;2;163;190;140m`[38;2;163;190;140mubuntu-latest[38;2;163;190;140m`[38;2;192;197;206m for fast lint/validate checks, EC2 self-hosted runners for Ubuntu and Arch Linux integration tests, and a local macOS [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m to avoid expensive GitHub macOS runner costs (10x Linux rate). The most critical finding is that [38;2;235;203;139m**[38;2;235;203;139m85% of notebooks (34/40) contain stored outputs[38;2;235;203;139m**[38;2;192;197;206m that must be stripped before CI can enforce clean commits — and the correct flag is [38;2;163;190;140m`[38;2;163;190;140mnbstripout --verify[38;2;163;190;140m`[38;2;192;197;206m, not [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m (which silently passes regardless of notebook state).[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mVisual Diagrams[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1. 3-Tier CI/CD Pipeline Architecture[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;208;135;112m![[38;2;208;135;112m3-Tier CI/CD Pipeline[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112m./diagram_pipeline.png[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m2. Repository Statistics: Notebook Distribution [38;2;143;161;179m&[38;2;143;161;179m Kernels[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;208;135;112m![[38;2;208;135;112mRepository Stats[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112m./diagram_repo_stats.png[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m3. Critical Tool Distinction: nbstripout --verify vs --dry-run[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;208;135;112m![[38;2;208;135;112mnbstripout flags[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112m./diagram_nbstripout.png[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4. Files to Create: Repository Structure[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;208;135;112m![[38;2;208;135;112mFiles to Create[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112m./diagram_files.png[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mDetailed Analysis[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mRepository State (Before CI)[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe repo has no automation whatsoever. Key facts confirmed by direct filesystem inspection:[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106m40 notebooks, 34 with stored outputs (85%)[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m 0 invalid JSON notebooks — all pass schema validation[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m 8 service directories, kernels spanning 5 different environments[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m 12 [38;2;163;190;140m`[38;2;163;190;140m.py[38;2;163;190;140m`[38;2;191;97;106m files, 4 subdirectory-level [38;2;163;190;140m`[38;2;163;190;140mrequirements.txt[38;2;163;190;140m`[38;2;191;97;106m, 5 Dockerfiles[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m No root [38;2;163;190;140m`[38;2;163;190;140mrequirements.txt[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140m.pre-commit-config.yaml[38;2;163;190;140m`[38;2;191;97;106m, or [38;2;163;190;140m`[38;2;163;190;140m.github/[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe [38;2;163;190;140m`[38;2;163;190;140mglue/pyspark-tutorial-glue.ipynb[38;2;163;190;140m`[38;2;192;197;206m notebook uses the [38;2;163;190;140m`[38;2;163;190;140mglue_pyspark[38;2;163;190;140m`[38;2;192;197;206m kernel and [38;2;235;203;139m**[38;2;235;203;139mcannot be tested locally or in standard CI[38;2;235;203;139m**[38;2;192;197;206m — it must be excluded via [38;2;163;190;140m`[38;2;163;190;140m--ignore glue/[38;2;163;190;140m`[38;2;192;197;206m in all test commands.[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mTool Selection Rationale[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Tool [38;2;192;197;206m|[38;2;192;197;206m Version [38;2;192;197;206m|[38;2;192;197;206m Why [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m-----[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m >=0.8.1 [38;2;192;197;206m|[38;2;192;197;206m Strips outputs + metadata; [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m enforces clean commits in CI [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruff[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m >=0.6.0 [38;2;192;197;206m|[38;2;192;197;206m Auto-discovers [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;192;197;206m since 0.6.0; no config needed for notebook inclusion [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mnbformat[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m >=5.9.0 [38;2;192;197;206m|[38;2;192;197;206m Standard Python API for notebook JSON/schema validation [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mnbmake[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m >=1.5.0 [38;2;192;197;206m|[38;2;192;197;206m pytest plugin for notebook execution tests [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruff-action@v3[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m v3.6.1 [38;2;192;197;206m|[38;2;192;197;206m Native GitHub Action with [38;2;163;190;140m`[38;2;163;190;140m--output-format=github[38;2;163;190;140m`[38;2;192;197;206m for inline PR annotations [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mec2-github-runner@v2[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m v2 [38;2;192;197;206m|[38;2;192;197;206m Standard action for EC2 self-hosted runners [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mArch Linux Strategy[K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;192;197;206mNo official GitHub Actions runner image exists for Arch Linux, and community AMIs in AWS Marketplace are unreliable. The recommended approach: [38;2;235;203;139m**[38;2;235;203;139mrun [38;2;163;190;140m`[38;2;163;190;140marchlinux:latest[38;2;163;190;140m`[38;2;235;203;139m Docker container on a standard Ubuntu EC2 instance[38;2;235;203;139m**[38;2;192;197;206m. This is reproducible, avoids AMI availability concerns, and works with the standard [38;2;163;190;140m`[38;2;163;190;140mmachulav/ec2-github-runner@v2[38;2;163;190;140m`[38;2;192;197;206m action.[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mruff Notebook Configuration[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;163;190;140m`[38;2;163;190;140mruff[38;2;163;190;140m`[38;2;192;197;206m does NOT support [38;2;163;190;140m`[38;2;163;190;140m--include[38;2;163;190;140m`[38;2;192;197;206m as a CLI flag — it is config-file only. Since ruff 0.6.0, [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;192;197;206m files are discovered automatically. The [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m config below adds [38;2;163;190;140m`[38;2;163;190;140mE402[38;2;163;190;140m`[38;2;192;197;206m ignore for notebooks (import-not-at-top is common in notebook cells):[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mtoml[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff][K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;192;197;206mextend-include = ["*.ipynb"][K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206mselect = ["E", "F", "W"][K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff.per-file-ignores][K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;192;197;206m"*.ipynb" = ["E402"][K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mStep-by-Step Implementation[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 1 — Install CI dependencies locally[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;192;197;206mpip install nbstripout>=0.8.1 ruff>=0.6.0 nbformat>=5.9.0 nbmake>=1.5.0[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 2 — Strip outputs from all 34 notebooks (one-time)[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;192;197;206mfind . -name "*.ipynb" \[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -not -path "*/.ipynb_checkpoints/*" \[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -not -path "*/investigation/*" \[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -exec nbstripout {} +[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206mVerify they're clean:[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;192;197;206mfind . -name "*.ipynb" \[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -not -path "*/.ipynb_checkpoints/*" \[K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -not -path "*/investigation/*" \[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Should exit 0 with no output[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 3 — Create [38;2;163;190;140m`[38;2;163;190;140mrequirements-ci.txt[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbstripout>=0.8.1[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;192;197;206mruff>=0.6.0[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbformat>=5.9.0[K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbmake>=1.5.0[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 4 — Create [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mtoml[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff][K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;192;197;206mextend-include = ["*.ipynb"][K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;192;197;206mselect = ["E", "F", "W"][K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff.per-file-ignores][K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;192;197;206m"*.ipynb" = ["E402"][K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 5 — Create [38;2;163;190;140m`[38;2;163;190;140mscripts/validate_notebooks.py[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mpython[K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [38;2;192;197;206mimport sys, glob, nbformat[K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnotebooks = glob.glob("**/*.ipynb", recursive=True)[K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnotebooks = [n for n in notebooks if ".ipynb_checkpoints" not in n and "investigation" not in n][K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;192;197;206merrors = [][K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;192;197;206mfor path in notebooks:[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    try:[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with open(path) as f:[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;192;197;206m            nb = nbformat.read(f, as_version=4)[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        nbformat.validate(nb)[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    except Exception as e:[K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        errors.append(f"{path}: {e}")[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;192;197;206mif errors:[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    print("\n".join(errors))[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    sys.exit(1)[K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;192;197;206mprint(f"All {len(notebooks)} notebooks valid.")[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 6 — Create [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmakefile[K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;192;197;206m.PHONY: lint validate strip-check test-mac[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;192;197;206mlint:[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	ruff check .[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;192;197;206mvalidate:[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	python scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;192;197;206mstrip-check:[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [38;2;192;197;206mtest-mac: lint validate strip-check[K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	pytest --nbmake notebooks/ bedrock/testing/ --ignore=glue/[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 7 — Create [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ci.yml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112myaml[K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;192;197;206mname: CI[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [38;2;192;197;206mon: [push, pull_request][K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [38;2;192;197;206mjobs:[K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  lint-validate:[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ubuntu-latest[K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/checkout@v4[K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/setup-python@v5[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          python-version: "3.11"[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - run: pip install -r requirements-ci.txt[K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Check notebook outputs stripped[K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        run: |[K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          find . -name "*.ipynb" \[K
+[0m[48;2;40;67;43m[39m+    185[0m:[39m[48;2;24;38;30m [38;2;192;197;206m            -not -path "*/.ipynb_checkpoints/*" \[K
+[0m[48;2;40;67;43m[39m+    186[0m:[39m[48;2;24;38;30m [38;2;192;197;206m            -not -path "*/investigation/*" \[K
+[0m[48;2;40;67;43m[39m+    187[0m:[39m[48;2;24;38;30m [38;2;192;197;206m            -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+    188[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Lint with ruff[K
+[0m[48;2;40;67;43m[39m+    189[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        uses: astral-sh/ruff-action@v3[K
+[0m[48;2;40;67;43m[39m+    190[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    191[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          args: "check --output-format=github ."[K
+[0m[48;2;40;67;43m[39m+    192[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Validate notebook JSON/schema[K
+[0m[48;2;40;67;43m[39m+    193[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        run: python scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+    194[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    195[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    196[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 8 — Create [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ec2-integration.yml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    197[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    198[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112myaml[K
+[0m[48;2;40;67;43m[39m+    199[0m:[39m[48;2;24;38;30m [38;2;192;197;206mname: EC2 Integration Tests[K
+[0m[48;2;40;67;43m[39m+    200[0m:[39m[48;2;24;38;30m [38;2;192;197;206mon:[K
+[0m[48;2;40;67;43m[39m+    201[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  push:[K
+[0m[48;2;40;67;43m[39m+    202[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    branches: [main][K
+[0m[48;2;40;67;43m[39m+    203[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    204[0m:[39m[48;2;24;38;30m [38;2;192;197;206mjobs:[K
+[0m[48;2;40;67;43m[39m+    205[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  start-runner:[K
+[0m[48;2;40;67;43m[39m+    206[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ubuntu-latest[K
+[0m[48;2;40;67;43m[39m+    207[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    outputs:[K
+[0m[48;2;40;67;43m[39m+    208[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      label: ${{ steps.start-ec2-runner.outputs.label }}[K
+[0m[48;2;40;67;43m[39m+    209[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}[K
+[0m[48;2;40;67;43m[39m+    210[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    211[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: aws-actions/configure-aws-credentials@v4[K
+[0m[48;2;40;67;43m[39m+    212[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    213[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}[K
+[0m[48;2;40;67;43m[39m+    214[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}[K
+[0m[48;2;40;67;43m[39m+    215[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-region: us-east-1[K
+[0m[48;2;40;67;43m[39m+    216[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - id: start-ec2-runner[K
+[0m[48;2;40;67;43m[39m+    217[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        uses: machulav/ec2-github-runner@v2[K
+[0m[48;2;40;67;43m[39m+    218[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    219[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          mode: start[K
+[0m[48;2;40;67;43m[39m+    220[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          github-token: ${{ secrets.GH_PAT }}[K
+[0m[48;2;40;67;43m[39m+    221[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          ec2-image-id: ami-0c02fb55956c7d316  # Ubuntu 22.04[K
+[0m[48;2;40;67;43m[39m+    222[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          ec2-instance-type: t3.medium[K
+[0m[48;2;40;67;43m[39m+    223[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          subnet-id: ${{ secrets.SUBNET_ID }}[K
+[0m[48;2;40;67;43m[39m+    224[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          security-group-id: ${{ secrets.SECURITY_GROUP_ID }}[K
+[0m[48;2;40;67;43m[39m+    225[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    226[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  test-ubuntu:[K
+[0m[48;2;40;67;43m[39m+    227[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    needs: start-runner[K
+[0m[48;2;40;67;43m[39m+    228[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ${{ needs.start-runner.outputs.label }}[K
+[0m[48;2;40;67;43m[39m+    229[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    230[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/checkout@v4[K
+[0m[48;2;40;67;43m[39m+    231[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - run: |[K
+[0m[48;2;40;67;43m[39m+    232[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          sudo apt-get update -q[K
+[0m[48;2;40;67;43m[39m+    233[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          sudo apt-get install -y python3-pip[K
+[0m[48;2;40;67;43m[39m+    234[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          pip3 install -r requirements-ci.txt[K
+[0m[48;2;40;67;43m[39m+    235[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          pytest --nbmake notebooks/ bedrock/testing/ --ignore=glue/[K
+[0m[48;2;40;67;43m[39m+    236[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    237[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  test-arch:[K
+[0m[48;2;40;67;43m[39m+    238[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    needs: start-runner[K
+[0m[48;2;40;67;43m[39m+    239[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ${{ needs.start-runner.outputs.label }}[K
+[0m[48;2;40;67;43m[39m+    240[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    container:[K
+[0m[48;2;40;67;43m[39m+    241[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      image: archlinux:latest[K
+[0m[48;2;40;67;43m[39m+    242[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    243[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/checkout@v4[K
+[0m[48;2;40;67;43m[39m+    244[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - run: |[K
+[0m[48;2;40;67;43m[39m+    245[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          pacman -Syu --noconfirm python python-pip[K
+[0m[48;2;40;67;43m[39m+    246[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          pip install -r requirements-ci.txt[K
+[0m[48;2;40;67;43m[39m+    247[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          pytest --nbmake notebooks/ bedrock/testing/ --ignore=glue/[K
+[0m[48;2;40;67;43m[39m+    248[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    249[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  stop-runner:[K
+[0m[48;2;40;67;43m[39m+    250[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    needs: [start-runner, test-ubuntu, test-arch][K
+[0m[48;2;40;67;43m[39m+    251[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ubuntu-latest[K
+[0m[48;2;40;67;43m[39m+    252[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    if: always()[K
+[0m[48;2;40;67;43m[39m+    253[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    254[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: aws-actions/configure-aws-credentials@v4[K
+[0m[48;2;40;67;43m[39m+    255[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    256[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}[K
+[0m[48;2;40;67;43m[39m+    257[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}[K
+[0m[48;2;40;67;43m[39m+    258[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          aws-region: us-east-1[K
+[0m[48;2;40;67;43m[39m+    259[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: machulav/ec2-github-runner@v2[K
+[0m[48;2;40;67;43m[39m+    260[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    261[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          mode: stop[K
+[0m[48;2;40;67;43m[39m+    262[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          github-token: ${{ secrets.GH_PAT }}[K
+[0m[48;2;40;67;43m[39m+    263[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          label: ${{ needs.start-runner.outputs.label }}[K
+[0m[48;2;40;67;43m[39m+    264[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}[K
+[0m[48;2;40;67;43m[39m+    265[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    266[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    267[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mStep 9 — (Optional) Add pre-commit hook[K
+[0m[48;2;40;67;43m[39m+    268[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    269[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112myaml[K
+[0m[48;2;40;67;43m[39m+    270[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# .pre-commit-config.yaml[K
+[0m[48;2;40;67;43m[39m+    271[0m:[39m[48;2;24;38;30m [38;2;192;197;206mrepos:[K
+[0m[48;2;40;67;43m[39m+    272[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  - repo: https://github.com/kynan/nbstripout[K
+[0m[48;2;40;67;43m[39m+    273[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    rev: 0.9.1[K
+[0m[48;2;40;67;43m[39m+    274[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    hooks:[K
+[0m[48;2;40;67;43m[39m+    275[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - id: nbstripout[K
+[0m[48;2;40;67;43m[39m+    276[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    277[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    278[0m:[39m[48;2;24;38;30m [38;2;192;197;206mInstall: [38;2;163;190;140m`[38;2;163;190;140mpip install pre-commit && pre-commit install[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    279[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    280[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    281[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    282[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mAWS Console Walkthrough: EC2 Runner Setup[K
+[0m[48;2;40;67;43m[39m+    283[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    284[0m:[39m[48;2;24;38;30m [38;2;192;197;206mTo configure the EC2 self-hosted runner, you need a VPC, subnet, security group, and IAM role. Here's the Console path:[K
+[0m[48;2;40;67;43m[39m+    285[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    286[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m1. Create Security Group[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    287[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m EC2 → Network [38;2;208;135;112m&[38;2;208;135;112m Security → Security Groups → Create security group[K
+[0m[48;2;40;67;43m[39m+    288[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mInbound: Allow HTTPS (443) outbound only (runner calls GitHub API)[K
+[0m[48;2;40;67;43m[39m+    289[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mOutbound: All traffic (0.0.0.0/0)[K
+[0m[48;2;40;67;43m[39m+    290[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    291[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m2. Note your Subnet ID[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    292[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m VPC → Subnets → Select a public subnet → Copy Subnet ID[K
+[0m[48;2;40;67;43m[39m+    293[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    294[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m3. Create IAM Role for GitHub Actions[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    295[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m IAM → Roles → Create role → AWS service → EC2[K
+[0m[48;2;40;67;43m[39m+    296[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mAttach: [38;2;163;190;140m`[38;2;163;190;140mAmazonEC2FullAccess[38;2;163;190;140m`[38;2;191;97;106m (scoped to runner management only in production)[K
+[0m[48;2;40;67;43m[39m+    297[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mName: [38;2;163;190;140m`[38;2;163;190;140mgithub-actions-ec2-runner[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    298[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    299[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m4. Create GitHub Secrets[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    300[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m GitHub repo → Settings → Secrets and variables → Actions → New repository secret[K
+[0m[48;2;40;67;43m[39m+    301[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mAWS_ACCESS_KEY_ID[38;2;163;190;140m`[38;2;191;97;106m — IAM user key[K
+[0m[48;2;40;67;43m[39m+    302[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mAWS_SECRET_ACCESS_KEY[38;2;163;190;140m`[38;2;191;97;106m — IAM user secret[K
+[0m[48;2;40;67;43m[39m+    303[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mGH_PAT[38;2;163;190;140m`[38;2;191;97;106m — GitHub Personal Access Token (repo scope)[K
+[0m[48;2;40;67;43m[39m+    304[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mSUBNET_ID[38;2;163;190;140m`[38;2;191;97;106m — from step 2[K
+[0m[48;2;40;67;43m[39m+    305[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mSECURITY_GROUP_ID[38;2;163;190;140m`[38;2;191;97;106m — from step 1[K
+[0m[48;2;40;67;43m[39m+    306[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    307[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m5. Verify runner registration[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    308[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m GitHub repo → Settings → Actions → Runners[K
+[0m[48;2;40;67;43m[39m+    309[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m (Runner appears here when the workflow starts an EC2 instance)[K
+[0m[48;2;40;67;43m[39m+    310[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    311[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    312[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    313[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSummary Tables[K
+[0m[48;2;40;67;43m[39m+    314[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    315[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mContradictions Resolved[K
+[0m[48;2;40;67;43m[39m+    316[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    317[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Topic [38;2;192;197;206m|[38;2;192;197;206m Wrong Claim [38;2;192;197;206m|[38;2;192;197;206m Correct Answer [38;2;192;197;206m|[38;2;192;197;206m Source [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    318[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m-------------[38;2;192;197;206m|[38;2;192;197;206m----------------[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    319[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m nbstripout CI flag [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m enforces CI [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m is correct; [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m always exits 0 [38;2;192;197;206m|[38;2;192;197;206m Debian manpage, 3 streams [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    320[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m bedrock/miscellaneous count [38;2;192;197;206m|[38;2;192;197;206m 8 or 11 notebooks [38;2;192;197;206m|[38;2;192;197;206m 10 notebooks [38;2;192;197;206m|[38;2;192;197;206m Direct filesystem [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    321[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m ruff [38;2;163;190;140m`[38;2;163;190;140m--include[38;2;163;190;140m`[38;2;192;197;206m CLI flag [38;2;192;197;206m|[38;2;192;197;206m Valid CLI syntax [38;2;192;197;206m|[38;2;192;197;206m Config-file only; auto-discovery since 0.6.0 [38;2;192;197;206m|[38;2;192;197;206m ruff docs [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    322[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    323[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mNotebook Output Status[K
+[0m[48;2;40;67;43m[39m+    324[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    325[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Metric [38;2;192;197;206m|[38;2;192;197;206m Value [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    326[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    327[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Total notebooks [38;2;192;197;206m|[38;2;192;197;206m 40 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    328[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Notebooks with stored outputs [38;2;192;197;206m|[38;2;192;197;206m 34 (85%) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    329[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Notebooks already clean [38;2;192;197;206m|[38;2;192;197;206m 6 (15%) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    330[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Invalid JSON notebooks [38;2;192;197;206m|[38;2;192;197;206m 0 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    331[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m nbformat 4.4 [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    332[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m nbformat 4.5 [38;2;192;197;206m|[38;2;192;197;206m 37 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    333[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    334[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKernel Testability[K
+[0m[48;2;40;67;43m[39m+    335[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    336[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Kernel [38;2;192;197;206m|[38;2;192;197;206m Count [38;2;192;197;206m|[38;2;192;197;206m Testable in CI? [38;2;192;197;206m|[38;2;192;197;206m Notes [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    337[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    338[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m python3 [38;2;192;197;206m|[38;2;192;197;206m 17 [38;2;192;197;206m|[38;2;192;197;206m Yes [38;2;192;197;206m|[38;2;192;197;206m Standard [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    339[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_python3 [38;2;192;197;206m|[38;2;192;197;206m 10 [38;2;192;197;206m|[38;2;192;197;206m Partial [38;2;192;197;206m|[38;2;192;197;206m SageMaker env; validate only [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    340[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_tensorflow2_p310 [38;2;192;197;206m|[38;2;192;197;206m 7 [38;2;192;197;206m|[38;2;192;197;206m Partial [38;2;192;197;206m|[38;2;192;197;206m SageMaker env; validate only [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    341[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_pytorch_p310 [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m Partial [38;2;192;197;206m|[38;2;192;197;206m SageMaker env; validate only [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    342[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m glue_pyspark [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m No [38;2;192;197;206m|[38;2;192;197;206m Exclude via [38;2;163;190;140m`[38;2;163;190;140m--ignore glue/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    343[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m none [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m Yes [38;2;192;197;206m|[38;2;192;197;206m No kernel dependency [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    344[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    345[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mFiles to Create[K
+[0m[48;2;40;67;43m[39m+    346[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    347[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m File [38;2;192;197;206m|[38;2;192;197;206m Purpose [38;2;192;197;206m|[38;2;192;197;206m Priority [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    348[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    349[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mrequirements-ci.txt[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m CI tool dependencies [38;2;192;197;206m|[38;2;192;197;206m Critical [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    350[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff config for notebooks [38;2;192;197;206m|[38;2;192;197;206m Critical [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    351[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mscripts/validate_notebooks.py[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbformat JSON/schema validation [38;2;192;197;206m|[38;2;192;197;206m Critical [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    352[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ci.yml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Tier 1: lint + strip + validate [38;2;192;197;206m|[38;2;192;197;206m Critical [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    353[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Tier 3: local macOS targets [38;2;192;197;206m|[38;2;192;197;206m Critical [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    354[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ec2-integration.yml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Tier 2: Ubuntu + Arch Linux EC2 [38;2;192;197;206m|[38;2;192;197;206m High [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    355[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m.pre-commit-config.yaml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Developer-side output stripping [38;2;192;197;206m|[38;2;192;197;206m Optional [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    356[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    357[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mCost Comparison: macOS Runners vs Makefile[K
+[0m[48;2;40;67;43m[39m+    358[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    359[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Approach [38;2;192;197;206m|[38;2;192;197;206m Cost per minute [38;2;192;197;206m|[38;2;192;197;206m 10-min run [38;2;192;197;206m|[38;2;192;197;206m Monthly (50 runs) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    360[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[38;2;192;197;206m----------------[38;2;192;197;206m|[38;2;192;197;206m------------[38;2;192;197;206m|[38;2;192;197;206m-------------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    361[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m GitHub macOS runner [38;2;192;197;206m|[38;2;192;197;206m $0.08 [38;2;192;197;206m|[38;2;192;197;206m $0.80 [38;2;192;197;206m|[38;2;192;197;206m $40.00 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    362[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m GitHub Linux runner [38;2;192;197;206m|[38;2;192;197;206m $0.008 [38;2;192;197;206m|[38;2;192;197;206m $0.08 [38;2;192;197;206m|[38;2;192;197;206m $4.00 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    363[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Local Makefile (macOS) [38;2;192;197;206m|[38;2;192;197;206m $0.00 [38;2;192;197;206m|[38;2;192;197;206m $0.00 [38;2;192;197;206m|[38;2;192;197;206m $0.00 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    364[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    365[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    366[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    367[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mReferences[K
+[0m[48;2;40;67;43m[39m+    368[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    369[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Source [38;2;192;197;206m|[38;2;192;197;206m Used For [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    370[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    371[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/kynan/nbstripout[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbstripout [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m flag, pre-commit hook [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    372[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://manpages.debian.org[38;2;192;197;206m/testing/nbstripout/nbstripout[38;2;192;197;206m.[38;2;192;197;206m1[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Definitive [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m vs [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m distinction [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    373[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.astral.sh[38;2;192;197;206m/ruff/configuration/#jupyter-notebook-discovery[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff notebook auto-discovery since 0.6.0 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    374[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://astral.sh[38;2;192;197;206m/blog/ruff-v0[38;2;192;197;206m.[38;2;192;197;206m1[38;2;192;197;206m.[38;2;192;197;206m5[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff notebook support stabilized in v0.1.5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    375[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/astral-sh/ruff-action[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff-action@v3 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    376[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 6 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/jupyter/nbformat[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbformat validation API [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    377[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 7 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/machulav/ec2-github-runner[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m EC2 self-hosted runner action [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    378[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 8 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.github.com[38;2;192;197;206m/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m macOS 10x minute cost [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    379[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 9 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/treebeardtech/nbmake[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m pytest notebook execution [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    380[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 10 [38;2;192;197;206m|[38;2;192;197;206m Direct filesystem inspection [38;2;192;197;206m|[38;2;192;197;206m All notebook counts, output presence, kernelspecs [38;2;192;197;206m|[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_report.md[0m
+[38;5;244m - Completed in 1.800s[0m
+[38;5;12m[1m [1.8][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Markdown Report Written" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.618s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[38;5;141m> [0mNow compile the PDF:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcat > /Users/murivirg/work/github/aws-samples/investigation/d1f13164/report_style.css << 'CSS'
+@page { size: A4; margin: 2cm; }
+body { font-family: -apple-system, Helvetica Neue, sans-serif; font-size: 11pt; line-height: 1.5; color: #1a1a1a; }
+h1 { color: #232f3e; font-size: 22pt; margin-top: 0; }
+h2 { color: #0073bb; border-bottom: 2px solid #0073bb; padding-bottom: 4px; font-size: 16pt; }
+h3 { color: #232f3e; font-size: 13pt; }
+img { max-width: 100%; height: auto; display: block; margin: 12px auto; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 9pt; table-layout: fixed; word-wrap: break-word; }
+th { background-color: #232f3e; color: white; padding: 6px 8px; text-align: left; word-wrap: break-word; }
+td { border: 1px solid #ddd; padding: 5px 7px; word-wrap: break-word; overflow-wrap: break-word; }
+tr:nth-child(even) { background-color: #f8f8f8; }
+code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-size: 9pt; word-break: break-all; }
+pre { background: #1a1a2e; color: #e0e0e0; padding: 12px; border-radius: 6px; font-size: 8.5pt; white-space: pre-wrap; word-break: break-word; }
+blockquote { border-left: 4px solid #0073bb; margin: 12px 0; padding: 8px 16px; background: #f0f7fc; }
+CSS[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.543s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples/investigation/d1f13164 && pandoc visual_report.md -o visual_report.pdf --pdf-engine=weasyprint --css=report_style.css 2>&1[0m[38;5;244m (using tool: shell)[0m
+
+WARNING: Ignored `gap: min(4vw, 1.5em)` at 4:28, invalid value.
+WARNING: Ignored `overflow-x: auto` at 5:24, unknown property.
+WARNING: Ignored `user-select: none` at 42:24, unknown property.
+WARNING: Ignored `word-break: break-word` at 12:120, invalid value.
+[38;5;244m - Completed in 4.528s[0m
+[38;5;12m[1m [1.11][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls -lh /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_report.pdf
+echo "$(date +%H:%M:%S)|PDF Compiled Successfully" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_nodes[0m[38;5;244m (using tool: shell)[0m
+
+-rw-r--r--@ 1 murivirg  staff   569K Mar 27 20:48 /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_report.pdf
+[38;5;244m - Completed in 2.654s[0m
+[38;5;12m[1m [1.12][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mopen /Users/murivirg/work/github/aws-samples/investigation/d1f13164/visual_report.pdf[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.38s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[38;5;141m> [0mDone. Here's what was produced:[0m[0m
+[0m[0m
+[1m4 diagrams generated:[22m[0m[0m
+- [38;5;10mdiagram_pipeline.png[0m — 3-tier CI/CD architecture (GitHub Actions → EC2 → Makefile)[0m[0m
+- [38;5;10mdiagram_repo_stats.png[0m — Notebook distribution bar chart + kernelspec pie chart[0m[0m
+- [38;5;10mdiagram_nbstripout.png[0m — Side-by-side [38;5;10m--verify[0m vs [38;5;10m--dry-run[0m comparison[0m[0m
+- [38;5;10mdiagram_files.png[0m — File tree with content summaries for each new file[0m[0m
+[0m[0m
+[1mReport:[22m [38;5;10mvisual_report.md[0m + [38;5;10mvisual_report.pdf[0m (569K) — opened in Preview[0m[0m
+[0m[0m
+[1mKey findings surfaced in the report:[22m[0m[0m
+- 85% of notebooks need one-time output stripping before CI can enforce anything[0m[0m
+- [38;5;10m--verify[0m not [38;5;10m--dry-run[0m is the correct nbstripout flag (critical — [38;5;10m--dry-run[0m silently passes)[0m[0m
+- Arch Linux: use [38;5;10marchlinux:latest[0m Docker container on Ubuntu EC2, not community AMIs[0m[0m
+- [38;5;10mglue/[0m must be excluded from all tests (incompatible kernel)[0m[0m
+- macOS runners cost 10x Linux — Makefile-only local approach saves ~$40/month at 50 ]9;Response completeruns[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 3.56 • Time: 3m 36s
+
+[0m[1G[0m[0m[?25h

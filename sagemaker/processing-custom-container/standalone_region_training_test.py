@@ -5,7 +5,6 @@ Test version with local paths.
 """
 
 import argparse
-import glob
 import os
 import logging
 import numpy as np
@@ -49,15 +48,15 @@ def prepare_region_data(df):
     logger.info(f"Input dataframe shape for region data preparation: {df.shape}")
     df_model = df[df['snapshot_week'] >= MIN_DATA_DATE].reset_index(drop=True)
     logger.info(f"After filtering by MIN_DATA_DATE ({MIN_DATA_DATE}): {df_model.shape}")
-    
+
     df_model['Region'] = df_model['destination_zip_assigned_region'].str.replace(r'^US\.', '', regex=True)
-    
+
     df_final = df_model.groupby(['marketplace_set', 'snapshot_week', 'Region', 'iog_type', 'sortability'])[
         ['inregion_units', 'total_units']].sum().reset_index()
-    
+
     df_final['iris'] = df_final.apply(lambda x: get_metric(x['inregion_units'], x['total_units']), axis=1)
     df_final['cohort'] = df_final['Region'] + '_' + df_final['iog_type'] + '_' + df_final['sortability']
-    
+
     logger.info(f"Final prepared dataframe shape: {df_final.shape}")
     logger.info('Data Preparation for Region completed')
     return df_final
@@ -77,11 +76,11 @@ def get_latest_data(preprocessed_df, dataset_date):
     merged_df = grouped_df.merge(group_count, on='cohort', how='left').reset_index(drop=True)
     df_with_subcat_count = merged_df[~(merged_df['cohort'].isin(['Unknown']))].reset_index(drop=True)
     logger.info(f"After removing Unknown cohorts: {df_with_subcat_count.shape}")
-    
+
     recent_df = df_with_subcat_count[df_with_subcat_count['snapshot_week'].astype(str) == dataset_date].sort_values(by=['cohort', 'total_units'])
     recent_df = recent_df.drop_duplicates(subset=['cohort'], keep='last')
     logger.info(f"Recent dataframe before group count filter: {recent_df.shape}")
-    
+
     final_recent_df = recent_df[recent_df['group_count'] > MIN_GROUP_COUNT].reset_index(drop=True)
     logger.info(f"Final recent dataframe after MIN_GROUP_COUNT filter ({MIN_GROUP_COUNT}): {final_recent_df.shape}")
 
@@ -91,7 +90,7 @@ def get_latest_data(preprocessed_df, dataset_date):
 def get_processed_data(recent_df, df_with_subcat_count):
     """Process data for model training."""
     logger.info(f"Processing data - recent_df shape: {recent_df.shape}, df_with_subcat_count shape: {df_with_subcat_count.shape}")
-    
+
     top_df = recent_df[['cohort', 'total_units']].groupby('cohort').sum().reset_index()
     top_df = top_df.sort_values('total_units', ascending=False).reset_index(drop=True)
     top_df['cum_units'] = top_df['total_units'].cumsum()
@@ -100,7 +99,7 @@ def get_processed_data(recent_df, df_with_subcat_count):
 
     filtered_cohorts = top_df[top_df['cum_perc'] < CUM_PERC_THRESHOLD]['cohort']
     logger.info(f"Number of cohorts after CUM_PERC_THRESHOLD filter ({CUM_PERC_THRESHOLD}): {len(filtered_cohorts)}")
-    
+
     filtered_df = df_with_subcat_count[df_with_subcat_count['cohort'].isin(filtered_cohorts)].reset_index(drop=True)
     logger.info(f"Filtered dataframe shape: {filtered_df.shape}")
 
@@ -126,7 +125,7 @@ def train_rrcf_for_group(group_data):
     """Train Robust Random Cut Forest (RRCF) model for anomaly detection on group data."""
     cohort_name = group_data['cohort'].iloc[0] if not group_data.empty else 'Unknown'
     logger.info(f"Training RRCF for cohort: {cohort_name}, data points: {len(group_data)}")
-    
+
     num_trees = NUM_TREES
     tree_size = min(MAX_TREE_SIZE, len(group_data))
     logger.info(f"Using {num_trees} trees with max size {tree_size}")
@@ -152,7 +151,7 @@ def train_rrcf_for_group(group_data):
     median_value = group_data['IRIS'].median()
     threshold = group_data['anomaly_score'].median()
     logger.info(f"Median IRIS: {median_value:.4f}, Anomaly threshold: {threshold:.4f}")
-    
+
     anomalies = group_data[(group_data['anomaly_score'] > threshold) & (group_data['diffs'] < 0)]
     logger.info(f"Found {len(anomalies)} anomalies")
 
@@ -188,10 +187,10 @@ def get_predictions(process_df, cohorts):
 def get_breach_data(final_anomalies, recent_df, cohorts, df, dataset_date):
     """Get breach data for reporting."""
     logger.info(f"Generating breach data for {len(cohorts)} cohorts")
-    
+
     latest_date = final_anomalies['snapshot_date'].max()
     logger.info(f"Latest date in anomalies: {latest_date}")
-    
+
     breach_status = final_anomalies[final_anomalies['snapshot_date'] == latest_date].reset_index(drop=True)
     final_data = breach_status[['cohort', 'median_IRIS', 'anomaly_score', 'breach']]
     logger.info(f"Breach status data shape: {breach_status.shape}")
@@ -204,7 +203,7 @@ def get_breach_data(final_anomalies, recent_df, cohorts, df, dataset_date):
     final_breach_df = recent_df[recent_df['cohort'].isin(cohorts)].reset_index(drop=True)
     result = final_breach_df.merge(final_data, on='cohort').reset_index(drop=True)
     logger.info(f"Final breach data shape: {result.shape}")
-    
+
     return result
 
 def process_mp_set_region(mp_set: str, dataset_date: str, df: pd.DataFrame) -> pd.DataFrame:
@@ -240,7 +239,7 @@ def train_inference_region_level():
 
     # Create output directory if it doesn't exist
     os.makedirs(args.output_path, exist_ok=True)
-    
+
     # Hardcoded input file path
     # Handle input file path
     if args.input_file:

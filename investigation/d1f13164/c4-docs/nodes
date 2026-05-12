@@ -1,0 +1,10 @@
+20:27:20|Starting up
+20:28:44|Starting investigation
+20:29:50|Exploring repo structure
+20:30:25|Reading key files
+20:31:13|Reading CodeBuild docs
+20:31:49|Searching EC2 runners
+20:32:32|Reading CI/CD tests
+20:33:08|Reading SSM Jupyter
+20:33:58|Writing findings doc
+20:35:49|Findings complete

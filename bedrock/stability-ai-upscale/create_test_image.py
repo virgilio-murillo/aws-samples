@@ -1,5 +1,4 @@
 from PIL import Image, ImageDraw
-import os
 
 # Create a simple test image
 width, height = 200, 200

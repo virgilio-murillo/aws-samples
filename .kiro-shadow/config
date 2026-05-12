@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	worktree = /Users/murivirg/work/github/aws-samples
+	ignorecase = true
+	precomposeunicode = true
+[defender "bypass"]
+[secrets]
+	allowed = AIPAY3S6GJY4Z3OMT5B3L
+	allowed = AROAY3S6GJY4UXSERF2FW
+	allowed = AROAY3S6GJY4TEOLB5OLW

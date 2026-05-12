@@ -1,11 +1,7 @@
-import os
 import boto3
 from config import *
-import base64
-from urllib.parse import urlparse
 import random
 import string
-import time
 import time
 from datetime import timedelta
 
@@ -16,19 +12,19 @@ bedrock_agent = boto3.Session().client('bedrock-agent')
 def generate_random_code():
     # Generate 4 random characters (uppercase letters)
     characters = ''.join(random.choices(string.ascii_uppercase, k=4))
-    
+
     # Generate 12 digit number combining timestamp and random numbers
     timestamp = str(int(time.time()))
     random_digits = ''.join(random.choices(string.digits, k=6))
     number = (timestamp + random_digits)[-12:]  # Ensure 12 digits
-    
+
     return characters, number
 
 def s3_upload(s3_location):
-    
+
     random_code = generate_random_code()
-    documentIdentifier = str(random_code[0]) + str(random_code[1]) 
-    document = { 
+    documentIdentifier = str(random_code[0]) + str(random_code[1])
+    document = {
         'content':{
             'dataSourceType': 'CUSTOM',
             'custom':{
@@ -43,7 +39,7 @@ def s3_upload(s3_location):
             }
         }
     }
-    
+
     documents = [document]
 
     response = bedrock_agent.ingest_knowledge_base_documents(
@@ -55,7 +51,7 @@ def s3_upload(s3_location):
 
 bucket_name = 'mainbucketrockhight5461'
 s3_folder = 'test/knowledge-bases/pdffiles/'
-s3_folder_uri = 's3://' + bucket_name + '/' + s3_folder 
+s3_folder_uri = 's3://' + bucket_name + '/' + s3_folder
 
 # first we test the function
 s3_uri = "s3://mainbucketrockhight5461/test/knowledge-bases/pdffiles/00627fcf4add0ded.pdf"
@@ -66,7 +62,7 @@ print(response)
 def append_to_file(filename, content):
     """
     Appends a string to a file. If the file doesn't exist, it creates it.
-    
+
     :param filename: The name of the file to append to
     :param content: The string content to append
     """
@@ -82,7 +78,7 @@ def append_to_file(filename, content):
 
 def traverse_s3_folder(bucket_name, folder_path):
     s3 = boto3.client('s3')
-    
+
     # List objects in the specified folder
     paginator = s3.get_paginator('list_objects_v2')
     print(paginator)
@@ -92,8 +88,8 @@ def traverse_s3_folder(bucket_name, folder_path):
 
     processed_files = 0
     total_time = 0
-    start_time = time.time()
-    
+    # start_time = time.time()  # noqa: F841
+
     for page in pages:
         if 'Contents' in page:
             for obj in page['Contents']:
@@ -101,15 +97,15 @@ def traverse_s3_folder(bucket_name, folder_path):
                 s3_uri = f"s3://{bucket_name}/{obj['Key']}"
                 if obj['Size'] == 0:
                     continue
-                
+
                 # Call the s3_upload function and measure the time
                 start_upload = time.time()
                 try:
                     response = s3_upload(s3_uri)
                 except:
-                    print("error")    
+                    print("error")
                 end_upload = time.time()
-                
+
                 upload_time = end_upload - start_upload
                 total_time += upload_time
                 processed_files += 1

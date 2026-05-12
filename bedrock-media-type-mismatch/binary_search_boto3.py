@@ -2,7 +2,8 @@
 Tests whether the mismatch error is server-side (all versions fail)
 or client-side (only newer versions fail).
 """
-import subprocess, sys
+import subprocess
+import sys
 
 VENV_DIR = "./kiro-test/venv_boto3"
 VENV_PIP = f"{VENV_DIR}/bin/pip"
@@ -65,7 +66,7 @@ for ver in VERSIONS:
     )
     output = test.stdout.strip()
     print(f"  {output}")
-    
+
     for line in output.split("\n"):
         if line.startswith("RESULT:"):
             results.append((ver, line.split(":", 1)[1]))

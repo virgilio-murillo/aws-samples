@@ -1,0 +1,1261 @@
+Not all mcp servers loaded. Configure non-interactive timeout with q settings mcp.noInteractiveTimeout
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 4.00s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Let me start by reading all the validated findings from the investigation directory, then cross-reference them and write the final report.
+[38;5;244m - Completed in 1.640s[0m
+[38;5;12m[1m [1.1][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Reading Findings" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/orchestrator_nodes && cat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c1-internet/validated.md[0m[38;5;244m (using tool: shell)[0m
+
+# Validated Findings: Repository Structure & CI/CD Best Practices for Jupyter Notebooks
+
+Validation performed: 2026-03-27T20:35 CDT
+Method: Local filesystem verification + web documentation cross-referencing
+
+---
+
+## Section 1: Repository Structure
+
+### Top-level files
+| Claim | Status | Evidence |
+|---|---|---|
+| README.md exists | ✅ CONFIRMED | `ls -la` verified, 2231 bytes |
+| LICENSE exists | ✅ CONFIRMED | `ls -la` verified, 1073 bytes |
+| .gitignore ignores config.py, env, .ipynb_checkpoints, .terraform | ✅ CONFIRMED | `cat .gitignore` verified. Note: findings omit additional entries: `*/.ipynb_checkpoints/*`, `sagemaker/how-to-use-inference-recommender/envi`, `sagemaker/how-to-use-inference-recommender/model/1`, `*/.terraform/*` |
+| .libs.json exists (SageMaker Studio config) | ✅ CONFIRMED | `ls -la` verified, 424 bytes |
+| SAGEMAKER_UNIFIED_STUDIO_README.md exists | ✅ CONFIRMED | `ls -la` verified |
+| TASK.md exists | ✅ CONFIRMED | `ls -la` verified |
+
+### No existing CI/CD infrastructure
+| Claim | Status | Evidence |
+|---|---|---|
+| No .github/ directory | ✅ CONFIRMED | `ls .github` → "No such file or directory" |
+| No Makefile | ✅ CONFIRMED | `ls Makefile` → not found |
+| No root requirements.txt | ✅ CONFIRMED | `ls requirements.txt` → not found |
+| No pyproject.toml | ✅ CONFIRMED | `ls pyproject.toml` → not found |
+| No .pre-commit-config.yaml | ✅ CONFIRMED | `ls .pre-commit-config.yaml` → not found |
+| No ruff.toml | ✅ CONFIRMED | `ls ruff.toml` → not found |
+
+### Service directories
+| Claim | Status | Evidence |
+|---|---|---|
+| bedrock/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| bedrock-agentcore/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| sagemaker/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| glue/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| opensearch/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| datazone/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| notebooks/ exists | ✅ CONFIRMED | `ls -d */` verified |
+| bedrock-media-type-mismatch/ exists | ✅ CONFIRMED | `ls -d */` verified |
+
+Note: `investigation/` directory also exists but is correctly omitted from the service directory listing (it's the investigation workspace).
+
+### Jupyter Notebooks — 40 total
+| Claim | Status | Evidence |
+|---|---|---|
+| 40 total notebooks | ✅ CONFIRMED | `find . -name "*.ipynb" | wc -l` → 40 |
+| bedrock/miscellaneous/ — 10 | ✅ CONFIRMED | Verified via find |
+| bedrock/agent-runtime/ — 2 | ✅ CONFIRMED | Verified via find |
+| bedrock/batch-inference/ — 1 | ✅ CONFIRMED | Verified via find |
+| bedrock/testing/ — 2 | ✅ CONFIRMED | Verified via find |
+| bedrock/prompt-caching/ — 1 | ✅ CONFIRMED | Verified via find |
+| bedrock/model-import/ — 1 | ✅ CONFIRMED | Verified via find |
+| bedrock/common-errors/ — 1 | ✅ CONFIRMED | Verified via find |
+| bedrock/bedrock-marketplace/ — 1 | ✅ CONFIRMED | Verified via find |
+| bedrock-agentcore/ — 2 | ✅ CONFIRMED | 1 in strands-agents, 1 in gateway-cedar-policies |
+| **sagemaker/ — 9 notebooks** | ❌ CONTRADICTED | **Actual count is 13 notebooks**, not 9. Full list: terraform/connect-ec2-to-notebook-SMAI (3), serverless-inference (2), inference-recommender (2), processing-custom-container (1), pipelines-sagemaker (1), byoc-sm-jupyterlab/sagemaker-distribution (1), byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre (1), byoc-sm-jupyterlab/notebook-al2023 (1), retail_sales_prediction.ipynb (1) |
+| glue/ — 1 | ✅ CONFIRMED | Verified via find |
+| opensearch/ — 1 | ✅ CONFIRMED | Verified via find |
+| datazone/ — 2 | ✅ CONFIRMED | Verified via find |
+| notebooks/ — 2 | ✅ CONFIRMED | Verified via find |
+
+### Existing requirements.txt files
+| Claim | Status | Evidence |
+|---|---|---|
+| bedrock-agentcore/strands-agents/requirements.txt | ✅ CONFIRMED | `find . -name "requirements.txt"` verified |
+| bedrock/stability-ai-upscale/requirements.txt | ✅ CONFIRMED | Verified |
+| sagemaker/inference-recommender/code/requirements.txt | ✅ CONFIRMED | Verified |
+| sagemaker/processing-custom-container/requirements.txt | ✅ CONFIRMED | Verified |
+| No other requirements.txt files exist | ✅ CONFIRMED | find returned exactly these 4 |
+
+---
+
+## Section 2: nbstripout
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Source: https://github.com/kynan/nbstripout | ✅ CONFIRMED | GitHub repo exists, 1.4k stars |
+| PyPI: https://pypi.org/project/nbstripout/ | ✅ CONFIRMED | PyPI listing verified |
+| Purpose: strips output cells, execution counts, metadata | ✅ CONFIRMED | PyPI description matches |
+| **`--dry-run` returns non-zero exit code if files would change** | ❌ CONTRADICTED | **The correct flag is `--verify`, NOT `--dry-run`.** The Debian manpage (nbstripout 0.9.x) clearly states: `--dry-run` = "Print which notebooks would have been stripped" (no exit code behavior). `--verify` = "Return a non-zero exit code if any files were changed, Implies --dry-run". The findings misattribute the `--verify` behavior to `--dry-run`. |
+| **CI usage: `nbstripout --dry-run notebooks/**/*.ipynb`** | ❌ CONTRADICTED | **Should be `nbstripout --verify notebooks/**/*.ipynb`** for CI enforcement. `--dry-run` alone will always exit 0 regardless of whether notebooks have outputs. |
+| Flags: --keep-count, --keep-output, --keep-id, --extra-keys, --drop-empty-cells, --drop-tagged-cells | ✅ CONFIRMED | Debian manpage lists all these flags |
+| Pre-commit hook rev: 0.9.1 | ✅ CONFIRMED | GitHub releases show 0.9.1 as latest release (Feb 21, 2025). Note: PyPI latest may lag behind at 0.8.1 — but pre-commit pulls from GitHub directly, so 0.9.1 is valid. |
+| Alternative: nb-clean (srstevenson/nb-clean) | 🔍 UNVERIFIED | Not independently verified but plausible |
+
+### Corrected CI Usage Pattern:
+```bash
+# CORRECT: Use --verify (not --dry-run) for CI enforcement
+nbstripout --verify notebooks/**/*.ipynb
+# Or using find:
+find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -exec nbstripout --verify {} +
+```
+
+---
+
+## Section 3: Ruff Linting for Jupyter Notebooks
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Ruff has native .ipynb support since v0.1.5 | ✅ CONFIRMED | astral.sh/blog/ruff-v0.1.5 confirms: "Support for Jupyter Notebooks in the Ruff command line interface was stabilized in v0." |
+| extend-include = ["*.ipynb"] required | ✅ CONFIRMED | Standard ruff configuration documented at docs.astral.sh/ruff/settings/ |
+| per-file-ignores for E402 on *.ipynb | ✅ CONFIRMED | Common and documented practice for notebooks |
+| ruff-action@v3 exists | ✅ CONFIRMED | Latest release is v3.6.1 (Jan 30, 2025). The `@v3` tag is valid. |
+| ruff-action supports `args` parameter | ✅ CONFIRMED | docs.astral.sh/ruff/integrations/ confirms: `args: The command-line arguments to pass to Ruff (default: "check")` |
+| `--output-format=github` supported | ✅ CONFIRMED | Standard ruff CLI option for GitHub Actions annotation format |
+
+---
+
+## Section 4: Notebook JSON Validation (nbformat)
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Source: https://github.com/jupyter/nbformat | ✅ CONFIRMED | Official Jupyter project |
+| nbformat.validate() validates against JSON schema | ✅ CONFIRMED | Standard nbformat API |
+| Validation script pattern is correct | ✅ CONFIRMED | Uses nbformat.read() + nbformat.validate() — standard pattern |
+| Alternative: check-jsonschema | 🔍 UNVERIFIED | Not independently verified but the GitHub repo exists |
+
+---
+
+## Section 5: EC2-Based Integration Tests
+
+| Claim | Status | Evidence |
+|---|---|---|
+| machulav/ec2-github-runner exists | ✅ CONFIRMED | GitHub repo and Marketplace listing verified |
+| @v2 tag available | ✅ CONFIRMED | cicube.io guide and GitHub Marketplace both reference v2 |
+| Workflow pattern (start/test/stop jobs) | ✅ CONFIRMED | Matches documented usage pattern on cicube.io and GitHub Marketplace |
+| Uses aws-actions/configure-aws-credentials@v4 | ✅ CONFIRMED | Standard AWS credentials action |
+| Requires: AWS credentials, GitHub PAT with repo scope, VPC/subnet/SG | ✅ CONFIRMED | Documented requirements |
+| Arch Linux AMIs available in AWS Marketplace | 🔍 UNVERIFIED | Plausible but not independently confirmed |
+| Self-hosted runner supports any Linux distribution | ✅ CONFIRMED | GitHub docs confirm self-hosted runners work on any Linux distro |
+
+---
+
+## Section 6: macOS Makefile
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Makefile provides local dev experience mirroring CI | ✅ CONFIRMED | Standard practice, commands are valid |
+| `make lint` runs ruff check | ✅ CONFIRMED | Valid ruff command |
+| `make strip-check` uses nbstripout --dry-run | ❌ CONTRADICTED | **Should use `nbstripout --verify`** for proper exit code behavior (same issue as Section 2) |
+| `make validate` runs validation script | ✅ CONFIRMED | Valid pattern |
+| `make test` uses pytest --nbmake | ✅ CONFIRMED | Valid nbmake usage |
+
+---
+
+## Section 7: Tool Comparison Table
+
+| Claim | Status | Evidence |
+|---|---|---|
+| nbmake: pytest plugin, executes notebooks | ✅ CONFIRMED | treebeardtech/nbmake on GitHub and PyPI verified |
+| nbval: validates notebook outputs match stored | ✅ CONFIRMED | PyPI listing verified |
+| nbstripout: strips/checks outputs | ✅ CONFIRMED | Verified above (but CI flag is --verify not --dry-run) |
+| nbformat: validates JSON schema | ✅ CONFIRMED | Verified above |
+| ruff: lints Python in notebooks natively | ✅ CONFIRMED | Verified above |
+| nbmake supports parallel execution | 🔍 UNVERIFIED | Not independently confirmed |
+
+---
+
+## Section 8: Recommended CI/CD Architecture
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Three-tier approach (fast checks / integration / local) | 🔍 UNVERIFIED | This is a recommendation/opinion, not a factual claim. The architecture is reasonable and follows common patterns. |
+| Tier 1 on GitHub-hosted runners | ✅ CONFIRMED | Standard and appropriate for linting/validation |
+| Tier 2 on EC2 self-hosted runners | ✅ CONFIRMED | Valid approach using machulav/ec2-github-runner |
+| Tier 3 via Makefile | ✅ CONFIRMED | Standard local dev pattern |
+
+---
+
+## Section 9: Source URLs
+
+| # | URL | Status |
+|---|---|---|
+| 1 | https://github.com/kynan/nbstripout | ✅ CONFIRMED |
+| 2 | https://github.com/astral-sh/ruff | ✅ CONFIRMED |
+| 3 | https://github.com/astral-sh/ruff-action | ✅ CONFIRMED |
+| 4 | https://astral.sh/blog/ruff-v0.1.5 | ✅ CONFIRMED |
+| 5 | https://docs.astral.sh/ruff/settings/ | ✅ CONFIRMED |
+| 6 | https://til.codeinthehole.com/posts/you-can-run-ruff-on-jupyter-notebooks/ | 🔍 UNVERIFIED |
+| 7 | https://github.com/jupyter/nbformat | ✅ CONFIRMED |
+| 8 | https://nbformat.readthedocs.io/en/latest/format_description.html | 🔍 UNVERIFIED |
+| 9 | https://github.com/treebeardtech/nbmake | ✅ CONFIRMED |
+| 10 | https://pypi.org/project/nbval/ | ✅ CONFIRMED |
+| 11 | https://github.com/machulav/ec2-github-runner | ✅ CONFIRMED |
+| 12 | https://docs.github.com/actions/reference/runners/self-hosted-runners | ✅ CONFIRMED |
+| 13 | https://manpages.debian.org/testing/nbstripout/nbstripout.1 | ✅ CONFIRMED (but findings misread it — see Section 2) |
+| 14 | https://spacetelescope.github.io/notebook-infrastructure/ci-overview.html | 🔍 UNVERIFIED |
+| 15 | https://github.com/srstevenson/nb-clean | 🔍 UNVERIFIED |
+| 16 | https://github.com/python-jsonschema/check-jsonschema | 🔍 UNVERIFIED |
+
+---
+
+## Summary
+
+| Verdict | Count | Details |
+|---|---|---|
+| ✅ CONFIRMED | 52 | Majority of claims verified via filesystem or documentation |
+| ❌ CONTRADICTED | 3 | (1) SageMaker notebook count: claimed 9, actual 13. (2) nbstripout `--dry-run` exit code: correct flag is `--verify`. (3) Makefile strip-check command uses wrong flag. |
+| 🔍 UNVERIFIED | 8 | Mostly alternative tool references and one architectural recommendation |
+
+### Critical Corrections Required
+
+1. **SageMaker notebook count**: Change from 9 to **13**. The findings miss 4 notebooks: 2 extra in terraform/ (Untitled.ipynb), 1 extra in byoc-sm-jupyterlab/ subdirectories.
+
+2. **nbstripout CI flag**: All instances of `nbstripout --dry-run` used for CI enforcement must be changed to `nbstripout --verify`. The `--dry-run` flag only prints what would change but always exits 0. The `--verify` flag implies `--dry-run` AND returns a non-zero exit code when files would be changed. Source: [Debian manpage for nbstripout](https://manpages.debian.org/testing/nbstripout/nbstripout.1).
+
+3. **Makefile strip-check target**: Must use `nbstripout --verify` instead of `nbstripout --dry-run` for the check to actually fail when outputs are present.
+[38;5;244m - Completed in 1.815s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c2-kb/validated.md[0m[38;5;244m (using tool: shell)[0m
+
+# Validated Findings: c2-kb (Knowledge Base & Lessons Learned)
+
+**Validator**: c2-kb-validator
+**Date**: 2026-03-27T20:35 CDT
+**Method**: Filesystem commands, web search, official documentation cross-check
+
+---
+
+## Section 1: Repository Structure
+
+### Git Remote & Branch
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Origin: `https://github.com/virgilio-murillo/aws-samples.git` | **CONFIRMED** | `git remote -v` output matches exactly |
+| Branch: `main` (single branch, no feature branches) | **CONFIRMED** | `git branch -a` shows only `main` and `remotes/origin/main` |
+
+### Top-Level Files
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| README.md, LICENSE, .gitignore, .libs.json, TASK.md, SAGEMAKER_UNIFIED_STUDIO_README.md | **CONFIRMED** | `ls -la` confirms all 6 files present |
+
+### .gitignore Contents
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Ignores `config.py`, `env`, `.ipynb_checkpoints`, `.terraform` | **CONFIRMED** (incomplete) | File contains those 4 patterns PLUS additional entries: `*/.ipynb_checkpoints/*`, `sagemaker/how-to-use-inference-recommender/envi`, `sagemaker/how-to-use-inference-recommender/model/1`, `*/.terraform/*`. Not wrong, but omits 4 additional lines. |
+
+### No Existing CI/CD Infrastructure
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| No `.github/` directory | **CONFIRMED** | `ls .github/` → "No such file or directory" |
+| No `Makefile` | **CONFIRMED** | `ls Makefile` → "No such file or directory" |
+| No root `requirements.txt` | **CONFIRMED** | `ls requirements.txt` → "No such file or directory" |
+| No `.pre-commit-config.yaml` | **CONFIRMED** | `ls .pre-commit-config.yaml` → "No such file or directory" |
+| No `pyproject.toml` or `setup.py` | **CONFIRMED** | Both absent |
+| No `ruff.toml` or `.ruff.toml` | **CONFIRMED** | Both absent |
+
+### Service Directories
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| "7 top-level" service directories | **CONTRADICTED** | Header says 7 but lists 8 items (1–8). Actual count is 8 directories: `bedrock/`, `bedrock-agentcore/`, `bedrock-media-type-mismatch/`, `datazone/`, `glue/`, `notebooks/`, `opensearch/`, `sagemaker/`. The list itself is correct; only the "7" count in the header is wrong. |
+| `bedrock/` — 11 subdirs, 11 notebooks | **CONTRADICTED** | Actual: **10 subdirs** (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing), **19 notebooks**. Both numbers are wrong. |
+| `bedrock-agentcore/` — 2 subdirs, 2 notebooks | **CONFIRMED** | 2 subdirs, 2 notebooks verified |
+| `bedrock-media-type-mismatch/` — Python scripts only | **CONFIRMED** | Contains 4 .py files, 0 .ipynb files |
+| `sagemaker/` — 7 subdirs, 10 notebooks | **CONTRADICTED** | Actual: **6 subdirs** (byoc-sm-jupyterlab, inference-recommender, pipelines-sagemaker, processing-custom-container, serverless-inference, terraform), **13 notebooks** (including 1 at sagemaker/ root level). Both numbers are wrong. |
+| `glue/` — 1 notebook | **CONFIRMED** | 1 notebook verified |
+| `opensearch/` — 1 notebook | **CONFIRMED** | 1 notebook in `create-resources/` subdir |
+| `datazone/` — 2 notebooks | **CONFIRMED** | 2 notebooks verified |
+| `notebooks/` — 2 general notebooks | **CONFIRMED** | 2 notebooks verified |
+
+---
+
+## Section 2: Notebook Inventory
+
+### Total Count
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 40 total `.ipynb` files | **CONFIRMED** | `find . -name '*.ipynb' ... | wc -l` → 40 |
+
+### Per-Directory Counts (from table)
+| Directory | Claimed | Actual | Verdict |
+|-----------|---------|--------|---------|
+| `bedrock/miscellaneous/` | 8 | **10** | **CONTRADICTED** — missing: `csutom_data_source_2.ipynb`, `multimodal_meta_llama32.ipynb` |
+| `sagemaker/` (all subdirs) | 10 | **13** | **CONTRADICTED** — missing: 3 notebooks in `byoc-sm-jupyterlab/` subdirs + `retail_sales_prediction.ipynb` at root |
+| `bedrock/agent-runtime/` | 2 | 2 | **CONFIRMED** |
+| `bedrock/batch-inference/` | 1 | 1 | **CONFIRMED** |
+| `bedrock/testing/` | 2 | 2 | **CONFIRMED** |
+| `bedrock/prompt-caching/` | 1 | 1 | **CONFIRMED** |
+| `bedrock/model-import/` | 1 | 1 | **CONFIRMED** |
+| `bedrock/common-errors/` | 1 | 1 | **CONFIRMED** |
+| `bedrock/bedrock-marketplace/` | 1 | 1 | **CONFIRMED** |
+| `bedrock-agentcore/` | 2 | 2 | **CONFIRMED** |
+| `opensearch/` | 1 | 1 | **CONFIRMED** |
+| `datazone/` | 2 | 2 | **CONFIRMED** |
+| `glue/` | 1 | 1 | **CONFIRMED** |
+| `notebooks/` | 2 | 2 | **CONFIRMED** |
+
+Note: The table sums to 35 (claimed) vs 40 (actual). The total of 40 is correct, but the per-directory breakdown is inconsistent — `bedrock/miscellaneous` and `sagemaker/` are undercounted by 5 total.
+
+### File Sizes
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `retail_sales_prediction.ipynb` ~2MB | **CONFIRMED** | 2,054,339 bytes ≈ 1.96 MB |
+| `conversation_examples-test-with-huggingface.ipynb` 199KB | **CONFIRMED** | 199,286 bytes (≈195 KB; "199KB" likely refers to raw byte count) |
+| `getting_started.ipynb` 78KB | **CONFIRMED** | 78,725 bytes ≈ 77 KB |
+| `ml_analysis_with_tests.ipynb` 6KB | **CONFIRMED** | 6,043 bytes ≈ 6 KB |
+
+### Python Files
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 12 total .py files | **CONFIRMED** | `find . -name '*.py' ...` returns exactly 12 files |
+
+### requirements.txt Files
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 4 subdirectory-level requirements.txt | **CONFIRMED** | All 4 paths verified: bedrock-agentcore/strands-agents/, bedrock/stability-ai-upscale/, sagemaker/inference-recommender/code/, sagemaker/processing-custom-container/ |
+
+### Dockerfiles
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 5 Dockerfiles | **CONFIRMED** | All 5 found: bedrock-agentcore/strands-agents/Dockerfile, sagemaker/byoc-sm-jupyterlab/ (3 variants), sagemaker/processing-custom-container/Dockerfile |
+
+### YAML Files
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 1 YAML file: `bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml` | **CONFIRMED** | Only YAML file found in repo |
+
+---
+
+## Section 3: Knowledge Base & Lessons Learned Search Results
+
+| Claim | Verdict | Notes |
+|-------|---------|-------|
+| 22 queries executed (14 search_lessons + 8 knowledge) | **UNVERIFIED** | Cannot reproduce exact search session; internal to investigation process |
+| No indexed knowledge bases exist | **UNVERIFIED** | Depends on runtime state at time of investigation |
+| Lessons confirmed repo structure (high confidence) | **UNVERIFIED** | Cannot reproduce; plausible given the repo exists |
+| No lessons found for CI/CD tooling specifics | **UNVERIFIED** | Cannot reproduce |
+
+---
+
+## Section 4: Best Practices Research (Tool Claims)
+
+### nbstripout
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `pip install nbstripout` | **CONFIRMED** | PyPI page confirms package name |
+| `nbstripout --verify` checks without modifying, exits non-zero if outputs present | **CONFIRMED** | PyPI docs: "--verify: Return a non-zero exit code if any files were changed, Implies --dry-run" |
+| CI use: `find . -name '*.ipynb' -exec nbstripout --verify {} +` | **CONFIRMED** | Valid approach. Note: nbstripout also offers a reusable GitHub Action (`kynan/nbstripout@main`) which is a simpler alternative not mentioned in findings. |
+
+### ruff
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `ruff check --include "*.ipynb"` (since ruff 0.1.0+) | **CONTRADICTED** | `--include` is NOT a CLI flag for `ruff check`. The `include` setting is config-file only (`ruff.toml` / `pyproject.toml`). Furthermore, `.ipynb` files are included BY DEFAULT since ruff 0.6.0 — no `--include` needed. Source: [Ruff configuration docs](https://docs.astral.sh/ruff/configuration/#jupyter-notebook-discovery) |
+| Extract cells with `jupyter nbconvert --to script` then lint | **CONFIRMED** | Valid alternative approach |
+| Config via `ruff.toml` or `[tool.ruff]` in `pyproject.toml` | **CONFIRMED** | Ruff docs confirm both config file formats |
+| Recommended rules: `E`, `F`, `W` (pyflakes + pycodestyle basics) | **CONFIRMED** (minor inaccuracy) | `F` = pyflakes, `E` + `W` = pycodestyle. The parenthetical description is slightly misleading — should say "pyflakes + pycodestyle" not "pyflakes + pycodestyle basics". |
+
+### Notebook JSON Validation
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `python -c "import json; json.load(open('notebook.ipynb'))"` for basic JSON | **CONFIRMED** | Valid Python for JSON syntax check |
+| `jupyter nbconvert --validate notebook.ipynb` | **UNVERIFIED** | The `--validate` flag is not a standard documented flag in recent nbconvert versions. May work in some versions but not reliably. |
+| `python -m nbformat.validator notebook.ipynb` | **UNVERIFIED** | The `nbformat.validator` module may not have a `__main__` entry point. The standard API approach is `nbformat.read()` + `nbformat.validate()`. |
+| `nbformat.read(f, as_version=4)` with `nbformat.validate(nb)` | **CONFIRMED** | Standard nbformat API usage |
+
+### EC2-Based Integration Tests
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Ubuntu: `apt-get install python3-pip jupyter-notebook` | **CONFIRMED** | Valid Ubuntu package names |
+| Arch Linux: `pacman -S python python-pip jupyter-notebook` | **CONFIRMED** | Valid Arch Linux package names |
+| GitHub Actions can use self-hosted runners on EC2 | **CONFIRMED** | Well-documented GitHub feature |
+| Notebook load test: `python -c "import nbformat; nbformat.read('notebook.ipynb', as_version=4)"` | **CONFIRMED** | Valid nbformat API usage |
+
+---
+
+## Section 5: Recommended CI/CD File Structure
+
+| Claim | Verdict | Notes |
+|-------|---------|-------|
+| Files to create: `.github/workflows/ci.yml`, `ec2-integration.yml`, `Makefile`, `requirements-ci.txt`, `pyproject.toml` | **UNVERIFIED** | This is a recommendation, not a factual claim. Reasonable structure. |
+
+---
+
+## Section 6: TASK.md Constraints
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| DO NOT modify existing notebooks | **CONFIRMED** | TASK.md: "Do NOT modify existing notebooks" |
+| Focus on ADDING CI/CD and validation only | **CONFIRMED** | TASK.md: "Focus on ADDING CI/CD and validation" |
+| GitHub Actions on `ubuntu-latest` | **CONFIRMED** | TASK.md: "GitHub Actions on ubuntu-latest" |
+| nbstripout, ruff lint, notebook JSON validation | **CONFIRMED** | TASK.md lists all three |
+| EC2 integration tests on Ubuntu + Arch Linux | **CONFIRMED** | TASK.md: "EC2 integration tests on Ubuntu + Arch Linux" |
+| macOS local-only via `make test-mac` | **CONFIRMED** | TASK.md: "macOS local-only via make test-mac" |
+| Makefile targets: `lint`, `validate`, `test-mac` | **CONFIRMED** | TASK.md: "Makefile: lint, validate, test-mac" |
+
+---
+
+## Summary Scorecard
+
+| Verdict | Count | Details |
+|---------|-------|---------|
+| **CONFIRMED** | 42 | Majority of filesystem claims, tool basics, TASK.md constraints |
+| **CONTRADICTED** | 5 | Service dir count header (7→8), bedrock subdirs (11→10), bedrock notebooks (11→19), bedrock/miscellaneous count (8→10), sagemaker subdirs (7→6), sagemaker notebooks (10→13), ruff `--include` CLI flag |
+| **UNVERIFIED** | 9 | KB/lessons search results (4), `jupyter nbconvert --validate` (1), `python -m nbformat.validator` (1), recommended file structure (1), knowledge base state (2) |
+
+## Critical Errors to Correct
+
+1. **bedrock/ subdirectory count**: Claimed 11, actual 10
+2. **bedrock/ notebook count**: Claimed 11, actual 19 (nearly double)
+3. **bedrock/miscellaneous/ notebook count**: Claimed 8, actual 10
+4. **sagemaker/ subdirectory count**: Claimed 7, actual 6
+5. **sagemaker/ notebook count**: Claimed 10, actual 13
+6. **Service directory header**: Says "7 top-level" but lists 8 (and 8 is correct)
+7. **ruff `--include` CLI flag**: Does not exist. Notebooks are linted by default since ruff 0.6.0. No special flag needed.
+[38;5;244m - Completed in 1.908s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c3-context/validated.md && echo "---SEPARATOR---" && cat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/validated.md[0m[38;5;244m (using tool: shell)[0m
+
+cat: /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c3-context/validated.md: No such file or directory
+[38;5;244m - Completed in 1.909s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls /Users/murivirg/work/github/aws-samples/investigation/d1f13164/[0m[38;5;244m (using tool: shell)[0m
+
+c1-internet
+c2-kb
+c3-context
+c4-docs
+c5-internal
+dashboard.sh
+orchestrator_nodes
+orchestrator.log
+status.json
+[38;5;244m - Completed in 2.221s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c3-context/ && ls /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/ && ls /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c5-internal/[0m[38;5;244m (using tool: shell)[0m
+
+child.log
+nodes
+child.log
+findings.md
+nodes
+val_nodes
+validated.md
+validator.log
+child.log
+nodes
+[38;5;244m - Completed in 2.131s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c3-context/child.log | tail -100[0m[38;5;244m (using tool: shell)[0m
+
+Not all mcp servers loaded. Configure non-interactive timeout with q settings mcp.noInteractiveTimeout
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 48.14s)
+
+[0m
+[38;5;252m[0m[?25l[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;11m
+WARNING: [0mRetry #3, retrying within 10.0s..
+[1m[38;5;9m ⚠️  Kiro rate limit reached:
+    Request quota exceeded. Please wait a moment and try again.
+
+[0m[0m
+[1G[0m[0m[?25h[38;5;244m - Completed in 2.312s[0m
+[38;5;12m[1m [1.7][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/validated.md[0m[38;5;244m (using tool: shell)[0m
+
+# Validated Findings: c4-docs (AWS Documentation & Repository Analysis)
+
+**Validator run:** 2026-03-27
+**Source:** `findings.md` from c4-docs agent
+
+---
+
+## Section 1: Repository Structure Analysis
+
+### 1.1 Top-Level Layout
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Directories: bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, notebooks, opensearch, sagemaker | **CONFIRMED** | `ls` output matches all listed directories |
+| Files: README.md, LICENSE, .gitignore, .libs.json, TASK.md, SAGEMAKER_UNIFIED_STUDIO_README.md | **CONFIRMED** | All files present in directory listing |
+
+### 1.2 No Existing CI/CD or Configuration
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| No `.github/` directory | **CONFIRMED** | `ls .github` → "No such file or directory" |
+| No `Makefile` | **CONFIRMED** | `find . -name "Makefile"` → empty |
+| No root `requirements.txt` | **CONFIRMED** | `ls requirements.txt` → "No such file or directory" |
+| No `pyproject.toml`, `setup.py`, `setup.cfg` | **CONFIRMED** | All three missing |
+| No `.pre-commit-config.yaml` | **CONFIRMED** | File not found |
+| No `ruff.toml`, `.flake8` | **CONFIRMED** | Neither file found |
+
+### 1.3 .gitignore Contents
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| .gitignore contents match exactly | **CONFIRMED** | `cat .gitignore` output is byte-for-byte identical to what findings report |
+| Does NOT ignore notebook outputs, `.venv`, `__pycache__`, CI artifacts | **CONFIRMED** | None of these patterns appear in .gitignore |
+
+### 1.4 Requirements.txt Files
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| 4 requirements.txt files exist at stated paths | **CONFIRMED** | `find . -name "requirements.txt"` returns exactly these 4 |
+| Contents of each file match | **CONFIRMED** | `cat` output matches findings exactly |
+
+### 1.5 Jupyter Notebook Inventory
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Total: 40 notebooks | **CONFIRMED** | `find . -name "*.ipynb" | wc -l` → 40 |
+| bedrock/miscellaneous: 11 notebooks | **CONTRADICTED** | Actual count: **10**. The notebook list shows 10 files in bedrock/miscellaneous/ |
+| sagemaker (all subdirs): 13 | **CONFIRMED** | `find ./sagemaker -name "*.ipynb" | wc -l` → 13 |
+| bedrock-agentcore: 2 | **CONFIRMED** | Count verified: 2 |
+| bedrock (other subdirs): 8 | **CONTRADICTED** | Actual count: **9**. (10 misc + 9 other = 19 total bedrock, which is correct, but the split is wrong) |
+| notebooks: 2 | **CONFIRMED** | Count verified: 2 |
+| glue: 1 | **CONFIRMED** | Count verified: 1 |
+| opensearch: 1 | **CONFIRMED** | Count verified: 1 |
+| datazone: 2 | **CONFIRMED** | Count verified: 2 |
+| bedrock has "11 subdirs" | **CONTRADICTED** | Actual: **10 subdirectories** (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing) |
+| retail_sales_prediction.ipynb ~2006 KB (2MB) | **CONFIRMED** | Actual: 2,054,339 bytes = 2006 KB |
+| inference_recommender.ipynb ~734KB | **CONFIRMED** | Actual: 752,035 bytes ≈ 734 KB |
+| Smallest notebook 0.1 KB | **CONFIRMED** (approx) | Smallest is Untitled.ipynb at 72 bytes (0.07 KB). Close enough to "0.1 KB" |
+| sagemaker has "8 subdirs" | **UNVERIFIED** | Not explicitly counted, but directory listing shows: terraform, processing-custom-container, inference-recommender, retail_sales_prediction.ipynb (file), serverless-inference, pipelines-sagemaker, byoc-sm-jupyterlab = 7 subdirs (not 8). Likely **CONTRADICTED** if the file is excluded. |
+
+---
+
+## Section 2: AWS Documentation Findings — CI/CD Best Practices
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| URL: `docs.aws.amazon.com/prescriptive-guidance/latest/strategy-cicd-litmus/cicd-best-practices.html` exists | **UNVERIFIED** | Not fetched directly, but this is a well-known AWS Prescriptive Guidance page |
+| Recommendations: code reviews, small merges, secure prod, separate accounts | **UNVERIFIED** | Standard AWS CI/CD guidance; plausible but not cross-checked |
+| URL: `docs.aws.amazon.com/prescriptive-guidance/latest/strategy-cicd-litmus/tests-for-cicd-pipelines.html` | **UNVERIFIED** | Not fetched |
+| Test types: unit, integration, SAST, acceptance | **UNVERIFIED** | Standard CI/CD taxonomy; plausible |
+| URL: `docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/security-in-every-stage-of-cicd-pipeline.html` | **UNVERIFIED** | Not fetched |
+
+---
+
+## Section 3: AWS Documentation — GitHub Actions Integration
+
+### 3.1 SAM GitHub Actions Example
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| AWS SAM docs show GitHub Actions example with `ubuntu-latest` | **CONFIRMED** | Fetched actual page; example uses `runs-on: ubuntu-latest` |
+| Example uses `actions/checkout@v3`, `actions/setup-python@v3`, `aws-actions/configure-aws-credentials@v1` | **CONFIRMED** | All present in the actual AWS docs example |
+| Findings omit `aws-actions/setup-sam@v2` step from the example | **CONFIRMED** (minor omission) | The actual AWS docs example includes this step; findings presented it as a "pattern" which is acceptable but incomplete |
+
+### 3.2 CodeBuild-Hosted GitHub Actions Runners
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `runs-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}` syntax | **CONFIRMED** | Exact match with AWS CodeBuild docs |
+| ubuntu 7.0 = Ubuntu 22.04 | **CONFIRMED** | AWS docs confirm |
+| ubuntu 6.0 = Ubuntu 22.04 | **CONFIRMED** | AWS docs confirm |
+| ubuntu 5.0 = Ubuntu 20.04 | **CONFIRMED** | AWS docs confirm |
+| linux 5.0 = Amazon Linux 2023 | **CONFIRMED** | AWS docs confirm |
+| arm 3.0 = Amazon Linux 2023 | **CONFIRMED** | AWS docs confirm |
+| CodeBuild does NOT offer Arch Linux images | **CONFIRMED** | Full image table reviewed; no Arch Linux entries |
+| CodeBuild provides native IAM, Secrets Manager, CloudTrail, VPC integration | **UNVERIFIED** | Not explicitly checked in the fetched page, but consistent with CodeBuild's known capabilities |
+
+### 3.3 AWS-SetupJupyter SSM Runbook
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| Sets up Jupyter Notebook on EC2 | **CONFIRMED** | AWS docs: "helps you set up Jupyter Notebook on an Amazon EC2 instance" |
+| Can launch new instance or use existing | **CONFIRMED** | AmiId (optional) + InstanceId parameters confirmed |
+| Requires SecureString parameter for Jupyter password | **CONFIRMED** | JupyterPasswordSSMKey parameter documented as required |
+| Supports Linux platforms | **CONFIRMED** | Platforms: "Linux" |
+| Uses CloudFormation for infrastructure | **CONFIRMED** | StackName parameter + cloudformation:* IAM permissions confirmed |
+
+---
+
+## Section 4: Tool Claims
+
+### 4.1 nbstripout
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| `nbstripout --is-stripped *.ipynb` is the check mode for CI | **CONTRADICTED** | The correct flag is `--verify`, not `--is-stripped`. From the official README: "`nbstripout --verify FILE.ipynb` — Do a verification run, which works like dry run but will fail if any files would have been stripped." The `--is-installed` flag checks installation status, not file state. |
+| Can strip in-place with `find . -name '*.ipynb' -exec nbstripout {} +` | **CONFIRMED** | Documented in official README |
+| Prevents accidental commit of sensitive outputs | **CONFIRMED** | Core purpose of the tool |
+| Does not validate notebook structure | **CONFIRMED** | nbstripout only strips outputs/metadata |
+| Only checks/strips outputs, not metadata | **CONTRADICTED** | nbstripout DOES strip certain metadata by default (signature, widgets, ExecuteTime, collapsed, execution, heading_collapsed, hidden, scrolled) |
+| nbstripout has a reusable GitHub Action | **NOT MENTIONED** (gap) | The findings don't mention `kynan/nbstripout@main` GitHub Action, which provides a ready-made CI check. This is a significant omission for a CI/CD-focused investigation. |
+
+### 4.2 ruff — Python Linting
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| ruff can lint `.ipynb` files directly | **CONFIRMED** | Documented in ruff docs and multiple sources |
+| "As of ruff 0.1.0+" for native notebook support | **CONTRADICTED** (minor) | Notebook support was stabilized in **v0.1.5** (per astral.sh blog), not v0.1.0. Preview support existed earlier. |
+| `ruff check --include "*.ipynb" .` syntax | **CONFIRMED** | Valid CLI syntax; alternatively `extend-include = ["*.ipynb"]` in config |
+| Alternative: `jupyter nbconvert --to script` then lint | **CONFIRMED** | Standard approach, though less preferred now that ruff has native support |
+
+### 4.3 Notebook JSON Validation
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| nbformat can validate notebook schema | **UNVERIFIED** | Standard nbformat capability; not tested but well-documented |
+| Code snippets are syntactically correct | **UNVERIFIED** | Not executed |
+
+### 4.4 EC2-Based Integration Tests / Arch Linux
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| No native GitHub Actions runner for Arch Linux | **CONFIRMED** | GitHub only provides ubuntu, windows, macos runners |
+| No AWS CodeBuild image for Arch Linux | **CONFIRMED** | Verified against full CodeBuild image table |
+| Docker container approach with `archlinux:latest` is viable | **UNVERIFIED** | Plausible approach but not tested |
+| `pacman -Syu --noconfirm python python-pip jupyter-notebook` for Arch setup | **UNVERIFIED** | Standard pacman syntax; package names not verified |
+
+---
+
+## Section 5: Limitations & Considerations
+
+| Claim | Verdict | Evidence |
+|-------|---------|----------|
+| macOS runners are 10x Linux cost | **CONFIRMED** | GitHub docs: "macOS runners consume minutes at 10 times the rate that jobs on Linux runners consume" ($0.08/min vs $0.008/min) |
+| Self-hosted runners require maintenance and security hardening | **CONFIRMED** | Standard operational truth |
+| 40 notebooks with varying kernels | **CONFIRMED** (count); kernels **UNVERIFIED** |
+| Glue PySpark notebook cannot be validated in standard Python | **CONFIRMED** | Glue PySpark kernel requires AWS Glue environment |
+| Arch Linux community AMIs exist but not officially supported by AWS | **UNVERIFIED** | Plausible but not verified |
+
+---
+
+## Summary
+
+| Category | CONFIRMED | CONTRADICTED | UNVERIFIED |
+|----------|-----------|--------------|------------|
+| Repo structure (Section 1) | 22 | 4 | 1 |
+| AWS CI/CD docs (Section 2) | 0 | 0 | 5 |
+| GitHub Actions/CodeBuild (Section 3) | 14 | 0 | 1 |
+| Tool claims (Section 4) | 5 | 3 | 4 |
+| Limitations (Section 5) | 4 | 0 | 2 |
+| **TOTAL** | **45** | **7** | **13** |
+
+### Key Contradictions
+
+1. **bedrock/miscellaneous notebook count**: Claimed 11, actual 10
+2. **bedrock other subdirs notebook count**: Claimed 8, actual 9
+3. **bedrock subdirectory count**: Claimed 11, actual 10
+4. **sagemaker subdirectory count**: Likely 7, not 8 (one entry is a file, not a subdir)
+5. **`nbstripout --is-stripped`**: Flag does not exist. Correct flag is `--verify`
+6. **nbstripout "only checks outputs, not metadata"**: It also strips metadata by default
+7. **ruff notebook support "0.1.0+"**: Stabilized in v0.1.5, not v0.1.0
+
+### Key Gaps (Not Contradictions)
+
+1. nbstripout has a reusable GitHub Action (`kynan/nbstripout@main`) not mentioned in findings — significant for CI/CD setup
+2. SAM example omits `aws-actions/setup-sam@v2` step (minor, findings framed it as a pattern)
+3. CodeBuild image table in findings is a subset (acceptable, not claimed as exhaustive)
+[38;5;244m - Completed in 2.164s[0m
+[38;5;12m[1m [1.8][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c5-internal/validated.md[0m[38;5;244m (using tool: shell)[0m
+
+cat: /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c5-internal/validated.md: No such file or directory
+[38;5;244m - Completed in 2.333s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c5-internal/ && cat /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c5-internal/child.log | tail -50[0m[38;5;244m (using tool: shell)[0m
+
+child.log
+nodes
+Not all mcp servers loaded. Configure non-interactive timeout with q settings mcp.noInteractiveTimeout
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 24.88s)
+
+[0m
+[38;5;252m[0m[?25l[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;11m
+WARNING: [0mRetry #3, retrying within 10.0s..
+[1m[38;5;9m ⚠️  Kiro rate limit reached:
+    Request quota exceeded. Please wait a moment and try again.
+
+[0m[0m
+[1G[0m[0m[?25h[38;5;244m - Completed in 4.619s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: So c3-context and c5-internal didn't produce validated.md files - they hit rate limits. I have validated findings from c1-internet, c2-kb, and c4-docs. Let me now do my own investigation to fill gaps and verify contradictions, then write the final report.
+
+Key findings to cross-reference:
+1. Total notebooks: 40 - ALL THREE agree ✅
+2. bedrock/miscellaneous count: c1 says 10, c2 says 10, c4 says 10 (contradicting original claim of 8/11)
+3. sagemaker notebooks: c1 says 13, c2 says 13, c4 says 13 ✅
+4. nbstripout flag: ALL THREE agree it's `--verify` not `--dry-run` ✅
+5. ruff notebook support: c2 says notebooks included by default since 0.6.0; c4 says stabilized in v0.1.5
+6. bedrock total notebooks: c2 says 19, c4 says 19 (10 misc + 9 other)
+
+Let me verify some key facts directly:
+- Actual bedrock notebook count
+- Actual bedrock/miscellaneous count
+- ruff --include flag behavior
+- nbstripout --verify vs --dry-run
+- Arch Linux on EC2 options
+
+[38;5;244m - Completed in 2.211s[0m
+[38;5;12m[1m [1.11][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Verifying Claims" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/orchestrator_nodes
+
+# Verify key counts
+echo "=== Total notebooks ==="
+find /Users/murivirg/work/github/aws-samples -name "*.ipynb" -not -path "*/investigation/*" | wc -l
+
+echo "=== bedrock/miscellaneous ==="
+find /Users/murivirg/work/github/aws-samples/bedrock/miscellaneous -name "*.ipynb" | sort
+
+echo "=== bedrock total ==="
+find /Users/murivirg/work/github/aws-samples/bedrock -name "*.ipynb" | wc -l
+
+echo "=== sagemaker total ==="
+find /Users/murivirg/work/github/aws-samples/sagemaker -name "*.ipynb" | wc -l
+
+echo "=== bedrock subdirs ==="
+ls /Users/murivirg/work/github/aws-samples/bedrock/
+
+echo "=== sagemaker subdirs ==="
+ls /Users/murivirg/work/github/aws-samples/sagemaker/[0m[38;5;244m (using tool: shell)[0m
+
+=== Total notebooks ===
+      40
+=== bedrock/miscellaneous ===
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/100_limit.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/csutom_data_source_2.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/custom_datasource.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+=== bedrock total ===
+      19
+=== sagemaker total ===
+      13
+=== bedrock subdirs ===
+agent-runtime
+batch-inference
+bedrock-marketplace
+common-errors
+fine-tuning
+miscellaneous
+model-import
+prompt-caching
+README.md
+stability-ai-upscale
+testing
+=== sagemaker subdirs ===
+byoc-sm-jupyterlab
+inference-recommender
+pipelines-sagemaker
+processing-custom-container
+README.md
+retail_sales_prediction.ipynb
+serverless-inference
+terraform
+[38;5;244m - Completed in 2.119s[0m
+[38;5;12m[1m [1.12][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141m# Verify ruff --include behavior and notebook support
+pip show ruff 2>/dev/null | grep Version || echo "ruff not installed locally"
+
+# Check TASK.md for exact constraints
+cat /Users/murivirg/work/github/aws-samples/TASK.md[0m[38;5;244m (using tool: shell)[0m
+
+ruff not installed locally
+Do a profound investigation then help me ADD CI/CD to my EXISTING 'aws-samples' GitHub repo. This repo already exists here with Jupyter notebooks for AWS service experiments. GitHub: virgilio-murillo/aws-samples. CI/CD TO ADD: GitHub Actions on ubuntu-latest (nbstripout to strip outputs, ruff lint on .py cells, validate notebook JSON), EC2 integration tests on Ubuntu + Arch Linux (install deps, validate notebooks load), macOS local-only via make test-mac. Makefile: lint, validate, test-mac. Do NOT modify existing notebooks. Focus on ADDING CI/CD and validation.
+[38;5;244m - Completed in 2.463s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141m# Check if any notebooks have outputs (to understand nbstripout need)
+python3 -c "
+import json, os, glob
+
+notebooks = glob.glob('/Users/murivirg/work/github/aws-samples/**/*.ipynb', recursive=True)
+notebooks = [n for n in notebooks if 'investigation' not in n]
+
+with_outputs = []
+for nb_path in notebooks:
+    with open(nb_path) as f:
+        nb = json.load(f)
+    for cell in nb.get('cells', []):
+        if cell.get('cell_type') == 'code' and cell.get('outputs'):
+            with_outputs.append(nb_path.replace('/Users/murivirg/work/github/aws-samples/', ''))
+            break
+
+print(f'Notebooks with outputs: {len(with_outputs)}/{len(notebooks)}')
+for p in sorted(with_outputs):
+    print(' ', p)
+"[0m[38;5;244m (using tool: shell)[0m
+
+Notebooks with outputs: 34/40
+  bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+  bedrock/agent-runtime/invoke_agent.ipynb
+  bedrock/agent-runtime/invoke_agent_stream.ipynb
+  bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+  bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+  bedrock/common-errors/RAG_with_query_decomposition.ipynb
+  bedrock/miscellaneous/100_limit.ipynb
+  bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+  bedrock/miscellaneous/bedrock-quickstart.ipynb
+  bedrock/miscellaneous/bedrock_agent.ipynb
+  bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+  bedrock/miscellaneous/conversation_examples.ipynb
+  bedrock/miscellaneous/cross-region-inference.ipynb
+  bedrock/miscellaneous/csutom_data_source_2.ipynb
+  bedrock/miscellaneous/custom_datasource.ipynb
+  bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+  bedrock/model-import/import_IBM_granite.ipynb
+  bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+  bedrock/testing/cross-region-inference.ipynb
+  bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+  datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+  datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+  glue/pyspark-tutorial-glue.ipynb
+  opensearch/create-resources/AOSS_resource_creation.ipynb
+  sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+  sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+  sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+  sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+  sagemaker/inference-recommender/inference_recommender.ipynb
+  sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+  sagemaker/retail_sales_prediction.ipynb
+  sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+  sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+  sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+[38;5;244m - Completed in 2.102s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141m# Check notebook JSON validity
+python3 -c "
+import json, glob
+
+notebooks = glob.glob('/Users/murivirg/work/github/aws-samples/**/*.ipynb', recursive=True)
+notebooks = [n for n in notebooks if 'investigation' not in n]
+
+invalid = []
+for nb_path in notebooks:
+    try:
+        with open(nb_path) as f:
+            json.load(f)
+    except Exception as e:
+        invalid.append((nb_path, str(e)))
+
+print(f'Invalid JSON: {len(invalid)}/{len(notebooks)}')
+for p, e in invalid:
+    print(f'  {p}: {e}')
+print('All valid JSON' if not invalid else '')
+"[0m[38;5;244m (using tool: shell)[0m
+
+Invalid JSON: 0/40
+All valid JSON
+[38;5;244m - Completed in 1.784s[0m
+[38;5;12m[1m [1.15][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141m# Check nbformat versions in notebooks
+python3 -c "
+import json, glob
+from collections import Counter
+
+notebooks = glob.glob('/Users/murivirg/work/github/aws-samples/**/*.ipynb', recursive=True)
+notebooks = [n for n in notebooks if 'investigation' not in n]
+
+versions = Counter()
+for nb_path in notebooks:
+    with open(nb_path) as f:
+        nb = json.load(f)
+    v = nb.get('nbformat', 'unknown')
+    m = nb.get('nbformat_minor', 'unknown')
+    versions[f'{v}.{m}'] += 1
+
+print('nbformat versions:')
+for v, count in sorted(versions.items()):
+    print(f'  {v}: {count} notebooks')
+"[0m[38;5;244m (using tool: shell)[0m
+
+nbformat versions:
+  4.4: 3 notebooks
+  4.5: 37 notebooks
+[38;5;244m - Completed in 2.9s[0m
+[38;5;12m[1m [1.16][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141m# Check kernelspec diversity
+python3 -c "
+import json, glob
+from collections import Counter
+
+notebooks = glob.glob('/Users/murivirg/work/github/aws-samples/**/*.ipynb', recursive=True)
+notebooks = [n for n in notebooks if 'investigation' not in n]
+
+kernels = Counter()
+for nb_path in notebooks:
+    with open(nb_path) as f:
+        nb = json.load(f)
+    ks = nb.get('metadata', {}).get('kernelspec', {})
+    name = ks.get('name', 'none')
+    kernels[name] += 1
+
+print('Kernelspecs:')
+for k, count in sorted(kernels.items()):
+    print(f'  {k}: {count}')
+"[0m[38;5;244m (using tool: shell)[0m
+
+Kernelspecs:
+  conda_python3: 10
+  conda_pytorch_p310: 4
+  conda_tensorflow2_p310: 7
+  glue_pyspark: 1
+  none: 1
+  python3: 17
+[38;5;244m - Completed in 2.356s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Writing Final Report" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/orchestrator_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.955s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[38;5;141m> [0mNow I have all the data I need. Let me write the final report.[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mFinal Investigation Report: aws-samples CI/CD for Jupyter Notebooks[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mDate:[38;2;235;203;139m**[38;2;192;197;206m 2026-03-27[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mRepo:[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/virgilio-murillo/aws-samples[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mInvestigation ID:[38;2;235;203;139m**[38;2;192;197;206m d1f13164[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mStreams completed:[38;2;235;203;139m**[38;2;192;197;206m c1-internet ✅, c2-kb ✅, c3-context ❌ (rate-limited), c4-docs ✅, c5-internal ❌ (rate-limited)[K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mExecutive Summary[K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe [38;2;163;190;140m`[38;2;163;190;140mvirgilio-murillo/aws-samples[38;2;163;190;140m`[38;2;192;197;206m repository contains [38;2;235;203;139m**[38;2;235;203;139m40 Jupyter notebooks[38;2;235;203;139m**[38;2;192;197;206m across 8 service directories (bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, notebooks, opensearch, sagemaker). It has [38;2;235;203;139m**[38;2;235;203;139mzero existing CI/CD infrastructure[38;2;235;203;139m**[38;2;192;197;206m — no [38;2;163;190;140m`[38;2;163;190;140m.github/[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mrequirements.txt[38;2;163;190;140m`[38;2;192;197;206m at root.[K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139m34 of 40 notebooks (85%) contain stored outputs[38;2;235;203;139m**[38;2;192;197;206m that need stripping before CI can enforce clean commits. All 40 notebooks are valid JSON. Kernels span [38;2;163;190;140m`[38;2;163;190;140mpython3[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mconda_python3[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mconda_pytorch_p310[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mconda_tensorflow2_p310[38;2;163;190;140m`[38;2;192;197;206m, and [38;2;163;190;140m`[38;2;163;190;140mglue_pyspark[38;2;163;190;140m`[38;2;192;197;206m — the Glue notebook requires special handling.[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe investigation resolved [38;2;235;203;139m**[38;2;235;203;139m3 critical contradictions[38;2;235;203;139m**[38;2;192;197;206m across streams (all related to [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;192;197;206m flag naming and notebook counts) and confirmed the full CI/CD architecture needed per [38;2;163;190;140m`[38;2;163;190;140mTASK.md[38;2;163;190;140m`[38;2;192;197;206m.[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mConfirmed Findings[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mRepository Structure (Confidence: HIGH — verified by all 3 streams + direct filesystem)[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Item [38;2;192;197;206m|[38;2;192;197;206m Value [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Git remote [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mhttps://github.com/virgilio-murillo/aws-samples.git[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Branch [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmain[38;2;163;190;140m`[38;2;192;197;206m (only branch) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Top-level files [38;2;192;197;206m|[38;2;192;197;206m README.md, LICENSE, .gitignore, .libs.json, TASK.md, SAGEMAKER_UNIFIED_STUDIO_README.md [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Service directories [38;2;192;197;206m|[38;2;192;197;206m 8: bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, notebooks, opensearch, sagemaker [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Total notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m40[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Notebooks with outputs [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m34/40 (85%)[38;2;235;203;139m**[38;2;192;197;206m — confirmed by direct inspection [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Invalid JSON notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m0[38;2;235;203;139m**[38;2;192;197;206m — all 40 are valid JSON [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m nbformat versions [38;2;192;197;206m|[38;2;192;197;206m 4.4 (3 notebooks), 4.5 (37 notebooks) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Python files (.py) [38;2;192;197;206m|[38;2;192;197;206m 12 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m requirements.txt files [38;2;192;197;206m|[38;2;192;197;206m 4 (subdirectory-level only) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Dockerfiles [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mNotebook Distribution (Confidence: HIGH — verified by orchestrator directly)[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Directory [38;2;192;197;206m|[38;2;192;197;206m Notebooks [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-----------[38;2;192;197;206m|[38;2;192;197;206m-----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/miscellaneous/ [38;2;192;197;206m|[38;2;192;197;206m 10 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/agent-runtime/ [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/batch-inference/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/testing/ [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/prompt-caching/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/model-import/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/common-errors/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/bedrock-marketplace/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mbedrock/ total[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m19[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock-agentcore/ [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/ (all subdirs + root) [38;2;192;197;206m|[38;2;192;197;206m 13 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m glue/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m opensearch/ [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m datazone/ [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m notebooks/ [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mTOTAL[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m40[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKernelspec Distribution (Confidence: HIGH — verified by orchestrator)[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Kernel [38;2;192;197;206m|[38;2;192;197;206m Count [38;2;192;197;206m|[38;2;192;197;206m Notes [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m python3 [38;2;192;197;206m|[38;2;192;197;206m 17 [38;2;192;197;206m|[38;2;192;197;206m Standard — fully testable [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_python3 [38;2;192;197;206m|[38;2;192;197;206m 10 [38;2;192;197;206m|[38;2;192;197;206m SageMaker-specific conda env [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_tensorflow2_p310 [38;2;192;197;206m|[38;2;192;197;206m 7 [38;2;192;197;206m|[38;2;192;197;206m SageMaker TF env [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m conda_pytorch_p310 [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m SageMaker PyTorch env [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m glue_pyspark [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m Requires AWS Glue — cannot validate locally [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m none [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m No kernelspec metadata [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mNo Existing CI/CD (Confidence: HIGH — confirmed by all 3 streams)[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [38;2;192;197;206mNo [38;2;163;190;140m`[38;2;163;190;140m.github/[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140msetup.py[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mruff.toml[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140m.pre-commit-config.yaml[38;2;163;190;140m`[38;2;192;197;206m, or root [38;2;163;190;140m`[38;2;163;190;140mrequirements.txt[38;2;163;190;140m`[38;2;192;197;206m exist.[K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mTASK.md Constraints (Confidence: HIGH — confirmed by c2-kb + direct read)[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mDo NOT modify existing notebooks[K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m GitHub Actions on [38;2;163;190;140m`[38;2;163;190;140mubuntu-latest[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m nbstripout to strip outputs[K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m ruff lint on .py cells[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Validate notebook JSON[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m EC2 integration tests on Ubuntu + Arch Linux[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m macOS local-only via [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Makefile targets: [38;2;163;190;140m`[38;2;163;190;140mlint[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mvalidate[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mtest-mac[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mTool Capabilities (Confidence: HIGH — confirmed by c1-internet + c2-kb + c4-docs)[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mnbstripout:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mPyPI: [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;191;97;106m, latest stable: 0.8.1 (PyPI), 0.9.1 (GitHub)[K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;191;97;106m: returns non-zero exit code if any files would be changed (implies [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;191;97;106m) — [38;2;235;203;139m**[38;2;235;203;139mcorrect CI flag[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;191;97;106m: only prints what would change, always exits 0 — [38;2;235;203;139m**[38;2;235;203;139mwrong for CI enforcement[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Also strips metadata by default (signature, widgets, ExecuteTime, etc.) — not just outputs[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m GitHub Action available: [38;2;163;190;140m`[38;2;163;190;140mkynan/nbstripout@main[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mruff:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mNative [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;191;97;106m support stabilized in v0.1.5; notebooks included by default since v0.6.0[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m No [38;2;163;190;140m`[38;2;163;190;140m--include[38;2;163;190;140m`[38;2;191;97;106m CLI flag — notebook inclusion is config-file only ([38;2;163;190;140m`[38;2;163;190;140mextend-include = ["*.ipynb"][38;2;163;190;140m`[38;2;191;97;106m in [38;2;163;190;140m`[38;2;163;190;140mruff.toml[38;2;163;190;140m`[38;2;191;97;106m) or automatic since 0.6.0[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mruff-action@v3[38;2;163;190;140m`[38;2;191;97;106m (latest: v3.6.1) supports [38;2;163;190;140m`[38;2;163;190;140margs[38;2;163;190;140m`[38;2;191;97;106m parameter and [38;2;163;190;140m`[38;2;163;190;140m--output-format=github[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Recommended rules for notebooks: [38;2;163;190;140m`[38;2;163;190;140mE[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mF[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mW[38;2;163;190;140m`[38;2;191;97;106m; add [38;2;163;190;140m`[38;2;163;190;140mper-file-ignores = {"*.ipynb" = ["E402"]}[38;2;163;190;140m`[38;2;191;97;106m for import order[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mnbformat:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mStandard validation: [38;2;163;190;140m`[38;2;163;190;140mnbformat.read(f, as_version=4)[38;2;163;190;140m`[38;2;191;97;106m + [38;2;163;190;140m`[38;2;163;190;140mnbformat.validate(nb)[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mpython -m nbformat.validator[38;2;163;190;140m`[38;2;191;97;106m is NOT a reliable CLI entry point — use a script[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mjupyter nbconvert --validate[38;2;163;190;140m`[38;2;191;97;106m flag is not reliably documented in recent versions[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mEC2 integration tests:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mmachulav/ec2-github-runner@v2[38;2;163;190;140m`[38;2;191;97;106m is the standard action for EC2 self-hosted runners[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Requires: AWS credentials, GitHub PAT (repo scope), VPC/subnet/security group[K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Ubuntu: [38;2;163;190;140m`[38;2;163;190;140mapt-get install python3-pip jupyter-notebook[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Arch Linux: no native GitHub Actions runner, no AWS CodeBuild image — must use self-hosted EC2 with Arch AMI (community) or Docker container ([38;2;163;190;140m`[38;2;163;190;140marchlinux:latest[38;2;163;190;140m`[38;2;191;97;106m)[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m GitHub self-hosted runners work on any Linux distribution[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mmacOS cost:[38;2;235;203;139m**[38;2;192;197;206m GitHub macOS runners consume minutes at 10x the rate of Linux ($0.08/min vs $0.008/min) — justifies Makefile-only local approach.[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mContradictions Found[K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mContradiction 1: [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;143;161;179m CI flag — [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;143;161;179m vs [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mClaimed (original findings):[38;2;235;203;139m**[38;2;192;197;206m Use [38;2;163;190;140m`[38;2;163;190;140mnbstripout --dry-run[38;2;163;190;140m`[38;2;192;197;206m for CI enforcement[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mResolution:[38;2;235;203;139m**[38;2;192;197;206m [38;2;235;203;139m**[38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;235;203;139m is correct.[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m always exits 0 regardless of notebook state. [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m implies [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m AND returns non-zero exit code when files would be changed. All three completed streams (c1, c2, c4) independently confirmed this. The Debian manpage is unambiguous.[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mImpact:[38;2;235;203;139m**[38;2;192;197;206m Any CI workflow using [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m would silently pass even when notebooks contain outputs.[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mContradiction 2: bedrock/miscellaneous notebook count[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mClaimed:[38;2;235;203;139m**[38;2;192;197;206m 8 or 11 (varied by stream)[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mResolution:[38;2;235;203;139m**[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m10 notebooks.[38;2;235;203;139m**[38;2;192;197;206m Verified directly: 100_limit, bedrock_agent, bedrock-quickstart, conversation_examples-test-with-huggingface, conversation_examples, cross-region-inference, csutom_data_source_2, custom_datasource, Knowledgebases_and_rag, multimodal_meta_llama32.[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mContradiction 3: ruff [38;2;163;190;140m`[38;2;163;190;140m--include[38;2;163;190;140m`[38;2;143;161;179m CLI flag[K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mClaimed (c2-kb):[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruff check --include "*.ipynb"[38;2;163;190;140m`[38;2;192;197;206m is not a valid CLI flag[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mClaimed (c4-docs):[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruff check --include "*.ipynb" .[38;2;163;190;140m`[38;2;192;197;206m is valid CLI syntax[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mResolution:[38;2;235;203;139m**[38;2;192;197;206m c2-kb is correct. [38;2;163;190;140m`[38;2;163;190;140m--include[38;2;163;190;140m`[38;2;192;197;206m is a config-file-only setting. Since ruff 0.6.0, [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;192;197;206m files are discovered automatically. For explicit control, use [38;2;163;190;140m`[38;2;163;190;140mextend-include = ["*.ipynb"][38;2;163;190;140m`[38;2;192;197;206m in [38;2;163;190;140m`[38;2;163;190;140mruff.toml[38;2;163;190;140m`[38;2;192;197;206m. The [38;2;163;190;140m`[38;2;163;190;140mruff check .[38;2;163;190;140m`[38;2;192;197;206m command alone covers notebooks in modern ruff.[K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mGaps Identified[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mGap 1: c3-context and c5-internal streams failed (rate-limited)[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mFinding:[38;2;235;203;139m**[38;2;192;197;206m Both streams hit API rate limits and produced no [38;2;163;190;140m`[38;2;163;190;140mvalidated.md[38;2;163;190;140m`[38;2;192;197;206m. The three completed streams (c1, c2, c4) provided sufficient coverage — all critical facts were confirmed by at least two independent streams.[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mGap 2: Arch Linux AMI availability[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mClaimed:[38;2;235;203;139m**[38;2;192;197;206m Community Arch Linux AMIs exist in AWS Marketplace[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mInvestigation:[38;2;235;203;139m**[38;2;192;197;206m Not independently verified. However, the Docker container approach ([38;2;163;190;140m`[38;2;163;190;140marchlinux:latest[38;2;163;190;140m`[38;2;192;197;206m on a standard Ubuntu EC2) is a more reliable and reproducible alternative that avoids AMI availability concerns. This is the recommended approach.[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mGap 3: Glue notebook testability[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mFinding (orchestrator-verified):[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mglue/pyspark-tutorial-glue.ipynb[38;2;163;190;140m`[38;2;192;197;206m uses [38;2;163;190;140m`[38;2;163;190;140mglue_pyspark[38;2;163;190;140m`[38;2;192;197;206m kernel. This notebook cannot be validated with standard Python tooling. It should be excluded from integration tests via path filter ([38;2;163;190;140m`[38;2;163;190;140m--ignore glue/[38;2;163;190;140m`[38;2;192;197;206m).[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mGap 4: 34/40 notebooks have stored outputs[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mFinding (orchestrator-verified):[38;2;235;203;139m**[38;2;192;197;206m This was not quantified in any stream. 85% of notebooks need output stripping. The [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;192;197;206m pre-commit hook or CI check is critical — not optional.[K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mGap 5: nbformat version compatibility[K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mFinding (orchestrator-verified):[38;2;235;203;139m**[38;2;192;197;206m 3 notebooks use nbformat 4.4, 37 use 4.5. The validation script should use [38;2;163;190;140m`[38;2;163;190;140mas_version=nbformat.NO_CONVERT[38;2;163;190;140m`[38;2;192;197;206m or [38;2;163;190;140m`[38;2;163;190;140mas_version=4[38;2;163;190;140m`[38;2;192;197;206m with appropriate minor version handling to avoid false failures.[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mRecommended Actions[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mFiles to Create[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [38;2;192;197;206m.github/[K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  workflows/[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ci.yml              # Tier 1: lint + strip check + JSON validation[K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ec2-integration.yml # Tier 2: EC2 Ubuntu + Arch Linux tests[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [38;2;192;197;206mMakefile                # Tier 3: local macOS targets[K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;192;197;206mpyproject.toml          # ruff config[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [38;2;192;197;206mrequirements-ci.txt     # CI tool dependencies[K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [38;2;192;197;206mscripts/[K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  validate_notebooks.py # nbformat validation script[K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1. [38;2;163;190;140m`[38;2;163;190;140mrequirements-ci.txt[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbstripout>=0.8.1[K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [38;2;192;197;206mruff>=0.6.0[K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbformat>=5.9.0[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbmake>=1.5.0[K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m2. [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mtoml[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff][K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;192;197;206mextend-include = ["*.ipynb"][K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;192;197;206mselect = ["E", "F", "W"][K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff.per-file-ignores][K
+[0m[48;2;40;67;43m[39m+    185[0m:[39m[48;2;24;38;30m [38;2;192;197;206m"*.ipynb" = ["E402"][K
+[0m[48;2;40;67;43m[39m+    186[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    187[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    188[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m3. [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ci.yml[38;2;163;190;140m`[38;2;143;161;179m (Tier 1 — ubuntu-latest)[K
+[0m[48;2;40;67;43m[39m+    189[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112myaml[K
+[0m[48;2;40;67;43m[39m+    190[0m:[39m[48;2;24;38;30m [38;2;192;197;206mname: CI[K
+[0m[48;2;40;67;43m[39m+    191[0m:[39m[48;2;24;38;30m [38;2;192;197;206mon: [push, pull_request][K
+[0m[48;2;40;67;43m[39m+    192[0m:[39m[48;2;24;38;30m [38;2;192;197;206mjobs:[K
+[0m[48;2;40;67;43m[39m+    193[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  lint-validate:[K
+[0m[48;2;40;67;43m[39m+    194[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    runs-on: ubuntu-latest[K
+[0m[48;2;40;67;43m[39m+    195[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    steps:[K
+[0m[48;2;40;67;43m[39m+    196[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/checkout@v4[K
+[0m[48;2;40;67;43m[39m+    197[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - uses: actions/setup-python@v5[K
+[0m[48;2;40;67;43m[39m+    198[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with: { python-version: "3.11" }[K
+[0m[48;2;40;67;43m[39m+    199[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - run: pip install -r requirements-ci.txt[K
+[0m[48;2;40;67;43m[39m+    200[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Check notebook outputs stripped[K
+[0m[48;2;40;67;43m[39m+    201[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        run: find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+    202[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Lint notebooks with ruff[K
+[0m[48;2;40;67;43m[39m+    203[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        uses: astral-sh/ruff-action@v3[K
+[0m[48;2;40;67;43m[39m+    204[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with:[K
+[0m[48;2;40;67;43m[39m+    205[0m:[39m[48;2;24;38;30m [38;2;192;197;206m          args: "check --output-format=github ."[K
+[0m[48;2;40;67;43m[39m+    206[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - name: Validate notebook JSON/schema[K
+[0m[48;2;40;67;43m[39m+    207[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        run: python scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+    208[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    209[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    210[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4. [38;2;163;190;140m`[38;2;163;190;140mscripts/validate_notebooks.py[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    211[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mpython[K
+[0m[48;2;40;67;43m[39m+    212[0m:[39m[48;2;24;38;30m [38;2;192;197;206mimport sys, glob, nbformat[K
+[0m[48;2;40;67;43m[39m+    213[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    214[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnotebooks = glob.glob("**/*.ipynb", recursive=True)[K
+[0m[48;2;40;67;43m[39m+    215[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnotebooks = [n for n in notebooks if ".ipynb_checkpoints" not in n and "investigation" not in n][K
+[0m[48;2;40;67;43m[39m+    216[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    217[0m:[39m[48;2;24;38;30m [38;2;192;197;206merrors = [][K
+[0m[48;2;40;67;43m[39m+    218[0m:[39m[48;2;24;38;30m [38;2;192;197;206mfor path in notebooks:[K
+[0m[48;2;40;67;43m[39m+    219[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    try:[K
+[0m[48;2;40;67;43m[39m+    220[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        with open(path) as f:[K
+[0m[48;2;40;67;43m[39m+    221[0m:[39m[48;2;24;38;30m [38;2;192;197;206m            nb = nbformat.read(f, as_version=4)[K
+[0m[48;2;40;67;43m[39m+    222[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        nbformat.validate(nb)[K
+[0m[48;2;40;67;43m[39m+    223[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    except Exception as e:[K
+[0m[48;2;40;67;43m[39m+    224[0m:[39m[48;2;24;38;30m [38;2;192;197;206m        errors.append(f"{path}: {e}")[K
+[0m[48;2;40;67;43m[39m+    225[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    226[0m:[39m[48;2;24;38;30m [38;2;192;197;206mif errors:[K
+[0m[48;2;40;67;43m[39m+    227[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    print("\n".join(errors))[K
+[0m[48;2;40;67;43m[39m+    228[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    sys.exit(1)[K
+[0m[48;2;40;67;43m[39m+    229[0m:[39m[48;2;24;38;30m [38;2;192;197;206mprint(f"All {len(notebooks)} notebooks valid.")[K
+[0m[48;2;40;67;43m[39m+    230[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    231[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    232[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m5. [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    233[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmakefile[K
+[0m[48;2;40;67;43m[39m+    234[0m:[39m[48;2;24;38;30m [38;2;192;197;206m.PHONY: lint validate strip-check test-mac[K
+[0m[48;2;40;67;43m[39m+    235[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    236[0m:[39m[48;2;24;38;30m [38;2;192;197;206mlint:[K
+[0m[48;2;40;67;43m[39m+    237[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	ruff check .[K
+[0m[48;2;40;67;43m[39m+    238[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    239[0m:[39m[48;2;24;38;30m [38;2;192;197;206mvalidate:[K
+[0m[48;2;40;67;43m[39m+    240[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	python scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+    241[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    242[0m:[39m[48;2;24;38;30m [38;2;192;197;206mstrip-check:[K
+[0m[48;2;40;67;43m[39m+    243[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+    244[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    245[0m:[39m[48;2;24;38;30m [38;2;192;197;206mtest-mac: lint validate strip-check[K
+[0m[48;2;40;67;43m[39m+    246[0m:[39m[48;2;24;38;30m [38;2;192;197;206m	pytest --nbmake notebooks/ bedrock/testing/ --ignore=glue/[K
+[0m[48;2;40;67;43m[39m+    247[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    248[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    249[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m6. EC2 Integration Test Strategy[K
+[0m[48;2;40;67;43m[39m+    250[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mUse [38;2;163;190;140m`[38;2;163;190;140mmachulav/ec2-github-runner@v2[38;2;163;190;140m`[38;2;191;97;106m for self-hosted EC2 runners[K
+[0m[48;2;40;67;43m[39m+    251[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Ubuntu: standard [38;2;163;190;140m`[38;2;163;190;140mubuntu-latest[38;2;163;190;140m`[38;2;191;97;106m AMI, install deps via [38;2;163;190;140m`[38;2;163;190;140mapt-get[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    252[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Arch Linux: use Docker container [38;2;163;190;140m`[38;2;163;190;140marchlinux:latest[38;2;163;190;140m`[38;2;191;97;106m on Ubuntu EC2 (more reliable than community AMIs)[K
+[0m[48;2;40;67;43m[39m+    253[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Exclude [38;2;163;190;140m`[38;2;163;190;140mglue/[38;2;163;190;140m`[38;2;191;97;106m from all integration tests (requires AWS Glue environment)[K
+[0m[48;2;40;67;43m[39m+    254[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Test scope: validate notebooks load ([38;2;163;190;140m`[38;2;163;190;140mnbformat.read[38;2;163;190;140m`[38;2;191;97;106m), not full execution (avoids AWS API calls)[K
+[0m[48;2;40;67;43m[39m+    255[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    256[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m7. Pre-commit (optional but recommended)[K
+[0m[48;2;40;67;43m[39m+    257[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112myaml[K
+[0m[48;2;40;67;43m[39m+    258[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# .pre-commit-config.yaml[K
+[0m[48;2;40;67;43m[39m+    259[0m:[39m[48;2;24;38;30m [38;2;192;197;206mrepos:[K
+[0m[48;2;40;67;43m[39m+    260[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  - repo: https://github.com/kynan/nbstripout[K
+[0m[48;2;40;67;43m[39m+    261[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    rev: 0.9.1[K
+[0m[48;2;40;67;43m[39m+    262[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    hooks:[K
+[0m[48;2;40;67;43m[39m+    263[0m:[39m[48;2;24;38;30m [38;2;192;197;206m      - id: nbstripout[K
+[0m[48;2;40;67;43m[39m+    264[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    265[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    266[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    267[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    268[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mReferences[K
+[0m[48;2;40;67;43m[39m+    269[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    270[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Source [38;2;192;197;206m|[38;2;192;197;206m Used For [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    271[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    272[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/kynan/nbstripout[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbstripout [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m flag, pre-commit hook [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    273[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://manpages.debian.org[38;2;192;197;206m/testing/nbstripout/nbstripout[38;2;192;197;206m.[38;2;192;197;206m1[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Definitive [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m vs [38;2;163;190;140m`[38;2;163;190;140m--dry-run[38;2;163;190;140m`[38;2;192;197;206m distinction [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    274[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.astral.sh[38;2;192;197;206m/ruff/configuration/#jupyter-notebook-discovery[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff notebook auto-discovery since 0.6.0 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    275[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://astral.sh[38;2;192;197;206m/blog/ruff-v0[38;2;192;197;206m.[38;2;192;197;206m1[38;2;192;197;206m.[38;2;192;197;206m5[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff notebook support stabilized in v0.1.5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    276[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/astral-sh/ruff-action[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m ruff-action@v3 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    277[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 6 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/jupyter/nbformat[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbformat validation API [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    278[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 7 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/machulav/ec2-github-runner[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m EC2 self-hosted runner action [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    279[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 8 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.github.com[38;2;192;197;206m/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m macOS 10x minute cost [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    280[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 9 [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://github.com[38;2;192;197;206m/treebeardtech/nbmake[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m pytest notebook execution [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    281[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 10 [38;2;192;197;206m|[38;2;192;197;206m Direct filesystem inspection [38;2;192;197;206m|[38;2;192;197;206m All notebook counts, output presence, kernelspecs [38;2;192;197;206m|[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md[0m
+[38;5;244m - Completed in 1.798s[0m
+[38;5;12m[1m [1.19][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Saving Lesson" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/orchestrator_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.560s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[0m[0mRunning tool [38;5;141madd_lesson[0m with the param[38;5;244m (from mcp server: knowledge-base)[0m
+ ⋮  {
+ ⋮    "topic": "nbstripout CI enforcement: --verify vs --dry-run",
+ ⋮    "problem": "Using `nbstripout --dry-run` in CI to enforce clean notebooks silently passes even when notebooks contain outputs, because `--dry-run` always exits 0. This makes the CI check useless.",
+ ⋮    "resolution": "Use `nbstripout --verify` instead. The `--verify` flag implies `--dry-run` (prints what would change) AND returns a non-zero exit code when any files would be modified. Correct CI command: `find . -name \"*.ipynb\" -not -path \"*/.ipynb_checkpoints/*\" -exec nbstripout --verify {} +`",
+ ⋮    "tags": [
+ ⋮      "nbstripout",
+ ⋮      "jupyter",
+ ⋮      "ci-cd",
+ ⋮      "github-actions",
+ ⋮      "notebooks"
+ ⋮    ]
+ ⋮  }
+[0m[38;5;244m - Completed in 3.845s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[38;5;141m> [0mDone. Here's a summary of what was done:[0m[0m
+[0m[0m
+[1mStreams read:[22m c1-internet ✅, c2-kb ✅, c4-docs ✅ (c3-context and c5-internal hit rate limits and produced no output)[0m[0m
+[0m[0m
+[1m3 contradictions resolved:[22m[0m[0m
+1. [38;5;10mnbstripout --dry-run[0m → [1mmust be [38;5;10m--verify[0m[22m — all 3 streams independently caught this; [38;5;10m--dry-run[0m always exits 0, making CI checks silent no-ops[0m[0m
+2. [38;5;10mbedrock/miscellaneous[0m notebook count → [1m10[22m (not 8 or 11 as variously claimed)[0m[0m
+3. [38;5;10mruff --include[0m CLI flag → [1mdoesn't exist[22m; notebooks are auto-discovered since ruff 0.6.0[0m[0m
+[0m[0m
+[1m2 gaps filled by direct investigation:[22m[0m[0m
+- **34/40 notebooks (85%) have stored outputs** — quantified for the first time; makes nbstripout critical, not optional[0m[0m
+- **Kernelspec breakdown** — [38;5;10mglue_pyspark[0m kernel on 1 notebook must be excluded from integration tests[0m[0m
+[0m[0m
+[1mFinal report written to:[22m [38;5;10m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md[0m[0m[0m
+[0m[0m
+[1mLesson persisted:[22m [38;5;10mnbstripout --verify[0m vs [38;5;10m--dry-run[0m — the single most reusable insight from this ]9;Response completeinvestigation.[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 3.98 • Time: 3m 24s
+
+[0m[1G[0m[0m[?25h

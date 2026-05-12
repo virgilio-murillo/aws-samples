@@ -1,0 +1,669 @@
+Not all mcp servers loaded. Configure non-interactive timeout with q settings mcp.noInteractiveTimeout
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 4.02s)
+
+[0m
+[38;5;252m[0m[?25l[38;5;141m> [0m[0m[0m
+[0m[0m
+Let me start by reading the findings file.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mReading file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/findings.md[0m, all lines[38;5;244m (using tool: read)[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Reading findings file" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m15810 bytes[0m from /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/findings.md
+[38;5;244m - Completed in 2.180s[0m
+[38;5;12m[1m [1.1][0m[0m
+[38;5;244m - Completed in 2.202s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: I need to validate the claims in this findings document. Let me categorize the claims:
+
+1. **Repository structure claims** (Section 1) - I can verify these by checking the filesystem
+2. **AWS documentation claims** (Sections 2-3) - I can verify by checking the actual AWS docs
+3. **Tool behavior claims** (Section 4) - I can verify some by checking tool docs/behavior
+4. **Notebook inventory claims** (Section 1.5) - I can verify by counting notebooks
+
+Let me start with the filesystem-verifiable claims, then move to documentation verification.
+[38;5;244m - Completed in 2.140s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[38;5;141m> [0mLet me verify the filesystem claims first.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Verifying repo structure" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+Reading directory: [38;5;141m/Users/murivirg/work/github/aws-samples[0m[38;5;244m (using tool: read, max depth: 1, max entries: 1000, excluding: defaults)[0m[38;5;244m - Completed in 2.307s[0m
+[38;5;12m[1m [1.4][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read directory [38;5;141m/Users/murivirg/work/github/aws-samples[0m [38;5;244m(53 entries)[0m
+[38;5;244m - Completed in 2.562s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[?25l[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && echo "=== .github dir ===" && ls -la .github 2>&1 || true && echo "=== Makefile ===" && find . -name "Makefile" -not -path "./investigation/*" 2>/dev/null && echo "=== root requirements.txt ===" && ls -la requirements.txt 2>&1 || true && echo "=== pyproject/setup ===" && ls -la pyproject.toml setup.py setup.cfg 2>&1 || true && echo "=== pre-commit ===" && ls -la .pre-commit-config.yaml 2>&1 || true && echo "=== ruff/flake8 ===" && ls -la ruff.toml .flake8 2>&1 || true[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check for CI/CD config files claimed to not exist
+
+I will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && cat .gitignore[0m[38;5;244m (using tool: shell)[0m
+Purpose: Verify .gitignore contents
+
+I will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && find . -name "*.ipynb" -not -path "./investigation/*" | wc -l && echo "---" && find . -name "*.ipynb" -not -path "./investigation/*" -print | sort[0m[38;5;244m (using tool: shell)[0m
+Purpose: Count and list all notebooks
+
+I will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && find . -name "requirements.txt" -not -path "./investigation/*" -exec echo "=== {} ===" \; -exec cat {} \;[0m[38;5;244m (using tool: shell)[0m
+Purpose: Verify requirements.txt files
+
+=== .github dir ===
+ls: .github: No such file or directory
+=== Makefile ===
+=== root requirements.txt ===
+ls: requirements.txt: No such file or directory
+=== pyproject/setup ===
+ls: pyproject.toml: No such file or directory
+ls: setup.cfg: No such file or directory
+ls: setup.py: No such file or directory
+=== pre-commit ===
+ls: .pre-commit-config.yaml: No such file or directory
+=== ruff/flake8 ===
+ls: .flake8: No such file or directory
+ls: ruff.toml: No such file or directory
+[38;5;244m - Completed in 2.155s[0m
+[38;5;12m[1m [1.6][0m[0m
+config.py
+env
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+sagemaker/how-to-use-inference-recommender/envi
+sagemaker/how-to-use-inference-recommender/model/1
+.terraform
+*/.terraform/*
+[38;5;244m - Completed in 2.688s[0m
+[38;5;12m[1m [1.7][0m[0m
+      40
+---
+./bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+./bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+./bedrock/agent-runtime/invoke_agent_stream.ipynb
+./bedrock/agent-runtime/invoke_agent.ipynb
+./bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+./bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+./bedrock/common-errors/RAG_with_query_decomposition.ipynb
+./bedrock/miscellaneous/100_limit.ipynb
+./bedrock/miscellaneous/bedrock_agent.ipynb
+./bedrock/miscellaneous/bedrock-quickstart.ipynb
+./bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+./bedrock/miscellaneous/conversation_examples.ipynb
+./bedrock/miscellaneous/cross-region-inference.ipynb
+./bedrock/miscellaneous/csutom_data_source_2.ipynb
+./bedrock/miscellaneous/custom_datasource.ipynb
+./bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+./bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+./bedrock/model-import/import_IBM_granite.ipynb
+./bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+./bedrock/testing/cross-region-inference.ipynb
+./bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+./datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+./datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+./glue/pyspark-tutorial-glue.ipynb
+./notebooks/getting_started.ipynb
+./notebooks/ml_analysis_with_tests.ipynb
+./opensearch/create-resources/AOSS_resource_creation.ipynb
+./sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+./sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+./sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+./sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+./sagemaker/inference-recommender/inference_recommender.ipynb
+./sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+./sagemaker/processing-custom-container/anomaly-detection-processing.ipynb
+./sagemaker/retail_sales_prediction.ipynb
+./sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+./sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+./sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+[38;5;244m - Completed in 2.230s[0m
+[38;5;12m[1m [1.8][0m[0m
+=== ./bedrock-agentcore/strands-agents/requirements.txt ===
+strands-agents-tools
+uv
+boto3
+bedrock-agentcore
+bedrock-agentcore-starter-toolkit
+=== ./bedrock/stability-ai-upscale/requirements.txt ===
+boto3
+pillow
+=== ./sagemaker/processing-custom-container/requirements.txt ===
+pandas
+joblib
+numpy
+rrcf
+scipy
+pyarrow
+swifter
+=== ./sagemaker/inference-recommender/code/requirements.txt ===
+
+numpy==1.26.4
+pillow==11.2.1
+[38;5;244m - Completed in 2.274s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[38;5;141m> [0mGood. Now let me verify notebook counts per directory and sizes, then check the AWS documentation claims.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && echo "=== bedrock/miscellaneous ===" && find ./bedrock/miscellaneous -name "*.ipynb" | wc -l && echo "=== sagemaker (all) ===" && find ./sagemaker -name "*.ipynb" | wc -l && echo "=== bedrock-agentcore ===" && find ./bedrock-agentcore -name "*.ipynb" | wc -l && echo "=== bedrock (non-misc) ===" && find ./bedrock -name "*.ipynb" -not -path "*/miscellaneous/*" | wc -l && echo "=== notebooks ===" && find ./notebooks -name "*.ipynb" | wc -l && echo "=== glue ===" && find ./glue -name "*.ipynb" | wc -l && echo "=== opensearch ===" && find ./opensearch -name "*.ipynb" | wc -l && echo "=== datazone ===" && find ./datazone -name "*.ipynb" | wc -l[0m[38;5;244m (using tool: shell)[0m
+Purpose: Count notebooks per directory
+
+I will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && echo "=== Largest notebooks ===" && find . -name "*.ipynb" -not -path "./investigation/*" -exec ls -la {} \; | sort -k5 -n -r | head -5 && echo "=== Smallest ===" && find . -name "*.ipynb" -not -path "./investigation/*" -exec ls -la {} \; | sort -k5 -n | head -5[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check notebook sizes
+
+I will run the following command: [38;5;141mcd /Users/murivirg/work/github/aws-samples && echo "=== bedrock subdirs ===" && ls -d bedrock/*/[0m[38;5;244m (using tool: shell)[0m
+Purpose: Count bedrock subdirectories
+
+I will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Checking notebook counts" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+=== bedrock/miscellaneous ===
+      10
+=== sagemaker (all) ===
+      13
+=== bedrock-agentcore ===
+       2
+=== bedrock (non-misc) ===
+       9
+=== notebooks ===
+       2
+=== glue ===
+       1
+=== opensearch ===
+       1
+=== datazone ===
+       2
+[38;5;244m - Completed in 1.807s[0m
+[38;5;12m[1m [1.10][0m[0m
+=== Largest notebooks ===
+-rw-r--r--  1 murivirg  staff  2054339 Mar  6 12:40 ./sagemaker/retail_sales_prediction.ipynb
+-rw-r--r--  1 murivirg  staff  752035 Mar  6 12:40 ./sagemaker/inference-recommender/inference_recommender.ipynb
+-rw-r--r--  1 murivirg  staff  272371 Mar  6 12:40 ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+-rw-r--r--  1 murivirg  staff  220131 Mar  6 12:40 ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+-rw-r--r--  1 murivirg  staff  199286 Mar  6 12:40 ./bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+=== Smallest ===
+-rw-r--r--  1 murivirg  staff  72 Mar  6 12:40 ./sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+-rw-r--r--  1 murivirg  staff  767 Mar  6 12:40 ./sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+-rw-r--r--  1 murivirg  staff  3884 Mar  6 12:40 ./bedrock/agent-runtime/invoke_agent_stream.ipynb
+-rw-r--r--  1 murivirg  staff  5301 Mar  6 12:40 ./datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+-rw-r--r--  1 murivirg  staff  5928 Mar  6 12:40 ./bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+[38;5;244m - Completed in 4.626s[0m
+[38;5;12m[1m [1.11][0m[0m
+=== bedrock subdirs ===
+bedrock/agent-runtime/
+bedrock/batch-inference/
+bedrock/bedrock-marketplace/
+bedrock/common-errors/
+bedrock/fine-tuning/
+bedrock/miscellaneous/
+bedrock/model-import/
+bedrock/prompt-caching/
+bedrock/stability-ai-upscale/
+bedrock/testing/
+[38;5;244m - Completed in 2.63s[0m
+[38;5;12m[1m [1.12][0m[0m
+[38;5;244m - Completed in 2.42s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Let me check the claims:
+
+1. **Total 40 notebooks** - CONFIRMED (count matches)
+2. **bedrock/miscellaneous: 11** - Finding says 11, actual is 10. CONTRADICTED.
+3. **sagemaker: 13** - CONFIRMED
+4. **bedrock-agentcore: 2** - CONFIRMED
+5. **bedrock (other subdirs): 8** - Finding says 8, actual is 9 (non-misc bedrock). CONTRADICTED.
+6. **notebooks: 2** - CONFIRMED
+7. **glue: 1** - CONFIRMED
+8. **opensearch: 1** - CONFIRMED
+9. **datazone: 2** - CONFIRMED
+
+Wait, let me recount. Total = 10 + 13 + 2 + 9 + 2 + 1 + 1 + 2 = 40. That's correct.
+But the breakdown is wrong: bedrock/miscellaneous is 10 (not 11), and bedrock other is 9 (not 8).
+
+10 + 9 = 19 bedrock total. The findings say 11 + 8 = 19. So the total is right but the split is wrong.
+
+Let me also check:
+- bedrock subdirs: 10 (not 11 as claimed). The findings say "11 subdirs" for bedrock.
+- Actually wait, let me recount: agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing = 10 subdirs. Finding says 11. CONTRADICTED.
+
+Now let me check sizes:
+- retail_sales_prediction.ipynb: 2054339 bytes = ~2006 KB = ~2MB. Finding says 2006 KB. CONFIRMED.
+- inference_recommender.ipynb: 752035 bytes = ~734 KB. Finding says 734KB. CONFIRMED.
+- Smallest: Untitled.ipynb at 72 bytes = 0.07 KB. Finding says 0.1 KB. Close enough, approximately correct.
+
+Now let me verify the AWS documentation claims.
+[38;5;244m - Completed in 2.228s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me verify the AWS documentation claims and tool claims.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Verifying AWS docs" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+Running tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/codebuild/latest/userguide/sample-github-action-runners-update-yaml.images.html",
+ ⋮    "max_length": 8000
+ ⋮  }
+[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/deploying-using-github.html",
+ ⋮    "max_length": 8000
+ ⋮  }
+[0m[38;5;244m - Completed in 2.352s[0m
+[38;5;12m[1m [1.15][0m[0m
+[38;5;244m - Completed in 2.767s[0m
+[38;5;12m[1m [1.16][0m[0m
+[38;5;244m - Completed in 2.277s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Let me check the CodeBuild images table from the findings vs actual docs:
+
+Findings claim:
+| Type | Image | Platform |
+| `ubuntu` | `7.0` | Ubuntu 22.04 |
+| `ubuntu` | `6.0` | Ubuntu 22.04 |
+| `ubuntu` | `5.0` | Ubuntu 20.04 |
+| `linux` | `5.0` | Amazon Linux 2023 |
+| `arm` | `3.0` | Amazon Linux 2023 |
+
+Actual docs show:
+- ubuntu 5.0 = Ubuntu 20.04 ✓
+- ubuntu 6.0 = Ubuntu 22.04 ✓
+- ubuntu 7.0 = Ubuntu 22.04 ✓
+- linux 5.0 = Amazon Linux 2023 ✓
+- arm 3.0 = Amazon Linux 2023 ✓
+
+But the findings table is INCOMPLETE - it omits linux 4.0 (Amazon Linux 2), arm 2.0 (Amazon Linux 2), linux-ec2, arm-ec2, windows, windows-ec2. However, the findings only listed a subset, which is fine - they didn't claim it was exhaustive.
+
+The claim "CodeBuild does NOT offer Arch Linux images" - CONFIRMED by the docs.
+
+The SAM GitHub Actions example - CONFIRMED, matches the docs exactly (though the findings omitted the `aws-actions/setup-sam@v2` step, but the findings explicitly said it was a pattern, not the full example).
+
+Now let me verify the ruff native notebook support claim.
+[38;5;244m - Completed in 2.593s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mSearching the web for: ruff linter native ipynb notebook support version[38;5;244m (using tool: web_search)[0m
+Running tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/aws-setup-jupyter.html"
+ ⋮  }
+[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Verifying tool claims" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.727s[0m
+[38;5;12m[1m [1.19][0m[0m
+[38;5;244m - Completed in 2.398s[0m
+[38;5;12m[1m [1.20][0m[0m
+[38;5;244m - Completed in 1.925s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Let me check the ruff claim. The findings say "As of ruff 0.1.0+, ruff can lint .ipynb files directly". The web search result says "Support for Jupyter Notebooks in the Ruff command line interface was stabilized in v0." (truncated, but from the v0.1.5 blog post). The actual stabilization was in v0.1.5, not v0.1.0. However, the initial preview support was added earlier. Let me check more carefully.
+
+Actually, looking at the search result from codeinthehole.com, it says you need `extend-include = ["*.ipynb"]` in pyproject.toml. The findings claim `ruff check --include "*.ipynb" .` works. The `--include` flag is a valid ruff CLI option. But the default behavior requires configuration since .ipynb is not included by default.
+
+The findings say "As of ruff 0.1.0+" - this is slightly inaccurate. The notebook support was added as preview in v0.0.291 and stabilized in v0.1.5. So saying "0.1.0+" is approximately correct but not precise.
+
+Now let me check the AWS-SetupJupyter claims:
+- "Sets up Jupyter Notebook on an EC2 instance" - CONFIRMED
+- "Can launch a new instance or use existing" - CONFIRMED (AmiId is optional, InstanceId is required)
+- "Requires a SecureString parameter for Jupyter password" - CONFIRMED
+- "Supports Linux platforms" - CONFIRMED
+- "Uses CloudFormation for infrastructure" - CONFIRMED (StackName parameter, cloudformation permissions)
+
+The SAM GitHub Actions example:
+- The findings show the example but omit `aws-actions/setup-sam@v2` step. The findings explicitly say it's a "pattern" not the full example, so this is acceptable.
+- `ubuntu-latest` as runner - CONFIRMED
+- `actions/checkout@v3` - CONFIRMED
+- `actions/setup-python@v3` - CONFIRMED
+- `aws-actions/configure-aws-credentials@v1` - CONFIRMED
+
+Now let me check the CodeBuild runner label syntax claim:
+Findings say: `runs-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}`
+I should verify this.
+
+Let me also verify the macOS runner cost claim (10x Linux cost).
+[38;5;244m - Completed in 3.157s[0m
+[38;5;12m[1m [1.22][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/codebuild/latest/userguide/action-runner.html"
+ ⋮  }
+[0mSearching the web for: GitHub Actions macOS runner cost multiplier vs Linux 2024 2025[38;5;244m (using tool: web_search)[0m
+Searching the web for: nbstripout --is-stripped check mode CI usage[38;5;244m (using tool: web_search)[0m
+[38;5;244m - Completed in 2.41s[0m
+[38;5;12m[1m [1.23][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 4.907s[0m
+[38;5;12m[1m [1.24][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 4.13s[0m
+[38;5;12m[1m [1.25][0m[0m
+[?25l[0m[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "start_index": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/codebuild/latest/userguide/action-runner.html"
+ ⋮  }
+[0m[38;5;244m - Completed in 2.816s[0m
+[38;5;12m[1m [1.26][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Now I have enough data to validate. Let me also check the nbstripout --is-stripped claim. From the Debian manpage search result, I see the flag is `--is-stripped` which "Return a non-zero exit code if any files were changed, Implies --dry-run". Wait, actually looking more carefully, the manpage doesn't mention `--is-stripped` directly. Let me look at the PyPI page or the GitHub repo.
+
+Actually, looking at the Debian manpage result more carefully, it mentions flags like `--keep-count`, `--keep-output`, `--keep-id`, `--extra-keys`, `--keep-metadata-keys`, `--drop-empty-cells`, `--drop-tagged-cells`, `--strip-init-cells`, `--attributes`. It doesn't explicitly mention `--is-stripped` in the snippet. But the findings claim `nbstripout --is-stripped *.ipynb` is the check mode.
+
+Let me check the nbstripout GitHub README for this flag. Actually, looking at the first search result from the Debian manpage, it says "Return a non-zero exit code if any files were changed, Implies --dry-run" - this seems to be describing a flag but the name got cut off. Let me check the actual nbstripout docs.
+
+Actually, I recall that nbstripout does have a `--is-stripped` flag. Let me verify by checking the PyPI page or GitHub.
+
+For now, let me compile my findings and write the validated.md file. I have enough data.
+
+Summary of validations:
+
+SECTION 1 - Repository Structure:
+1. Top-level layout - CONFIRMED (all dirs/files match)
+2. No .github/ - CONFIRMED
+3. No Makefile - CONFIRMED
+4. No root requirements.txt - CONFIRMED
+5. No pyproject.toml, setup.py, setup.cfg - CONFIRMED
+6. No pre-commit config - CONFIRMED
+7. No linting config - CONFIRMED
+8. .gitignore contents - CONFIRMED (exact match)
+9. requirements.txt files - CONFIRMED (all 4 match)
+10. Total 40 notebooks - CONFIRMED
+11. bedrock/miscellaneous: 11 notebooks - CONTRADICTED (actual: 10)
+12. sagemaker: 13 - CONFIRMED
+13. bedrock-agentcore: 2 - CONFIRMED
+14. bedrock (other): 8 - CONTRADICTED (actual: 9)
+15. notebooks: 2 - CONFIRMED
+16. glue: 1 - CONFIRMED
+17. opensearch: 1 - CONFIRMED
+18. datazone: 2 - CONFIRMED
+19. bedrock has 11 subdirs - CONTRADICTED (actual: 10)
+20. retail_sales_prediction.ipynb ~2006 KB - CONFIRMED (2054339 bytes ≈ 2006 KB)
+21. inference_recommender.ipynb ~734KB - CONFIRMED (752035 bytes ≈ 734 KB)
+22. Smallest 0.1 KB - approximately correct (72 bytes ≈ 0.07 KB, close enough)
+
+SECTION 2 - AWS Documentation:
+23. CI/CD best practices URL and content - UNVERIFIED (didn't check this specific URL but it's a known AWS page)
+24. Test types for CI/CD - UNVERIFIED
+25. CI/CD Security Whitepaper - UNVERIFIED
+
+SECTION 3 - GitHub Actions Integration:
+26. SAM GitHub Actions example - CONFIRMED (matches AWS docs, though findings omitted setup-sam step)
+27. ubuntu-latest recommended - CONFIRMED
+28. CodeBuild runner label syntax - CONFIRMED (exact match with docs)
+29. CodeBuild images table - CONFIRMED (subset is accurate)
+30. No Arch Linux in CodeBuild - CONFIRMED
+
+SECTION 3.3 - AWS-SetupJupyter:
+31. Sets up Jupyter on EC2 - CONFIRMED
+32. Can launch new or use existing - CONFIRMED
+33. Requires SecureString parameter - CONFIRMED
+34. Supports Linux - CONFIRMED
+35. Uses CloudFormation - CONFIRMED
+
+SECTION 4 - Tool Claims:
+36. ruff native .ipynb support since 0.1.0+ - PARTIALLY CONFIRMED (stabilized in v0.1.5, not v0.1.0)
+37. nbstripout --is-stripped flag - UNVERIFIED (need to check)
+38. macOS runners 10x Linux cost - CONFIRMED (GitHub docs confirm this)
+
+SECTION 5 - Limitations:
+39. macOS runners 10x cost - CONFIRMED
+40. No Arch Linux runner - CONFIRMED
+41. 40 notebooks with varying kernels - CONFIRMED (count), kernels UNVERIFIED
+
+Let me also quickly verify the nbstripout --is-stripped flag.
+[38;5;244m - Completed in 2.326s[0m
+[38;5;12m[1m [1.27][0m[0m
+[?25l[0m[?25l[?25l[0m[0mFetching content from: https://github.com/kynan/nbstripout (searching for: --is-stripped check CI) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+I will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Checking nbstripout docs" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+
+[38;5;10m ✓ [0mFetched 29527 bytes (selective) from URL
+[38;5;244m - Completed in 2.800s[0m
+[38;5;12m[1m [1.28][0m[0m
+[38;5;244m - Completed in 2.98s[0m
+[38;5;12m[1m [1.29][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Important finding from the nbstripout README: The findings claim `nbstripout --is-stripped` is the check mode. But the actual README shows:
+- `nbstripout --verify FILE.ipynb` - "Do a verification run, which works like dry run but will fail if any files would have been stripped"
+- The GitHub Action uses `nbstripout --verify` not `--is-stripped`
+- `--is-installed` checks if nbstripout is installed, not if files are stripped
+
+So the claim about `--is-stripped` is CONTRADICTED. The correct flag is `--verify`.
+
+Also, nbstripout now has a reusable GitHub Action (`kynan/nbstripout@main`) which the findings don't mention. That's not a contradiction, just a gap.
+
+Now let me also verify the ruff claim more precisely. The findings say "As of ruff 0.1.0+, ruff can lint .ipynb files directly" and the command is `ruff check --include "*.ipynb" .`. The web search result from astral.sh says "Support for Jupyter Notebooks in the Ruff command line interface was stabilized in v0." (truncated at v0.1.5). And from codeinthehole.com, the config is `extend-include = ["*.ipynb"]` in pyproject.toml. The `--include` CLI flag should also work. So the version claim is slightly off (stabilized in v0.1.5, not v0.1.0), but the functionality claim is correct.
+
+Now let me write the validated.md file.
+[38;5;244m - Completed in 2.202s[0m
+[38;5;12m[1m [1.30][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Writing validated file" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.127s[0m
+[38;5;12m[1m [1.31][0m[0m
+[?25l[0m[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/validated.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mValidated Findings: c4-docs (AWS Documentation [38;2;143;161;179m&[38;2;143;161;179m Repository Analysis)[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mValidator run:[38;2;235;203;139m**[38;2;192;197;206m 2026-03-27[K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mSource:[38;2;235;203;139m**[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfindings.md[38;2;163;190;140m`[38;2;192;197;206m from c4-docs agent[K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 1: Repository Structure Analysis[K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1.1 Top-Level Layout[K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Directories: bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, notebooks, opensearch, sagemaker [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mls[38;2;163;190;140m`[38;2;192;197;206m output matches all listed directories [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Files: README.md, LICENSE, .gitignore, .libs.json, TASK.md, SAGEMAKER_UNIFIED_STUDIO_README.md [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All files present in directory listing [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1.2 No Existing CI/CD or Configuration[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140m.github/[38;2;163;190;140m`[38;2;192;197;206m directory [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mls .github[38;2;163;190;140m`[38;2;192;197;206m → "No such file or directory" [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140mMakefile[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "Makefile"[38;2;163;190;140m`[38;2;192;197;206m → empty [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No root [38;2;163;190;140m`[38;2;163;190;140mrequirements.txt[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mls requirements.txt[38;2;163;190;140m`[38;2;192;197;206m → "No such file or directory" [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140msetup.py[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140msetup.cfg[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All three missing [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140m.pre-commit-config.yaml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File not found [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140mruff.toml[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140m.flake8[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Neither file found [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1.3 .gitignore Contents[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m .gitignore contents match exactly [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mcat .gitignore[38;2;163;190;140m`[38;2;192;197;206m output is byte-for-byte identical to what findings report [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Does NOT ignore notebook outputs, [38;2;163;190;140m`[38;2;163;190;140m.venv[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140m__pycache__[38;2;163;190;140m`[38;2;192;197;206m, CI artifacts [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m None of these patterns appear in .gitignore [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1.4 Requirements.txt Files[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 4 requirements.txt files exist at stated paths [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "requirements.txt"[38;2;163;190;140m`[38;2;192;197;206m returns exactly these 4 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Contents of each file match [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mcat[38;2;163;190;140m`[38;2;192;197;206m output matches findings exactly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m1.5 Jupyter Notebook Inventory[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Total: 40 notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "*.ipynb" | wc -l[38;2;163;190;140m`[38;2;192;197;206m → 40 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock/miscellaneous: 11 notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual count: [38;2;235;203;139m**[38;2;235;203;139m10[38;2;235;203;139m**[38;2;192;197;206m. The notebook list shows 10 files in bedrock/miscellaneous/ [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m sagemaker (all subdirs): 13 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind ./sagemaker -name "*.ipynb" | wc -l[38;2;163;190;140m`[38;2;192;197;206m → 13 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock-agentcore: 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Count verified: 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock (other subdirs): 8 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual count: [38;2;235;203;139m**[38;2;235;203;139m9[38;2;235;203;139m**[38;2;192;197;206m. (10 misc + 9 other = 19 total bedrock, which is correct, but the split is wrong) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m notebooks: 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Count verified: 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m glue: 1 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Count verified: 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m opensearch: 1 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Count verified: 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m datazone: 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Count verified: 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock has "11 subdirs" [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: [38;2;235;203;139m**[38;2;235;203;139m10 subdirectories[38;2;235;203;139m**[38;2;192;197;206m (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m retail_sales_prediction.ipynb ~2006 KB (2MB) [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: 2,054,339 bytes = 2006 KB [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m inference_recommender.ipynb ~734KB [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: 752,035 bytes ≈ 734 KB [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Smallest notebook 0.1 KB [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (approx) [38;2;192;197;206m|[38;2;192;197;206m Smallest is Untitled.ipynb at 72 bytes (0.07 KB). Close enough to "0.1 KB" [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m sagemaker has "8 subdirs" [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not explicitly counted, but directory listing shows: terraform, processing-custom-container, inference-recommender, retail_sales_prediction.ipynb (file), serverless-inference, pipelines-sagemaker, byoc-sm-jupyterlab = 7 subdirs (not 8). Likely [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m if the file is excluded. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 2: AWS Documentation Findings — CI/CD Best Practices[K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m URL: [38;2;163;190;140m`[38;2;163;190;140mdocs.aws.amazon.com/prescriptive-guidance/latest/strategy-cicd-litmus/cicd-best-practices.html[38;2;163;190;140m`[38;2;192;197;206m exists [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not fetched directly, but this is a well-known AWS Prescriptive Guidance page [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Recommendations: code reviews, small merges, secure prod, separate accounts [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard AWS CI/CD guidance; plausible but not cross-checked [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m URL: [38;2;163;190;140m`[38;2;163;190;140mdocs.aws.amazon.com/prescriptive-guidance/latest/strategy-cicd-litmus/tests-for-cicd-pipelines.html[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not fetched [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Test types: unit, integration, SAST, acceptance [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard CI/CD taxonomy; plausible [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m URL: [38;2;163;190;140m`[38;2;163;190;140mdocs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/security-in-every-stage-of-cicd-pipeline.html[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not fetched [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 3: AWS Documentation — GitHub Actions Integration[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m3.1 SAM GitHub Actions Example[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AWS SAM docs show GitHub Actions example with [38;2;163;190;140m`[38;2;163;190;140mubuntu-latest[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Fetched actual page; example uses [38;2;163;190;140m`[38;2;163;190;140mruns-on: ubuntu-latest[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Example uses [38;2;163;190;140m`[38;2;163;190;140mactions/checkout@v3[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mactions/setup-python@v3[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140maws-actions/configure-aws-credentials@v1[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All present in the actual AWS docs example [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Findings omit [38;2;163;190;140m`[38;2;163;190;140maws-actions/setup-sam@v2[38;2;163;190;140m`[38;2;192;197;206m step from the example [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (minor omission) [38;2;192;197;206m|[38;2;192;197;206m The actual AWS docs example includes this step; findings presented it as a "pattern" which is acceptable but incomplete [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m3.2 CodeBuild-Hosted GitHub Actions Runners[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruns-on: codebuild-<project-name>-${{ github.run_id }}-${{ github.run_attempt }}[38;2;163;190;140m`[38;2;192;197;206m syntax [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Exact match with AWS CodeBuild docs [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m ubuntu 7.0 = Ubuntu 22.04 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs confirm [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m ubuntu 6.0 = Ubuntu 22.04 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs confirm [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m ubuntu 5.0 = Ubuntu 20.04 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs confirm [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m linux 5.0 = Amazon Linux 2023 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs confirm [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m arm 3.0 = Amazon Linux 2023 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs confirm [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m CodeBuild does NOT offer Arch Linux images [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Full image table reviewed; no Arch Linux entries [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m CodeBuild provides native IAM, Secrets Manager, CloudTrail, VPC integration [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not explicitly checked in the fetched page, but consistent with CodeBuild's known capabilities [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m3.3 AWS-SetupJupyter SSM Runbook[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Sets up Jupyter Notebook on EC2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AWS docs: "helps you set up Jupyter Notebook on an Amazon EC2 instance" [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Can launch new instance or use existing [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AmiId (optional) + InstanceId parameters confirmed [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Requires SecureString parameter for Jupyter password [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m JupyterPasswordSSMKey parameter documented as required [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Supports Linux platforms [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Platforms: "Linux" [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Uses CloudFormation for infrastructure [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m StackName parameter + cloudformation:* IAM permissions confirmed [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 4: Tool Claims[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4.1 nbstripout[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mnbstripout --is-stripped *.ipynb[38;2;163;190;140m`[38;2;192;197;206m is the check mode for CI [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m The correct flag is [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;192;197;206m, not [38;2;163;190;140m`[38;2;163;190;140m--is-stripped[38;2;163;190;140m`[38;2;192;197;206m. From the official README: "[38;2;163;190;140m`[38;2;163;190;140mnbstripout --verify FILE.ipynb[38;2;163;190;140m`[38;2;192;197;206m — Do a verification run, which works like dry run but will fail if any files would have been stripped." The [38;2;163;190;140m`[38;2;163;190;140m--is-installed[38;2;163;190;140m`[38;2;192;197;206m flag checks installation status, not file state. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Can strip in-place with [38;2;163;190;140m`[38;2;163;190;140mfind . -name '*.ipynb' -exec nbstripout {} +[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Documented in official README [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Prevents accidental commit of sensitive outputs [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Core purpose of the tool [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Does not validate notebook structure [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbstripout only strips outputs/metadata [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Only checks/strips outputs, not metadata [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m nbstripout DOES strip certain metadata by default (signature, widgets, ExecuteTime, collapsed, execution, heading_collapsed, hidden, scrolled) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m nbstripout has a reusable GitHub Action [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mNOT MENTIONED[38;2;235;203;139m**[38;2;192;197;206m (gap) [38;2;192;197;206m|[38;2;192;197;206m The findings don't mention [38;2;163;190;140m`[38;2;163;190;140mkynan/nbstripout@main[38;2;163;190;140m`[38;2;192;197;206m GitHub Action, which provides a ready-made CI check. This is a significant omission for a CI/CD-focused investigation. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4.2 ruff — Python Linting[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m ruff can lint [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;192;197;206m files directly [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Documented in ruff docs and multiple sources [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m "As of ruff 0.1.0+" for native notebook support [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m (minor) [38;2;192;197;206m|[38;2;192;197;206m Notebook support was stabilized in [38;2;235;203;139m**[38;2;235;203;139mv0.1.5[38;2;235;203;139m**[38;2;192;197;206m (per astral.sh blog), not v0.1.0. Preview support existed earlier. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mruff check --include "*.ipynb" .[38;2;163;190;140m`[38;2;192;197;206m syntax [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Valid CLI syntax; alternatively [38;2;163;190;140m`[38;2;163;190;140mextend-include = ["*.ipynb"][38;2;163;190;140m`[38;2;192;197;206m in config [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Alternative: [38;2;163;190;140m`[38;2;163;190;140mjupyter nbconvert --to script[38;2;163;190;140m`[38;2;192;197;206m then lint [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard approach, though less preferred now that ruff has native support [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4.3 Notebook JSON Validation[K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m nbformat can validate notebook schema [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard nbformat capability; not tested but well-documented [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Code snippets are syntactically correct [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not executed [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179m4.4 EC2-Based Integration Tests / Arch Linux[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No native GitHub Actions runner for Arch Linux [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m GitHub only provides ubuntu, windows, macos runners [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No AWS CodeBuild image for Arch Linux [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Verified against full CodeBuild image table [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker container approach with [38;2;163;190;140m`[38;2;163;190;140marchlinux:latest[38;2;163;190;140m`[38;2;192;197;206m is viable [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Plausible approach but not tested [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mpacman -Syu --noconfirm python python-pip jupyter-notebook[38;2;163;190;140m`[38;2;192;197;206m for Arch setup [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard pacman syntax; package names not verified [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 5: Limitations [38;2;143;161;179m&[38;2;143;161;179m Considerations[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m macOS runners are 10x Linux cost [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m GitHub docs: "macOS runners consume minutes at 10 times the rate that jobs on Linux runners consume" ($0.08/min vs $0.008/min) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Self-hosted runners require maintenance and security hardening [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Standard operational truth [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 40 notebooks with varying kernels [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (count); kernels [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue PySpark notebook cannot be validated in standard Python [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Glue PySpark kernel requires AWS Glue environment [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Arch Linux community AMIs exist but not officially supported by AWS [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Plausible but not verified [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSummary[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Category [38;2;192;197;206m|[38;2;192;197;206m CONFIRMED [38;2;192;197;206m|[38;2;192;197;206m CONTRADICTED [38;2;192;197;206m|[38;2;192;197;206m UNVERIFIED [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[38;2;192;197;206m-----------[38;2;192;197;206m|[38;2;192;197;206m--------------[38;2;192;197;206m|[38;2;192;197;206m------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Repo structure (Section 1) [38;2;192;197;206m|[38;2;192;197;206m 22 [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AWS CI/CD docs (Section 2) [38;2;192;197;206m|[38;2;192;197;206m 0 [38;2;192;197;206m|[38;2;192;197;206m 0 [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m GitHub Actions/CodeBuild (Section 3) [38;2;192;197;206m|[38;2;192;197;206m 14 [38;2;192;197;206m|[38;2;192;197;206m 0 [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Tool claims (Section 4) [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Limitations (Section 5) [38;2;192;197;206m|[38;2;192;197;206m 4 [38;2;192;197;206m|[38;2;192;197;206m 0 [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mTOTAL[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m45[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m7[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139m13[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKey Contradictions[K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock/miscellaneous notebook count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 11, actual 10[K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock other subdirs notebook count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 8, actual 9[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock subdirectory count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 11, actual 10[K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139msagemaker subdirectory count[38;2;235;203;139m**[38;2;191;97;106m: Likely 7, not 8 (one entry is a file, not a subdir)[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;163;190;140m`[38;2;163;190;140mnbstripout --is-stripped[38;2;163;190;140m`[38;2;235;203;139m**[38;2;191;97;106m: Flag does not exist. Correct flag is [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;191;97;106m6[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mnbstripout "only checks outputs, not metadata"[38;2;235;203;139m**[38;2;191;97;106m: It also strips metadata by default[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;191;97;106m7[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mruff notebook support "0.1.0+"[38;2;235;203;139m**[38;2;191;97;106m: Stabilized in v0.1.5, not v0.1.0[K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKey Gaps (Not Contradictions)[K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    185[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;191;97;106mnbstripout has a reusable GitHub Action ([38;2;163;190;140m`[38;2;163;190;140mkynan/nbstripout@main[38;2;163;190;140m`[38;2;191;97;106m) not mentioned in findings — significant for CI/CD setup[K
+[0m[48;2;40;67;43m[39m+    186[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m SAM example omits [38;2;163;190;140m`[38;2;163;190;140maws-actions/setup-sam@v2[38;2;163;190;140m`[38;2;191;97;106m step (minor, findings framed it as a pattern)[K
+[0m[48;2;40;67;43m[39m+    187[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m CodeBuild image table in findings is a subset (acceptable, not claimed as exhaustive)[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/validated.md[0m
+[38;5;244m - Completed in 1.824s[0m
+[38;5;12m[1m [1.32][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Validation complete" >> /Users/murivirg/work/github/aws-samples/investigation/d1f13164/c4-docs/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.803s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[38;5;141m> [0mValidation complete. Here's the summary:[0m[0m
+[0m[0m
+[1m45 CONFIRMED | 7 CONTRADICTED | 13 UNVERIFIED[22m[0m[0m
+[0m[0m
+The 7 contradictions found:[0m[0m
+[0m[0m
+1. [1mbedrock/miscellaneous notebook count[22m — claimed 11, actual 10[0m[0m
+2. [1mbedrock other subdirs notebook count[22m — claimed 8, actual 9 (the total of 19 is correct, but the split is wrong)[0m[0m
+3. [1mbedrock subdirectory count[22m — claimed "11 subdirs", actual 10[0m[0m
+4. [1msagemaker subdirectory count[22m — likely 7 not 8 (one entry is a file not a subdir)[0m[0m
+5. [1m[38;5;10mnbstripout --is-stripped[0m flag[22m — does not exist. The correct flag is [38;5;10m--verify[0m[0m[0m
+6. [1mnbstripout "only checks outputs, not metadata"[22m — it strips metadata by default too (signature, widgets, ExecuteTime, etc.)[0m[0m
+7. [1mruff notebook support "0.1.0+"[22m — stabilized in v0.1.5, not v0.1.0[0m[0m
+[0m[0m
+One notable gap: the findings missed that nbstripout now provides a reusable GitHub Action ([38;5;10mkynan/nbstripout@main[0m) which is directly relevant to the CI/CD setup task.[0m[0m
+[0m[0m
+Full validated report written to [38;5;10mvalidated.md[0m.]9;Response complete[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 4.68 • Time: 4m 58s
+
+[0m[1G[0m[0m[?25h

@@ -1,7 +1,8 @@
 """Step 4: Reproduce via LangChain — JPEG bytes with data:image/webp;base64 URL.
 This simulates a customer passing a JPEG image with a wrong webp media type declaration.
 """
-import base64, io
+import base64
+import io
 from PIL import Image
 from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage
