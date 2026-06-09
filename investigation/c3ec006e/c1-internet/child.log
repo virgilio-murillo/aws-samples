@@ -1,0 +1,411 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 32.09s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mmkdir -p /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet && printf '%s|Starting web search\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.433s[0m
+[38;5;12m[1m [1.1][0m[0m
+[38;5;244m - Completed in 2.156s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: aws-samples GitHub repository structure best practices 2024 2025[38;5;244m (using tool: web_search)[0m
+Searching the web for: Amazon Bedrock samples GitHub CDK deployment patterns[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.701s[0m
+[38;5;12m[1m [1.3][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.406s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Found Bedrock repos\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"aws-samples/amazon-bedrock-samples is the main Bedrock samples repo; awslabs/amazon-bedrock-agentcore-samples for Agentcore; CDK patterns common for deployment"}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Searching the web for: Amazon Bedrock Agentcore samples Python deployment architecture[38;5;244m (using tool: web_search)[0m
+Searching the web for: AWS DataZone samples GitHub CDK Python TypeScript[38;5;244m (using tool: web_search)[0m
+[38;5;244m - Completed in 1.936s[0m
+[38;5;12m[1m [1.5][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.786s[0m
+[38;5;12m[1m [1.6][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.250s[0m
+[38;5;12m[1m [1.7][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: AWS Glue samples GitHub Python Spark ETL jobs CDK[38;5;244m (using tool: web_search)[0m
+Searching the web for: "aws-samples" agent prompt engineering system prompt best practices[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 2.846s[0m
+[38;5;12m[1m [1.8][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.108s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Searching Glue+DataZone\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"Bedrock Agentcore uses Python + AgentCore CLI/SDK, ARM64 arch, supports Strands/LangGraph/OpenAI Agents frameworks. Glue samples use PySpark ETL. DataZone uses CDK+CloudFormation for data mesh."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Searching the web for: Bedrock media type mismatch error content type image video[38;5;244m (using tool: web_search)[0m
+Searching the web for: Kiro AI agent notes project structure conventions[38;5;244m (using tool: web_search)[0m
+[38;5;244m - Completed in 1.793s[0m
+[38;5;12m[1m [1.10][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 5.874s[0m
+[38;5;12m[1m [1.11][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.178s[0m
+[38;5;12m[1m [1.12][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: AI coding agent system prompt design "critical rules" section structure 2024 2025[38;5;244m (using tool: web_search)[0m
+Searching the web for: aws-samples Makefile pattern deploy test lint Python CDK[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.743s[0m
+[38;5;12m[1m [1.13][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.282s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Prompt design patterns\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"Best agent prompt structure: 4 sections - role/scope, tools/schemas, decision rules, output format. Critical Rules section has highest ROI. Kiro uses .kiro/steering/ for persistent project context."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Searching the web for: aws-samples/aws-cdk-project-structure-python Makefile targets README[38;5;244m (using tool: web_search)[0m
+Searching the web for: Amazon Bedrock converse API multimodal content type validation error handling[38;5;244m (using tool: web_search)[0m
+[38;5;244m - Completed in 1.455s[0m
+[38;5;12m[1m [1.15][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 2.810s[0m
+[38;5;12m[1m [1.16][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.507s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[?25l[?25l[0m[0mFetching content from: https://github.com/aws-samples/aws-cdk-project-structure-python/blob/main/REA... (searching for: Makefile make deploy test synth) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+Searching the web for: enhanced AI agent prompt for AWS samples repository coding assistant deployment patterns[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFetched 10838 bytes (selective) from URL
+[38;5;244m - Completed in 2.508s[0m
+[38;5;12m[1m [1.18][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.789s[0m
+[38;5;12m[1m [1.19][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|CDK project patterns\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"CDK Python project pattern: scripts/install-deps.sh + scripts/run-tests.sh, npx cdk deploy, pip-compile for deps. AWS Startup Prompt Library has Full AWS Deployment Agent prompt template."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Fetching content from: https://aws.amazon.com/startups/prompt-library/full-aws-deployment-agent (searching for: system prompt agent deployment AWS DevOps) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+[38;5;244m - Completed in 1.781s[0m
+[38;5;12m[1m [1.20][0m[0m
+
+[38;5;10m ✓ [0mFetched 10063 bytes (selective) from URL
+[38;5;244m - Completed in 2.126s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|AWS prompt library\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"AWS Startup Prompt Library has a Full AWS Deployment Agent with structured sections: safety_protocol, infrastructure_standards, service_recommendations, decision_criteria. Great template for enhanced prompt design."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Searching the web for: awslabs agent-plugins AWS coding agents architecture deploy operate[38;5;244m (using tool: web_search)[0m
+[38;5;244m - Completed in 1.807s[0m
+[38;5;12m[1m [1.22][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.17s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: CLAUDE.md AGENTS.md coding agent project rules file best practices examples[38;5;244m (using tool: web_search)[0m
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+
+[38;5;10m ✓ [0mFound 12 search results
+[38;5;244m - Completed in 15.727s[0m
+[38;5;12m[1m [1.24][0m[0m
+[38;5;244m - Completed in 7.36s[0m
+[38;5;12m[1m [1.25][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: kiro steering file example aws project conventions deployment[38;5;244m (using tool: web_search)[0m
+Searching the web for: Amazon Bedrock samples repository structure notebooks agents knowledge-bases[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.766s[0m
+[38;5;12m[1m [1.26][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.364s[0m
+[38;5;12m[1m [1.27][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Kiro steering research\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"aws-samples/sample-kiro-steering-studio exists as reference. Kiro uses .kiro/steering/ markdown files for persistent project context. awslabs/aidlc-workflows provides AI-DLC adaptive workflow steering rules."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Fetching content from: https://github.com/awsdataarchitect/kiro-best-practices/blob/main/.kiro/steer... (searching for: steering conventions rules deployment) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+[38;5;244m - Completed in 1.561s[0m
+[38;5;12m[1m [1.28][0m[0m
+
+[38;5;10m ✓ [0mFetched 6441 bytes (selective) from URL
+[38;5;244m - Completed in 2.865s[0m
+[38;5;12m[1m [1.29][0m[0m
+[?25l[0m[?25l[0m[0mSearching the web for: aws-samples autonomous cloud coding agents ABCA prompt guide structure[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.101s[0m
+[38;5;12m[1m [1.30][0m[0m
+[?25l[0m[?25l[0m[0mFetching content from: https://aws-samples.github.io/sample-autonomous-cloud-coding-agents/customizi... (searching for: prompt quality structure sections context constraints) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+
+[38;5;10m ✓ [0mFetched 32042 bytes (selective) from URL
+[38;5;244m - Completed in 2.85s[0m
+[38;5;12m[1m [1.31][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|ABCA prompt guide\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"ABCA prompt guide: CLAUDE.md is single most impactful thing. Should include Build commands, Conventions, Architecture sections. Repo-level instructions loaded automatically. Describe end state not steps."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.890s[0m
+[38;5;12m[1m [1.32][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me check directives and write the final findings:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+{"from":"head","to":"all","directive":"HEAD has read the full project. Key facts confirmed: 40 notebooks, 8 service dirs (bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, opensearch, sagemaker, notebooks), CI already exists (.github/workflows/ci.yml + ec2-integration.yml). Agent prompt found at ~/.kiro/agents/aws-samples-agent.json (1343 chars). Focus remaining work on: (1) gaps in current prompt vs actual project, (2) missing dirs in prompt (opensearch, sagemaker, notebooks), (3) wrong tech stack claim (prompt says SAM/CloudFormation but project uses Jupyter notebooks + Terraform + Docker/ECR)."}
+{"from":"head","to":"c1-internet","directive":"Stop searching for generic agent prompt patterns. Focus: what are best practices for Jupyter notebook CI/CD agent prompts? What should an agent know about nbstripout, ruff on .ipynb, nbformat validation?"}
+{"from":"head","to":"c4-docs","directive":"Focus on: AWS Bedrock AgentCore deployment docs (bedrock_agentcore deploy CLI), SageMaker Terraform patterns, OpenSearch AOSS resource creation patterns. These are the actual deploy patterns in this repo."}
+{"from":"head","to":"c5-internal","directive":"REDIRECT: Current prompt has 3 factual errors: (1) says SAM/CloudFormation but project uses Jupyter+Terraform+Docker, (2) missing dirs: opensearch, sagemaker, notebooks, (3) make test does not exist — correct target is make test-mac. Draft the corrected Critical Rules and Key Directories sections."}
+[38;5;244m - Completed in 1.428s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: Jupyter notebook CI/CD agent nbstripout ruff ipynb validation best practices[38;5;244m (using tool: web_search)[0m
+Searching the web for: nbformat validate notebook pre-commit hooks nbstripout CI pipeline[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.181s[0m
+[38;5;12m[1m [1.34][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.55s[0m
+[38;5;12m[1m [1.35][0m[0m
+[?25l[0m[?25l[?25l[0m[0mSearching the web for: ruff check jupyter notebook ipynb linting 2024 2025 configuration[38;5;244m (using tool: web_search)[0m
+Searching the web for: microsoft ai-agents-for-beginners jupyter-notebook SKILL.md agent skill[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.296s[0m
+[38;5;12m[1m [1.36][0m[0m
+
+[38;5;10m ✓ [0mFound 11 search results
+[38;5;244m - Completed in 3.461s[0m
+[38;5;12m[1m [1.37][0m[0m
+[?25l[0m[?25l[0m[0mFetching content from: https://skillsmp.com/skills/microsoft-ai-agents-for-beginners-translations-en... (searching for: notebook skill structure conventions cells markdown) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+
+[38;5;10m ✓ [0mFetched 10111 bytes (selective) from URL
+[38;5;244m - Completed in 2.631s[0m
+[38;5;12m[1m [1.38][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Notebook agent skills\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"Microsoft Jupyter Notebook Skill: keep cells focused on one step, add markdown explaining purpose, avoid large outputs, validate top-to-bottom. Ruff supports .ipynb natively with per-file-ignores for E402."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 3.7s[0m
+[38;5;12m[1m [1.39][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me write the comprehensive findings file:[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/findings.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mInternet Research Findings: Enhance aws-samples-agent[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m1. What Samples Exist in Each Subdirectory (from public repos)[K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBased on web research of the aws-samples ecosystem:[K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock/[K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSource[38;2;235;203;139m**[38;2;191;97;106m: [38;2;208;135;112m[[38;2;208;135;112maws-samples/amazon-bedrock-samples[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/aws-samples/amazon-bedrock-samples[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Contains examples for all foundational models on Amazon Bedrock[K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Typical structure: Jupyter notebooks organized by use case (agents, knowledge-bases, RAG, multimodal)[K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Categories: [38;2;163;190;140m`[38;2;163;190;140magents-and-function-calling/[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mintroduction-to-bedrock/[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mknowledge-bases/[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock-agentcore/[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSource[38;2;235;203;139m**[38;2;191;97;106m: [38;2;208;135;112m[[38;2;208;135;112mawslabs/amazon-bedrock-agentcore-samples[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/awslabs/amazon-bedrock-agentcore-samples[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Python-based agent deployment to AgentCore Runtime[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Uses AgentCore CLI or SDK for deployment[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Supports frameworks: Strands Agents, LangGraph, Google ADK, OpenAI Agents[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mArchitecture[38;2;235;203;139m**[38;2;191;97;106m: ARM64 required, serverless environments, entrypoint.py pattern[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock-media-type-mismatch/[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mLikely demonstrates/troubleshoots the Bedrock Converse API media type validation issue[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Common error: "The provided image does not match the specified image format"[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Related to multimodal content handling where type must be explicitly specified (defaults to text)[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;208;135;112m[[38;2;208;135;112mAWS docs on multimodal KB troubleshooting[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://docs.aws.amazon.com/bedrock/latest/userguide/kb-multimodal-troubleshooting.html[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mdatazone/[K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSource[38;2;235;203;139m**[38;2;191;97;106m: [38;2;208;135;112m[[38;2;208;135;112maws-samples/data-mesh-datazone-cdk-cloudformation[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/aws-samples/data-mesh-datazone-cdk-cloudformation[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Enterprise data mesh with Amazon DataZone[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Uses CDK and CloudFormation infrastructure[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mglue/[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSource[38;2;235;203;139m**[38;2;191;97;106m: [38;2;208;135;112m[[38;2;208;135;112maws-samples/aws-glue-samples[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/aws-samples/aws-glue-samples[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m PySpark ETL jobs, Python Shell jobs[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Patterns: CDK-based CI/CD for Glue ([38;2;208;135;112m[[38;2;208;135;112maws-glue-cdk-cicd[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/aws-samples/aws-glue-cdk-cicd[38;2;208;135;112m)[38;2;191;97;106m)[K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mopensearch/ (confirmed by head agent)[K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mLikely Amazon OpenSearch Serverless (AOSS) samples[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Common pattern: vector database for RAG, knowledge base backing store[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179msagemaker/ (confirmed by head agent)[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mTerraform-based deployment patterns (per head agent directive)[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Training, inference, model deployment[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mnotebooks/ (confirmed by head agent)[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mStandalone Jupyter notebooks (~40 total across project)[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m2. Makefile Structure (from web patterns)[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206mCommon aws-samples Makefile patterns found:[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mCDK Python projects[38;2;235;203;139m**[38;2;192;197;206m (aws-samples/aws-cdk-project-structure-python):[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mscripts/install-deps.sh[38;2;163;190;140m`[38;2;191;97;106m + [38;2;163;190;140m`[38;2;163;190;140mscripts/run-tests.sh[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mnpx cdk deploy <StackName>[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mpip-compile[38;2;163;190;140m`[38;2;191;97;106m for dependency management[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mHead agent confirmed[38;2;235;203;139m**[38;2;192;197;206m: The actual project uses [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;192;197;206m (NOT [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m).[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m3. Languages/Frameworks Used[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Service [38;2;192;197;206m|[38;2;192;197;206m Primary Language [38;2;192;197;206m|[38;2;192;197;206m Framework/Tools [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m Jupyter notebooks, boto3, Bedrock SDK [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock AgentCore [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m AgentCore CLI/SDK, Strands, LangGraph [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone [38;2;192;197;206m|[38;2;192;197;206m Python/TypeScript [38;2;192;197;206m|[38;2;192;197;206m CDK, CloudFormation [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m PySpark, Glue ETL libraries [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m OpenSearch [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m OpenSearch client, AOSS [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m SageMaker [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m Terraform, SageMaker SDK [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mKey correction from head agent[38;2;235;203;139m**[38;2;192;197;206m: Project uses Jupyter + Terraform + Docker/ECR, NOT SAM/CloudFormation as the current prompt claims.[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m4. Deployment Patterns[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Sample [38;2;192;197;206m|[38;2;192;197;206m Deployment Method [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m------------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock notebooks [38;2;192;197;206m|[38;2;192;197;206m Manual execution (Jupyter) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock AgentCore [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140magentcore deploy[38;2;163;190;140m`[38;2;192;197;206m CLI, direct code deployment (.zip), Docker containers [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone [38;2;192;197;206m|[38;2;192;197;206m CDK/CloudFormation stacks [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue [38;2;192;197;206m|[38;2;192;197;206m CDK-based CI/CD pipelines [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m SageMaker [38;2;192;197;206m|[38;2;192;197;206m Terraform [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m General [38;2;192;197;206m|[38;2;192;197;206m Docker/ECR for containerized workloads [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m5. What the Enhanced Prompt Should Contain[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mBest Practices from Research[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mA. Optimal Agent Prompt Structure[38;2;235;203;139m**[38;2;192;197;206m (from [38;2;208;135;112m[[38;2;208;135;112mroborhythms.com[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://www.roborhythms.com/fix-agent-tool-hallucinations-4-section-prompt/[38;2;208;135;112m)[38;2;192;197;206m):[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206mFour sections in order:[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;191;97;106mRole and scope[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m Tools with strict schemas[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m Decision rules[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m Output format[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mB. AWS Startup Prompt Library Reference[38;2;235;203;139m**[38;2;192;197;206m ([38;2;208;135;112m[[38;2;208;135;112mFull AWS Deployment Agent[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://aws.amazon.com/startups/prompt-library/full-aws-deployment-agent[38;2;208;135;112m)[38;2;192;197;206m):[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;192;197;206mUses XML-tagged sections:[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m<safety_protocol>[38;2;163;190;140m`[38;2;191;97;106m - pause on risky actions[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m<infrastructure_standards>[38;2;163;190;140m`[38;2;191;97;106m - MUST-follow constraints[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m<service_recommendations>[38;2;163;190;140m`[38;2;191;97;106m - decision tables[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m<decision_criteria>[38;2;163;190;140m`[38;2;191;97;106m - when to choose what[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mC. ABCA (Autonomous Background Coding Agents) Prompt Guide[38;2;235;203;139m**[38;2;192;197;206m ([38;2;208;135;112m[[38;2;208;135;112maws-samples[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://aws-samples.github.io/sample-autonomous-cloud-coding-agents/customizing/prompt-engineering/[38;2;208;135;112m)[38;2;192;197;206m):[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106m"CLAUDE.md is the single most impactful thing you can add"[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Should include: Build commands, Conventions, Architecture sections[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Describe end state, not steps[K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m State constraints and define success[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Point to the right area (file paths)[K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mD. Kiro Steering Best Practices[38;2;235;203;139m**[38;2;192;197;206m ([38;2;208;135;112m[[38;2;208;135;112mkiro.dev[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://kiro.dev/docs/cli/steering/[38;2;208;135;112m)[38;2;192;197;206m):[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140m.kiro/steering/[38;2;163;190;140m`[38;2;191;97;106m markdown files for persistent project context[K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Frontmatter with [38;2;163;190;140m`[38;2;163;190;140minclusion: always[38;2;163;190;140m`[38;2;191;97;106m for critical rules[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Reference: [38;2;208;135;112m[[38;2;208;135;112mawsdataarchitect/kiro-best-practices[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/awsdataarchitect/kiro-best-practices[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Reference: [38;2;208;135;112m[[38;2;208;135;112maws-samples/sample-kiro-steering-studio[38;2;208;135;112m][38;2;208;135;112m([38;2;208;135;112mhttps://github.com/aws-samples/sample-kiro-steering-studio[38;2;208;135;112m)[K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mE. Jupyter Notebook Agent Conventions[38;2;235;203;139m**[38;2;192;197;206m (from Microsoft SKILL.md + community):[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mKeep each code cell focused on one step[K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Add markdown cells explaining purpose and expected result[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Validate notebooks top-to-bottom[K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Use [38;2;163;190;140m`[38;2;163;190;140mruff check[38;2;163;190;140m`[38;2;191;97;106m natively on [38;2;163;190;140m`[38;2;163;190;140m.ipynb[38;2;163;190;140m`[38;2;191;97;106m files[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Configure per-file-ignores: [38;2;163;190;140m`[38;2;163;190;140m"*.ipynb" = ["E402"][38;2;163;190;140m`[38;2;191;97;106m in pyproject.toml[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Use [38;2;163;190;140m`[38;2;163;190;140mnbstripout[38;2;163;190;140m`[38;2;191;97;106m as git filter/pre-commit hook to strip outputs[K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mnbformat[38;2;163;190;140m`[38;2;191;97;106m for validation[K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mRecommended Enhanced Prompt Sections[K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBased on all research, the enhanced prompt should contain:[K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mCritical Rules[38;2;235;203;139m**[38;2;191;97;106m (highest ROI per shared learnings):[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m SANITIZE AWS account IDs in all outputs[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Verify factual claims against actual source code[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Use [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;191;97;106m not [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Notebooks are the primary artifact type (not Lambda/SAM)[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mProject Architecture[38;2;235;203;139m**[38;2;191;97;106m:[K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m 8 service directories: bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, opensearch, sagemaker, notebooks[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m ~40 Jupyter notebooks total[K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m CI: [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ci.yml[38;2;163;190;140m`[38;2;191;97;106m + [38;2;163;190;140m`[38;2;163;190;140mec2-integration.yml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mTechnology Stack[38;2;235;203;139m**[38;2;191;97;106m:[K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Python (primary), Jupyter notebooks[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Terraform (not CloudFormation/SAM)[K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Docker/ECR for containerized workloads[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m AgentCore CLI for Bedrock agent deployment[K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m CDK for some infrastructure[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mDeployment Patterns per Service[38;2;235;203;139m**[38;2;191;97;106m (decision table)[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mNotebook Conventions[38;2;235;203;139m**[38;2;191;97;106m:[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Cell structure rules[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Linting with ruff[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Output stripping for git[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Validation requirements[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;191;97;106m6[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mBuild/Test Commands[38;2;235;203;139m**[38;2;191;97;106m:[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m Actual Makefile targets (make test-mac, etc.)[K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;191;97;106m   [38;2;191;97;106m-[38;2;191;97;106m How to validate notebooks[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSources[K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/aws-samples/amazon-bedrock-samples[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/awslabs/amazon-bedrock-agentcore-samples[K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m. [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock-agentcore/latest/devguide/runtime-get-started-code-deploy-python[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/aws-samples/aws-glue-samples[K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/aws-samples/data-mesh-datazone-cdk-cloudformation[K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [38;2;191;97;106m6[38;2;191;97;106m. [38;2;191;97;106mhttps://aws.amazon.com[38;2;191;97;106m/startups/prompt-library/full-aws-deployment-agent[K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;191;97;106m7[38;2;191;97;106m. [38;2;191;97;106mhttps://aws-samples.github.io[38;2;191;97;106m/sample-autonomous-cloud-coding-agents/customizing/prompt-engineering/[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [38;2;191;97;106m8[38;2;191;97;106m. [38;2;191;97;106mhttps://kiro.dev[38;2;191;97;106m/docs/cli/steering/[K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;191;97;106m9[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/awsdataarchitect/kiro-best-practices[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [38;2;191;97;106m10[38;2;191;97;106m. [38;2;191;97;106mhttps://www.roborhythms.com[38;2;191;97;106m/fix-agent-tool-hallucinations-4-section-prompt/[K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;191;97;106m11[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/aws-samples/aws-cdk-project-structure-python[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;191;97;106m12[38;2;191;97;106m. [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/kb-multimodal-troubleshooting[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;191;97;106m13[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/awslabs/agent-plugins[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;191;97;106m14[38;2;191;97;106m. [38;2;191;97;106mhttps://github.com[38;2;191;97;106m/microsoft/ai-agents-for-beginners[38;2;191;97;106m (Jupyter Notebook SKILL.md)[K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;191;97;106m15[38;2;191;97;106m.[38;2;191;97;106m [38;2;191;97;106mhttps://docs.astral.sh[38;2;191;97;106m/ruff/linter/[38;2;191;97;106m (ruff .ipynb support)[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/findings.md[0m
+[38;5;244m - Completed in 1.916s[0m
+[38;5;12m[1m [1.40][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Findings written\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes && echo '{"from":"c1-internet","finding":"COMPLETE: Wrote findings.md covering all 5 questions. Key insight: enhanced prompt needs Jupyter notebook conventions, correct tech stack (Terraform not SAM), 8 service dirs, and ABCA-style CLAUDE.md structure with Build/Conventions/Architecture sections."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 4.921s[0m
+[38;5;12m[1m [1.41][0m[0m
+[?25l[0m[38;5;141m> [0mInvestigation complete. Findings written to [38;5;10m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/findings.md[0m.[0m[0m
+[0m[0m
+Key discoveries:[0m[0m
+- The project is primarily Jupyter notebooks + Terraform + Docker/ECR (not SAM/CloudFormation as the current prompt claims)[0m[0m
+- Best agent prompt structure follows 4 sections: role/scope, tools, decision rules, output format[0m[0m
+- ABCA's prompt guide says "CLAUDE.md is the single most impactful thing" — should include Build commands, Conventions, Architecture[0m[0m
+- Notebook-specific agent conventions exist (Microsoft SKILL.md pattern) covering cell structure, ruff linting, nbstripout[0m[0m
+- AWS Startup Prompt Library provides a production-quality template with XML-tagged constraint ]9;Response completesections[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 4.82 • Time: 4m 56s
+
+[0m[1G[0m[0m[?25h

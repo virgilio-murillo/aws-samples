@@ -1,0 +1,606 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 21.53s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mmkdir -p /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal && printf '%s|Starting internal search\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.168s[0m
+[38;5;12m[1m [1.1][0m[0m
+[38;5;244m - Completed in 1.591s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[38;5;141m> [0mNo directives yet. Let me first examine the project structure locally, then search internal sources for best practices on aws-samples repos and agent prompts.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mBatch fs_read operation with [38;5;141m2[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading directory: [38;5;141m/Users/murivirg/work/github/aws-samples[0m
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/Makefile[0m, all linesRunning tool [38;5;141mInternalSearch[0m with the param[38;5;244m (from mcp server: builder-mcp)[0m
+ ⋮  {
+ ⋮    "query": "aws-samples github repository best practices agent prompt",
+ ⋮    "domain": "WIKI"
+ ⋮  }
+[0m
+[38;5;10m ✓ [0mSuccessfully read directory [38;5;141m/Users/murivirg/work/github/aws-samples[0m [38;5;244m(539 entries)[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m546 bytes[0m from /Users/murivirg/work/github/aws-samples/Makefile
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 2 operations processed, 2 successful, 0 failed
+[38;5;244m - Completed in 1.768s[0m
+[38;5;12m[1m [1.3][0m[0m
+[38;5;244m - Completed in 2.599s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[38;5;141m> [0mInternalSearch requires Midway auth. Let me try other internal tools and also read the existing project files to understand the structure better.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading project files\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m4[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/README.md[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/pyproject.toml[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/TASK.md[0m, all lines
+↱ Operation 4: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml[0m, all lines[38;5;244m - Completed in 1.916s[0m
+[38;5;12m[1m [1.5][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2230 bytes[0m from /Users/murivirg/work/github/aws-samples/README.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m282 bytes[0m from /Users/murivirg/work/github/aws-samples/pyproject.toml
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m567 bytes[0m from /Users/murivirg/work/github/aws-samples/TASK.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m685 bytes[0m from /Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 4 operations processed, 4 successful, 0 failed
+[38;5;244m - Completed in 1.870s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[?25l[0m[0mBatch fs_read operation with [38;5;141m4[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/requirements-ci.txt[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/scripts/validate_notebooks.py[0m, all lines
+↱ Operation 4: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/Dockerfile[0m, all linesRunning tool [38;5;141mAtlas[0m with the param[38;5;244m (from mcp server: builder-mcp)[0m
+ ⋮  {
+ ⋮    "entities": [
+ ⋮      {
+ ⋮        "entityId": "awssamples",
+ ⋮        "contentDetail": "DESCRIPTION",
+ ⋮        "relationshipDetail": "LIST"
+ ⋮      },
+ ⋮      {
+ ⋮        "entityId": "bedrockagentcore",
+ ⋮        "contentDetail": "DESCRIPTION",
+ ⋮        "relationshipDetail": "LIST"
+ ⋮      },
+ ⋮      {
+ ⋮        "entityId": "strandsagents",
+ ⋮        "contentDetail": "DESCRIPTION",
+ ⋮        "relationshipDetail": "LIST"
+ ⋮      }
+ ⋮    ]
+ ⋮  }
+[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2451 bytes[0m from /Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m45 bytes[0m from /Users/murivirg/work/github/aws-samples/requirements-ci.txt
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m694 bytes[0m from /Users/murivirg/work/github/aws-samples/scripts/validate_notebooks.py
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m683 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/Dockerfile
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 4 operations processed, 4 successful, 0 failed
+[38;5;244m - Completed in 2.342s[0m
+[38;5;12m[1m [1.7][0m[0m
+[38;5;244m - Completed in 2.963s[0m
+[38;5;12m[1m [1.8][0m[0m
+[?25l[0m[38;5;141m> [0mMidway auth is expired for internal tools. Let me continue with what I can access - the local project structure and SearchSoftwareRecommendations which may not require Midway.[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mRunning tool [38;5;141mSearchSoftwareRecommendations[0m with the param[38;5;244m (from mcp server: builder-mcp)[0m
+ ⋮  {
+ ⋮    "keyword": "agent prompt engineering best practices"
+ ⋮  }
+[0mBatch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/requirements.txt[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml[0m, all lines[38;5;244m - Completed in 3.310s[0m
+[38;5;12m[1m [1.9][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2712 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m81 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/requirements.txt
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2695 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 1.364s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mecho '{"from":"c5-internal","finding":"Midway auth expired - cannot access Atlas/InternalSearch/SearchSoftwareRecommendations. Proceeding with local project analysis only."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb[0m, from line [38;5;141m1[0m to [38;5;141m30[0m
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/README.md[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/glue/apache-iceberg-johonny-chivers.md[0m, all lines[38;5;244m - Completed in 4.162s[0m
+[38;5;12m[1m [1.11][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m1011 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m4135 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/README.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m4862 bytes[0m from /Users/murivirg/work/github/aws-samples/glue/apache-iceberg-johonny-chivers.md
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 1.643s[0m
+[38;5;12m[1m [1.12][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Analyzing all subdirs\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb[0m, from line [38;5;141m1[0m to [38;5;141m20[0m
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/README.md[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb[0m, from line [38;5;141m1[0m to [38;5;141m25[0m[38;5;244m - Completed in 2.16s[0m
+[38;5;12m[1m [1.13][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m787 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m5696 bytes[0m from /Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/README.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m419 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 1.486s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*" -not -path "*/.kiro-shadow/*" | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.py" -not -path "*/.venv/*" -not -path "*/investigation/*" -not -path "*/kiro-*" -not -path "*/.kiro-shadow/*" | sort[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent_stream.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/common-errors/RAG_with_query_decomposition.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/100_limit.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/csutom_data_source_2.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/custom_datasource.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/model-import/import_IBM_granite.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/testing/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+/Users/murivirg/work/github/aws-samples/glue/pyspark-tutorial-glue.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/getting_started.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/ml_analysis_with_tests.ipynb
+/Users/murivirg/work/github/aws-samples/opensearch/create-resources/AOSS_resource_creation.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/inference_recommender.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/anomaly-detection-processing.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/retail_sales_prediction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+[38;5;244m - Completed in 1.599s[0m
+[38;5;12m[1m [1.15][0m[0m
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_boto3.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_langchain.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_boto3_real_jpeg.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_langchain_mismatch.py
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/6g_upload_test.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/complete_demo.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/create_test_image.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/stability_upscale.py
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/code/inference.py
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/inference_script.py
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/standalone_region_training_test.py
+/Users/murivirg/work/github/aws-samples/scripts/validate_notebooks.py
+[38;5;244m - Completed in 1.949s[0m
+[38;5;12m[1m [1.16][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Examining deploy patterns\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m3[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb[0m, from line [38;5;141m1[0m to [38;5;141m30[0m
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/.libs.json[0m, all lines
+↱ Operation 3: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/SAGEMAKER_UNIFIED_STUDIO_README.md[0m, from line [38;5;141m1[0m to [38;5;141m50[0m[38;5;244m - Completed in 1.425s[0m
+[38;5;12m[1m [1.17][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m772 bytes[0m from /Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m424 bytes[0m from /Users/murivirg/work/github/aws-samples/.libs.json
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m3926 bytes[0m from /Users/murivirg/work/github/aws-samples/SAGEMAKER_UNIFIED_STUDIO_README.md
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 3 operations processed, 3 successful, 0 failed
+[38;5;244m - Completed in 1.518s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/sagemaker/terraform -type f -not -path "*/.terraform/*" | head -30[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI -name "*.tf" | head -20[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/LICENSE.txt
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/outputs.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_user.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_spaces.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/variables.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/provider.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/vpc.tf
+[38;5;244m - Completed in 1.881s[0m
+[38;5;12m[1m [1.19][0m[0m
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/outputs.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_user.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_spaces.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/variables.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/provider.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/vpc.tf
+[38;5;244m - Completed in 1.508s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho '{"from":"c5-internal","finding":"Project has 40 notebooks, 13 .py files across 8 service dirs. Languages: Python (boto3, strands-agents, langchain), Terraform (HCL), PySpark. Deploy patterns: Docker+ECR+AgentCore, SageMaker Processing, Terraform IaC, GitHub Actions CI/CD with EC2 runners."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.543s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me look at the existing agent prompt and the kiro-notes for context on what the enhanced prompt should contain:[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name ".kiro" -o -name "*.prompt" -o -name "AGENT*" -o -name "agent*" 2>/dev/null | grep -v ".kiro-shadow" | grep -v ".venv"[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m2[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/kiro-notes/001_notes_repo_baseline.md[0m, all lines/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime
+[38;5;244m - Completed in 2.31s[0m
+[38;5;12m[1m [1.22][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m179 bytes[0m from /Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m371 bytes[0m from /Users/murivirg/work/github/aws-samples/kiro-notes/001_notes_repo_baseline.md
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 2 operations processed, 2 successful, 0 failed
+[38;5;244m - Completed in 1.407s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name ".kiro" -type d 2>/dev/null | grep -v ".kiro-shadow"[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.41s[0m
+[38;5;12m[1m [1.24][0m[0m
+[38;5;244m - Completed in 1.492s[0m
+[38;5;12m[1m [1.25][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.md" -path "*kiro*" -not -path "*investigation*" -not -path "*kiro-shadow*" | sort; find /Users/murivirg/work/github/aws-samples -name "prompt*" -o -name "*system*prompt*" -o -name ".cursorrules" -o -name ".clinerules" 2>/dev/null | grep -v ".kiro-shadow" | grep -v ".venv" | grep -v investigation[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/kiro-notes/001_notes_repo_baseline.md
+/Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+[38;5;244m - Completed in 23.392s[0m
+[38;5;12m[1m [1.26][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name ".kirorules" -o -name "CONVENTIONS*" -o -name "CONTRIBUTING*" 2>/dev/null | grep -v ".kiro-shadow" | grep -v ".venv" | grep -v investigation[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/recommendations.md 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.571s[0m
+[38;5;12m[1m [1.27][0m[0m
+# Early Recommendations
+
+_Waiting for initial findings..._
+[38;5;244m - Completed in 1.773s[0m
+[38;5;12m[1m [1.28][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me look at the existing investigation report from the previous run to understand what was already found:[0m[0m
+[?25l[0m[0mReading file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md[0m, from line [38;5;141m1[0m to [38;5;141m100[0m[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m4626 bytes[0m from /Users/murivirg/work/github/aws-samples/investigation/d1f13164/final_report.md
+[38;5;244m - Completed in 1.624s[0m
+[38;5;12m[1m [1.29][0m[0m
+[?25l[0m[38;5;141m> [0mGood, I have comprehensive context now. Let me also check what the current agent prompt looks like (the task mentions ~1343 chars):[0m[0m
+[?25l[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.md" -path "*agent*" -not -path "*investigation*" -not -path "*kiro-shadow*" 2>/dev/null; find /Users/murivirg/work/github/aws-samples -name "system_prompt*" -not -path "*investigation*" -not -path "*kiro-shadow*" 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/README.md
+[38;5;244m - Completed in 3.403s[0m
+[38;5;12m[1m [1.30][0m[0m
+{"from":"c3-context","finding":"Project is Python-heavy: Jupyter notebooks + .py scripts. Makefile has lint/validate/strip-check/test-mac targets using ruff + nbstripout + venv"}
+{"from":"c1-internet","finding":"aws-samples/amazon-bedrock-samples is the main Bedrock samples repo; awslabs/amazon-bedrock-agentcore-samples for Agentcore; CDK patterns common for deployment"}
+{"from":"c2-kb","finding":"KB has lessons on bedrock/ (agent-runtime, batch, fine-tuning, model-import, prompt-caching, stability-upscaling) and bedrock-agentcore/ (gateway, Cedar, Strands, MCP)"}
+{"from":"c4-docs","finding":"Found AWS docs for Glue (PySpark ETL, CDK constructs), DataZone (data catalog/governance), Bedrock Agents (action groups, knowledge bases, flows), and Bedrock AgentCore (datasets, schema validation)"}
+{"from":"c1-internet","finding":"Bedrock Agentcore uses Python + AgentCore CLI/SDK, ARM64 arch, supports Strands/LangGraph/OpenAI Agents frameworks. Glue samples use PySpark ETL. DataZone uses CDK+CloudFormation for data mesh."}
+{"from":"c5-internal","finding":"Midway auth expired - cannot access Atlas/InternalSearch/SearchSoftwareRecommendations. Proceeding with local project analysis only."}
+{"from":"c3-context","finding":"bedrock-agentcore uses Strands SDK + Docker + BedrockAgentCoreApp for deployment to Bedrock AgentCore runtime. Has .bedrock_agentcore.yaml with ECR/CodeBuild/IAM config"}
+{"from":"c4-docs","finding":"Bedrock AgentCore is a modular platform with 12 services: Runtime, Harness, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Payments, Evaluations, Policy, Registry. Supports MCP, A2A protocols, any framework (CrewAI, LangGraph, Strands)."}
+{"from":"c2-kb","finding":"Makefile has 4 targets: lint (ruff), validate (notebook JSON), strip-check (nbstripout), test-mac (all). CI uses GitHub Actions with same checks. Python 3.11, ruff linter, nbstripout for notebook hygiene."}
+{"from":"c1-internet","finding":"Best agent prompt structure: 4 sections - role/scope, tools/schemas, decision rules, output format. Critical Rules section has highest ROI. Kiro uses .kiro/steering/ for persistent project context."}
+{"from":"c5-internal","finding":"Project has 40 notebooks, 13 .py files across 8 service dirs. Languages: Python (boto3, strands-agents, langchain), Terraform (HCL), PySpark. Deploy patterns: Docker+ECR+AgentCore, SageMaker Processing, Terraform IaC, GitHub Actions CI/CD with EC2 runners."}
+{"from":"c2-kb","finding":"bedrock-agentcore uses Docker+CodeBuild+ECR for deployment to AgentCore runtime. Strands agent pattern with .bedrock_agentcore.yaml config. Account 794038231401 us-east-1."}
+{"from":"c1-internet","finding":"CDK Python project pattern: scripts/install-deps.sh + scripts/run-tests.sh, npx cdk deploy, pip-compile for deps. AWS Startup Prompt Library has Full AWS Deployment Agent prompt template."}
+{"from":"c4-docs","finding":"Bedrock Converse API ContentBlock supports: text, image (ImageBlock with format+bytes/s3), document (DocumentBlock requires accompanying text), video, toolUse, toolResult, guardContent. Key media type mismatch risk: DocumentBlock REQUIRES text field alongside it."}
+{"from":"c1-internet","finding":"AWS Startup Prompt Library has a Full AWS Deployment Agent with structured sections: safety_protocol, infrastructure_standards, service_recommendations, decision_criteria. Great template for enhanced prompt design."}
+{"from":"c3-context","finding":"Repo has 40 notebooks, 13 .py files, 16 .tf files, 5 Dockerfiles. Services: bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, opensearch, sagemaker. Deployment patterns: Docker+ECR (agentcore, sagemaker BYOC), Terraform (sagemaker), SageMaker Processing Jobs, Bedrock API calls"}
+{"from":"c2-kb","finding":"KB lessons on agent scoping: add Scope Boundaries section, Your Available Tools section, Critical Rules section. Explicit tool lists > wildcard. Leaf agents refuse out-of-scope. Non-leaf delegate."}
+{"from":"c1-internet","finding":"aws-samples/sample-kiro-steering-studio exists as reference. Kiro uses .kiro/steering/ markdown files for persistent project context. awslabs/aidlc-workflows provides AI-DLC adaptive workflow steering rules."}
+[38;5;244m - Completed in 1.569s[0m
+[38;5;12m[1m [1.31][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Writing findings file\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.657s[0m
+[38;5;12m[1m [1.32][0m[0m
+[?25l[0m[38;5;141m> [0mNow I have comprehensive data. Let me write the findings file:[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/findings.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mInternal Sources Investigation: Enhance aws-samples-agent[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mDate:[38;2;235;203;139m**[38;2;192;197;206m 2026-05-24[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mSource:[38;2;235;203;139m**[38;2;192;197;206m Local project analysis (Midway auth expired — Atlas/InternalSearch/SearchSoftwareRecommendations unavailable)[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mConfidence:[38;2;235;203;139m**[38;2;192;197;206m HIGH for project structure (direct filesystem), MEDIUM for best practices (derived from shared bus findings + prior investigation d1f13164)[K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m1. Samples in Each Subdirectory[K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock/ (19 notebooks, 4 .py files)[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Subdirectory [38;2;192;197;206m|[38;2;192;197;206m Content [38;2;192;197;206m|[38;2;192;197;206m Purpose [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m agent-runtime/ [38;2;192;197;206m|[38;2;192;197;206m invoke_agent.ipynb, invoke_agent_stream.ipynb [38;2;192;197;206m|[38;2;192;197;206m Bedrock Agent invocation patterns [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m batch-inference/ [38;2;192;197;206m|[38;2;192;197;206m batch-inference-35-haiku-cache.ipynb + batch-101-records.jsonl [38;2;192;197;206m|[38;2;192;197;206m Batch inference with caching [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock-marketplace/ [38;2;192;197;206m|[38;2;192;197;206m autogluon-forecasting-chronos-bolt-base/main.ipynb [38;2;192;197;206m|[38;2;192;197;206m Marketplace model deployment [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m common-errors/ [38;2;192;197;206m|[38;2;192;197;206m RAG_with_query_decomposition.ipynb [38;2;192;197;206m|[38;2;192;197;206m RAG troubleshooting patterns [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m fine-tuning/ [38;2;192;197;206m|[38;2;192;197;206m finetunning-nova-micro.jsonl (data only) [38;2;192;197;206m|[38;2;192;197;206m Fine-tuning data prep [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m miscellaneous/ [38;2;192;197;206m|[38;2;192;197;206m 10 notebooks: quickstart, cross-region-inference, conversation examples, custom datasource, knowledge bases, multimodal, 100_limit, 6g_upload_test.py [38;2;192;197;206m|[38;2;192;197;206m General Bedrock exploration [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m model-import/ [38;2;192;197;206m|[38;2;192;197;206m import_IBM_granite.ipynb [38;2;192;197;206m|[38;2;192;197;206m Custom model import [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m prompt-caching/ [38;2;192;197;206m|[38;2;192;197;206m prompt-caching-sonnet-3.7.ipynb [38;2;192;197;206m|[38;2;192;197;206m Prompt caching with Claude [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m stability-ai-upscale/ [38;2;192;197;206m|[38;2;192;197;206m 3 .py files + README + images [38;2;192;197;206m|[38;2;192;197;206m Image upscaling with Stability AI [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m testing/ [38;2;192;197;206m|[38;2;192;197;206m cross-region-inference.ipynb, invoke_agent_stream_scape_new_lines.ipynb [38;2;192;197;206m|[38;2;192;197;206m Testing/debugging [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock-agentcore/ (2 notebooks, 1 .py file)[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Subdirectory [38;2;192;197;206m|[38;2;192;197;206m Content [38;2;192;197;206m|[38;2;192;197;206m Purpose [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m gateway-cedar-policies/ [38;2;192;197;206m|[38;2;192;197;206m gateway_cedar_policies_setup.ipynb [38;2;192;197;206m|[38;2;192;197;206m Gateway + Cedar policy setup with Cognito OAuth [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m strands-agents/ [38;2;192;197;206m|[38;2;192;197;206m strands_claude.py, runtime_with_strands_and_bedrock_models.sync.ipynb, Dockerfile, .bedrock_agentcore.yaml, requirements.txt [38;2;192;197;206m|[38;2;192;197;206m Strands SDK agent deployed to AgentCore runtime [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mbedrock-media-type-mismatch/ (4 .py files)[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mbinary_search_boto3.py, binary_search_langchain.py — Bug reproduction scripts[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m test_boto3_real_jpeg.py, test_langchain_mismatch.py — Test files[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m bug_reproduction_report.md — Documentation of media type mismatch issue[K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mdatazone/ (2 notebooks)[K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106merror-creating-glossary-using-assumed-role/ — Reproduces glossary creation bug with assumed roles[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mglue/ (1 notebook + 1 markdown)[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mpyspark-tutorial-glue.ipynb — PySpark ETL tutorial[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m apache-iceberg-johonny-chivers.md — Apache Iceberg on AWS tutorial (Athena + S3 + CloudFormation)[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mopensearch/ (1 notebook)[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mcreate-resources/AOSS_resource_creation.ipynb — Amazon OpenSearch Serverless resource creation[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179msagemaker/ (13 notebooks, 2 .py files, 16 .tf files)[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Subdirectory [38;2;192;197;206m|[38;2;192;197;206m Content [38;2;192;197;206m|[38;2;192;197;206m Purpose [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m byoc-sm-jupyterlab/ [38;2;192;197;206m|[38;2;192;197;206m 3 notebooks (al2023, lustre, sagemaker-distribution) [38;2;192;197;206m|[38;2;192;197;206m BYOC JupyterLab images [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m inference-recommender/ [38;2;192;197;206m|[38;2;192;197;206m 2 notebooks + inference scripts + payload [38;2;192;197;206m|[38;2;192;197;206m SageMaker Inference Recommender [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m pipelines-sagemaker/ [38;2;192;197;206m|[38;2;192;197;206m 1 notebook [38;2;192;197;206m|[38;2;192;197;206m SageMaker Pipelines end-to-end [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m processing-custom-container/ [38;2;192;197;206m|[38;2;192;197;206m 1 notebook + Dockerfile + standalone_region_training_test.py [38;2;192;197;206m|[38;2;192;197;206m Custom container for anomaly detection [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m serverless-inference/ [38;2;192;197;206m|[38;2;192;197;206m 2 notebooks [38;2;192;197;206m|[38;2;192;197;206m Serverless inference walkthrough [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m terraform/ [38;2;192;197;206m|[38;2;192;197;206m 2 notebooks + 10 .tf files [38;2;192;197;206m|[38;2;192;197;206m Terraform IaC for EC2-to-notebook connectivity [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m (root) [38;2;192;197;206m|[38;2;192;197;206m retail_sales_prediction.ipynb [38;2;192;197;206m|[38;2;192;197;206m Retail ML prediction [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mnotebooks/ (2 notebooks)[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mgetting_started.ipynb — SageMaker Unified Studio intro[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m ml_analysis_with_tests.ipynb — ML analysis patterns[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m2. Makefile Structure[K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmakefile[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206mVENV := .venv[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206mPIP := $(VENV)/bin/pip[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206mPY := $(VENV)/bin/python[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206mFIND_NB := find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*"[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m.PHONY: lint validate strip-check test-mac[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m$(VENV):                    # Auto-creates venv + installs requirements-ci.txt[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;192;197;206mlint: $(VENV)               # ruff check .[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206mvalidate: $(VENV)           # python scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [38;2;192;197;206mstrip-check: $(VENV)        # nbstripout --verify on all notebooks[K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;192;197;206mtest-mac: lint validate strip-check  # Runs all checks locally[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mKey design decisions:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mVenv-based isolation (not system Python)[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Excludes investigation/ and kiro-* from notebook discovery[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mstrip-check[38;2;163;190;140m`[38;2;191;97;106m uses [38;2;163;190;140m`[38;2;163;190;140m--verify[38;2;163;190;140m`[38;2;191;97;106m flag (non-zero exit if outputs present)[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mtest-mac[38;2;163;190;140m`[38;2;191;97;106m is the local developer entrypoint[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m3. Languages [38;2;143;161;179m&[38;2;143;161;179m Frameworks[K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Language/Framework [38;2;192;197;206m|[38;2;192;197;206m Usage [38;2;192;197;206m|[38;2;192;197;206m Files [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mPython (boto3)[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Primary — all notebooks + scripts [38;2;192;197;206m|[38;2;192;197;206m 40 .ipynb, 13 .py [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mStrands Agents SDK[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Bedrock AgentCore agent framework [38;2;192;197;206m|[38;2;192;197;206m strands_claude.py [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mLangChain[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Media type mismatch testing [38;2;192;197;206m|[38;2;192;197;206m binary_search_langchain.py [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mTerraform (HCL)[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m SageMaker infrastructure [38;2;192;197;206m|[38;2;192;197;206m 16 .tf files [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mPySpark[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Glue ETL [38;2;192;197;206m|[38;2;192;197;206m 1 notebook [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mDocker[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Container builds for ECR [38;2;192;197;206m|[38;2;192;197;206m 2 Dockerfiles (agentcore, sagemaker) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mYAML[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m AgentCore config, GitHub Actions [38;2;192;197;206m|[38;2;192;197;206m .bedrock_agentcore.yaml, ci.yml, ec2-integration.yml [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mJSONL[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Batch inference data, fine-tuning data [38;2;192;197;206m|[38;2;192;197;206m 2 files [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mPython dependencies (from various requirements.txt):[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mCore: boto3, requests[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m AgentCore: strands-agents-tools, uv, bedrock-agentcore, bedrock-agentcore-starter-toolkit[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m SageMaker: pandas, joblib, numpy, rrcf, scipy, pyarrow, swifter[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m CI: nbstripout>=0.8.1, ruff>=0.6.0, nbformat>=5.9.0[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Image: pillow (stability-ai-upscale)[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m4. Deployment Patterns[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Pattern [38;2;192;197;206m|[38;2;192;197;206m Used By [38;2;192;197;206m|[38;2;192;197;206m Mechanism [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mBedrock AgentCore Runtime[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m bedrock-agentcore/strands-agents [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → CodeBuild → AgentCore Runtime (ARM64, HTTP, OTel) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mSageMaker Processing Jobs[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/processing-custom-container [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → SageMaker Processing API [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mTerraform IaC[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/terraform [38;2;192;197;206m|[38;2;192;197;206m terraform init/plan/apply for VPC, EC2, SageMaker Domain [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mDirect API calls[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Most bedrock/ notebooks [38;2;192;197;206m|[38;2;192;197;206m boto3 client calls (no deployment) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mGitHub Actions CI/CD[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m .github/workflows/ [38;2;192;197;206m|[38;2;192;197;206m ubuntu-latest + EC2 self-hosted runners (Ubuntu + Arch) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mSageMaker Notebook execution[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/byoc-sm-jupyterlab [38;2;192;197;206m|[38;2;192;197;206m BYOC images for JupyterLab spaces [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCloudFormation[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m glue/ (referenced) [38;2;192;197;206m|[38;2;192;197;206m Stack for S3 + Glue DB + Athena workgroup [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mAgentCore deployment flow (most complex):[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mbedrock-agentcore[38;2;163;190;140m`[38;2;191;97;106m CLI creates IAM roles, ECR repo, CodeBuild project[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m Docker build (ARM64) with opentelemetry-instrument entrypoint[K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m Push to ECR[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m CodeBuild triggers deployment to AgentCore Runtime[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m Agent accessible via HTTP with OAuth (Cognito) + Cedar policies[K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m5. Enhanced Prompt Recommendations[K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBased on shared bus findings (c1-internet found AWS Startup Prompt Library structure, c2-kb found agent scoping best practices), the enhanced prompt should contain:[K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mRecommended Structure (4 sections, per best practices):[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;143;161;179m####[38;2;192;197;206m [38;2;143;161;179mSection 1: Role [38;2;143;161;179m&[38;2;143;161;179m Scope[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mIdentity: "You are an AWS samples development assistant for this repository"[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Scope boundaries: Only operates within ~/work/github/aws-samples/[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Services covered: Bedrock, Bedrock AgentCore, SageMaker, Glue, OpenSearch, DataZone[K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Languages: Python (primary), Terraform (IaC), PySpark (Glue)[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;143;161;179m####[38;2;192;197;206m [38;2;143;161;179mSection 2: Tools [38;2;143;161;179m&[38;2;143;161;179m Available Resources[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mMakefile targets: lint, validate, strip-check, test-mac[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m CI pipeline: GitHub Actions (ci.yml, ec2-integration.yml)[K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Linting: ruff (pyproject.toml config, E/F/W rules, notebook-specific ignores)[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Notebook hygiene: nbstripout --verify[K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Validation: scripts/validate_notebooks.py (nbformat schema check)[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Docker: Dockerfiles in bedrock-agentcore/ and sagemaker/processing-custom-container/[K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m AgentCore CLI: .bedrock_agentcore.yaml for deployment config[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;143;161;179m####[38;2;192;197;206m [38;2;143;161;179mSection 3: Critical Rules (Highest ROI per shared learnings)[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mNEVER modify existing notebooks[38;2;235;203;139m**[38;2;191;97;106m — add new files only[K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSANITIZE AWS account IDs[38;2;235;203;139m**[38;2;191;97;106m before committing (seen: 2 in shared learnings)[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mVerify factual claims[38;2;235;203;139m**[38;2;191;97;106m against actual source code (seen: 6 in shared learnings)[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mRun [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;235;203;139m**[38;2;191;97;106m before suggesting commits[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mExclude investigation/ and kiro-* dirs[38;2;235;203;139m**[38;2;191;97;106m from notebook operations[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;191;97;106m6[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mUse inference profiles[38;2;235;203;139m**[38;2;191;97;106m for Bedrock models (not direct model IDs)[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [38;2;191;97;106m7[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mARM64 architecture[38;2;235;203;139m**[38;2;191;97;106m for AgentCore containers[K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;191;97;106m8[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mnbstripout --verify[38;2;235;203;139m**[38;2;191;97;106m (not --dry-run) for CI enforcement[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [38;2;191;97;106m9[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mruff extend-include = ["[38;2;180;142;173m*[38;2;180;142;173m.ipynb"]** already configured in pyproject.toml[K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;191;97;106m10[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mPer-file-ignores for notebooks[38;2;235;203;139m**[38;2;191;97;106m: E402, E501, F403, F405, E722, F821, E741, F841[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;143;161;179m####[38;2;192;197;206m [38;2;143;161;179mSection 4: Output Format [38;2;143;161;179m&[38;2;143;161;179m Conventions[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mNotebooks: nbformat v4.5, python3 kernel preferred[K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Python: 120 char line length, ruff E/F/W rules[K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m READMEs: Each service dir has one[K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m File organization: service-name/feature-name/files[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Docker: python:3.13-slim base, non-root user, EXPOSE 8080/8000[K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Terraform: provider.tf, variables.tf, outputs.tf, resource-specific .tf files[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mLimitations[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mMidway auth expired[38;2;235;203;139m**[38;2;191;97;106m: Could not access Atlas, InternalSearch (wikis/Sage/broadcasts), SearchSoftwareRecommendations, or TicketingReadActions[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mNo internal best practices retrieved[38;2;235;203;139m**[38;2;191;97;106m: Recommendations derived from local project analysis + shared bus findings from other agents[K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mAccount ID exposure[38;2;235;203;139m**[38;2;191;97;106m: .bedrock_agentcore.yaml contains account 794038231401 — this should be parameterized in the enhanced prompt's Critical Rules[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSummary[K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe aws-samples repo is a [38;2;235;203;139m**[38;2;235;203;139mpersonal learning/experimentation repository[38;2;235;203;139m**[38;2;192;197;206m with 40 notebooks and 13 Python scripts spanning 8 AWS services. It uses a [38;2;235;203;139m**[38;2;235;203;139mPython-first approach[38;2;235;203;139m**[38;2;192;197;206m with boto3 as the primary SDK. The most sophisticated deployment pattern is [38;2;235;203;139m**[38;2;235;203;139mBedrock AgentCore[38;2;235;203;139m**[38;2;192;197;206m (Docker → ECR → CodeBuild → Runtime). The CI/CD is already implemented via GitHub Actions + Makefile. The enhanced prompt should emphasize the Critical Rules section (highest ROI per shared learnings) and provide explicit tool/target references to avoid hallucination.[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/findings.md[0m
+[38;5;244m - Completed in 2.111s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Findings written done\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes && echo '{"from":"c5-internal","finding":"COMPLETE: Wrote findings.md with full analysis of all 8 subdirs, Makefile structure, languages (Python/Terraform/PySpark/Docker), 7 deployment patterns, and 4-section enhanced prompt recommendation with 10 Critical Rules."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.896s[0m
+[38;5;12m[1m [1.34][0m[0m
+[?25l[0m[38;5;141m> [0mInvestigation complete. Here's a summary of what I found and wrote to the findings file:[0m[0m
+[0m[0m
+[1mKey findings:[22m[0m[0m
+[0m[0m
+1. [1mSamples per subdirectory[22m: 8 service directories with 40 notebooks + 13 .py files. Bedrock is the largest (19 notebooks across 10 subdirs), followed by SageMaker (13 notebooks, plus Terraform IaC).[0m[0m
+[0m[0m
+2. [1mMakefile[22m: 4 targets (lint, validate, strip-check, test-mac) using a venv-based approach with ruff, nbstripout, and nbformat validation.[0m[0m
+[0m[0m
+3. [1mLanguages/Frameworks[22m: Python (boto3, Strands SDK, LangChain), Terraform HCL, PySpark, Docker, YAML configs.[0m[0m
+[0m[0m
+4. [1mDeployment patterns[22m: 7 distinct patterns ranging from simple API calls to full Bedrock AgentCore deployment (Docker→ECR→CodeBuild→Runtime with OAuth+Cedar).[0m[0m
+[0m[0m
+5. [1mEnhanced prompt recommendation[22m: 4-section structure (Role/Scope, Tools/Resources, Critical Rules, Output Format) with 10 specific Critical Rules — the highest-ROI section per shared learnings.[0m[0m
+[0m[0m
+[1mLimitation[22m: Midway auth was expired, so Atlas, InternalSearch, and SearchSoftwareRecommendations were all inaccessible. All findings are from direct local project analysis and cross-referencing with other agents' shared ]9;Response completefindings.[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 3.54 • Time: 4m 10s
+
+[0m[1G[0m[0m[?25h

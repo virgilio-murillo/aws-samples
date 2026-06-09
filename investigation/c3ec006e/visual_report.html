@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", Helvetica Neue, sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; max-width: 960px; margin: 40px auto; padding: 0 20px; background: #fff; }
+h1 { color: #232f3e; font-size: 22pt; border-bottom: 3px solid #ff9900; padding-bottom: 8px; }
+h2 { color: #0073bb; border-bottom: 2px solid #0073bb; padding-bottom: 4px; font-size: 16pt; margin-top: 2em; }
+h3 { color: #232f3e; font-size: 13pt; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 10pt; }
+th { background-color: #232f3e; color: white; padding: 8px; text-align: left; }
+td { border: 1px solid #ddd; padding: 6px 8px; }
+tr:nth-child(even) { background-color: #f8f8f8; }
+code { background: #f0f0f0; padding: 2px 5px; border-radius: 3px; font-size: 10pt; color: #c7254e; }
+pre { background: #1e1e2e; padding: 16px; border-radius: 8px; font-size: 9.5pt; white-space: pre-wrap; word-break: break-word; overflow-x: auto; }
+pre code { background: none; color: #cdd6f4; padding: 0; font-size: inherit; }
+blockquote { border-left: 4px solid #0073bb; margin: 12px 0; padding: 8px 16px; background: #f0f7fc; }
+img { max-width: 100%; height: auto; display: block; margin: 12px auto; }
+.mermaid { background: #fff; padding: 16px; border-radius: 8px; border: 1px solid #e0e0e0; margin: 16px 0; text-align: center; }
+.code-wrapper { position: relative; }
+.copy-btn { position: absolute; top: 8px; right: 8px; background: #3498db; color: #fff; border: none; border-radius: 4px; padding: 4px 10px; font-size: 8pt; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; }
+.copy-btn:hover { opacity: 1; }
+.copy-btn.copied { background: #27ae60; }
+</style>
+</head>
+<body>
+<h1 id="aws-samples-agent-enhancement-report">aws-samples-agent
+Enhancement Report</h1>
+<p><strong>Date:</strong> 2026-05-24 | <strong>Investigation
+ID:</strong> c3ec006e | <strong>Confidence:</strong> HIGH</p>
+<hr />
+<h2 id="executive-summary">Executive Summary</h2>
+<p>The current <code>aws-samples-agent</code> prompt (~1343 chars)
+contains <strong>3 confirmed factual errors</strong> and <strong>omits 4
+of 8 service directories</strong>. The project is a personal AWS
+learning repository with 40 Jupyter notebooks, 13 Python scripts, 16
+Terraform files, and 5 Dockerfiles spanning 8 AWS service areas. It uses
+Python exclusively — no TypeScript, no CDK, no SAM. The enhanced prompt
+below corrects all errors, adds all missing directories, and adds a
+Critical Rules section (highest-ROI section per shared learnings). All
+findings were verified against actual source files.</p>
+<hr />
+<h2 id="repository-architecture">Repository Architecture</h2>
+<div class="mermaid">
+graph TD
+    ROOT["aws-samples/"] --> BEDROCK["bedrock/<br/>19 notebooks<br/>boto3 direct API"]
+    ROOT --> BAC["bedrock-agentcore/<br/>strands-agents<br/>gateway-cedar-policies"]
+    ROOT --> BMM["bedrock-media-type-mismatch/<br/>bug reproduction<br/>boto3 + LangChain"]
+    ROOT --> DZ["datazone/<br/>glossary creation<br/>assumed IAM roles"]
+    ROOT --> GLUE["glue/<br/>PySpark ETL<br/>Apache Iceberg"]
+    ROOT --> OS["opensearch/<br/>AOSS resource<br/>creation"]
+    ROOT --> SM["sagemaker/<br/>13 notebooks<br/>16 Terraform files"]
+    ROOT --> NB["notebooks/<br/>SageMaker Unified Studio<br/>ML analysis"]
+
+    BAC --> BAC1["Docker build linux/arm64<br/>→ ECR → CodeBuild<br/>→ AgentCore Runtime"]
+    BAC --> BAC2["Cognito OAuth<br/>+ Cedar policies"]
+
+    SM --> SM1["processing-custom-container<br/>Docker → ECR → SM Processing"]
+    SM --> SM2["terraform/<br/>VPC + EC2 + SM Domain<br/>terraform init && apply"]
+    SM --> SM3["byoc-sm-jupyterlab<br/>Docker → ECR → SM Spaces"]
+
+    ROOT --> CI["CI/CD"]
+    CI --> GHA[".github/workflows/ci.yml<br/>ubuntu-latest<br/>lint + validate + strip-check"]
+    CI --> EC2[".github/workflows/ec2-integration.yml<br/>EC2 self-hosted<br/>Ubuntu + Arch Linux"]
+    CI --> MK["Makefile<br/>make test-mac<br/>lint + validate + strip-check"]
+
+    style ROOT fill:#2c3e50,color:#fff
+    style BEDROCK fill:#3498db,color:#fff
+    style BAC fill:#9b59b6,color:#fff
+    style BMM fill:#e74c3c,color:#fff
+    style DZ fill:#27ae60,color:#fff
+    style GLUE fill:#f39c12,color:#fff
+    style OS fill:#3498db,color:#fff
+    style SM fill:#9b59b6,color:#fff
+    style NB fill:#27ae60,color:#fff
+    style CI fill:#2c3e50,color:#fff
+</div>
+<hr />
+<h2 id="detailed-findings">Detailed Findings</h2>
+<h3 id="confirmed-factual-errors-in-current-prompt">Confirmed Factual
+Errors in Current Prompt</h3>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 43%" />
+<col style="width: 27%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Current Prompt (Wrong)</th>
+<th>Correct Value</th>
+<th>Verified By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>Python + Shell + CloudFormation/SAM</code></td>
+<td>Python + PySpark + HCL (Terraform) + Shell</td>
+<td>No <code>cdk.json</code>, no <code>template.yaml</code>, 16
+<code>.tf</code> files found</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Use SAM/CloudFormation for infrastructure</code></td>
+<td>Terraform (<code>sagemaker/terraform/</code>), Docker+ECR</td>
+<td>Direct filesystem — no SAM/CDK anywhere</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>make test</code></td>
+<td><code>make test-mac</code> (macOS local target)</td>
+<td>Direct Makefile read — <code>make test</code> does not exist</td>
+</tr>
+</tbody>
+</table>
+<h3 id="omitted-directories">Omitted Directories</h3>
+<table>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 27%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Contents</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opensearch/</code></td>
+<td>Amazon OpenSearch Serverless (AOSS) resource creation</td>
+<td>Entire service area missing</td>
+</tr>
+<tr>
+<td><code>sagemaker/</code></td>
+<td>6 subdirs, 13 notebooks, 16 Terraform files</td>
+<td>Largest IaC section in repo</td>
+</tr>
+<tr>
+<td><code>notebooks/</code></td>
+<td>SageMaker Unified Studio getting started, ML analysis</td>
+<td>General-purpose notebooks</td>
+</tr>
+<tr>
+<td><code>bedrock-media-type-mismatch/</code></td>
+<td>Bug reproduction for Bedrock Converse API</td>
+<td>Active debugging work</td>
+</tr>
+</tbody>
+</table>
+<h3 id="file-counts-verified">File Counts (Verified)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 35%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Type</th>
+<th>Count</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jupyter notebooks</td>
+<td>40</td>
+<td>Excludes <code>investigation/</code>, <code>kiro-*</code></td>
+</tr>
+<tr>
+<td>Python scripts</td>
+<td>13</td>
+<td>Excludes <code>.venv/</code></td>
+</tr>
+<tr>
+<td>Terraform files</td>
+<td>16</td>
+<td>All in <code>sagemaker/terraform/</code></td>
+</tr>
+<tr>
+<td>Dockerfiles</td>
+<td>5</td>
+<td><code>bedrock-agentcore/</code> (ARM64) + <code>sagemaker/</code> (3
+BYOC + 1 processing)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="makefile-targets-verified">Makefile Targets (Verified)</h3>
+<pre class="makefile"><code>lint        → ruff check .
+validate    → python scripts/validate_notebooks.py (nbformat schema)
+strip-check → nbstripout --verify on all notebooks
+test-mac    → lint + validate + strip-check  ← ONLY composite target</code></pre>
+<blockquote>
+<p><strong>Critical:</strong> <code>make test</code> does
+<strong>not</strong> exist. Always use <code>make test-mac</code> on
+macOS.</p>
+</blockquote>
+<h3 id="deployment-patterns">Deployment Patterns</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Used By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker (linux/arm64) → ECR → CodeBuild → AgentCore Runtime</td>
+<td><code>bedrock-agentcore/strands-agents/</code></td>
+</tr>
+<tr>
+<td>Docker → ECR → SageMaker Processing Job</td>
+<td><code>sagemaker/processing-custom-container/</code></td>
+</tr>
+<tr>
+<td>Docker → ECR → SageMaker JupyterLab BYOC</td>
+<td><code>sagemaker/byoc-sm-jupyterlab/</code></td>
+</tr>
+<tr>
+<td>Terraform IaC
+(<code>terraform init &amp;&amp; terraform apply</code>)</td>
+<td><code>sagemaker/terraform/</code></td>
+</tr>
+<tr>
+<td>Direct boto3 API calls (no deployment)</td>
+<td>Most <code>bedrock/</code> notebooks</td>
+</tr>
+<tr>
+<td>GitHub Actions CI/CD</td>
+<td><code>.github/workflows/ci.yml</code> +
+<code>ec2-integration.yml</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ruff-configuration-pyproject.toml">ruff Configuration
+(<code>pyproject.toml</code>)</h3>
+<pre class="toml"><code>[tool.ruff]
+extend-include = [&quot;*.ipynb&quot;]
+line-length = 120
+
+[tool.ruff.lint]
+select = [&quot;E&quot;, &quot;F&quot;, &quot;W&quot;]
+
+[tool.ruff.lint.per-file-ignores]
+&quot;*.ipynb&quot; = [&quot;E402&quot;, &quot;E501&quot;, &quot;F403&quot;, &quot;F405&quot;, &quot;E722&quot;, &quot;F821&quot;, &quot;E741&quot;, &quot;F841&quot;]</code></pre>
+<hr />
+<h2 id="troubleshooting-decision-tree">Troubleshooting Decision
+Tree</h2>
+<div class="mermaid">
+flowchart TD
+    START["Issue with aws-samples project"] --> Q1{"Which area?"}
+
+    Q1 -->|"CI failing"| Q2{"Which check?"}
+    Q1 -->|"Deployment failing"| Q3{"Which pattern?"}
+    Q1 -->|"Notebook issue"| Q4{"What error?"}
+    Q1 -->|"Prompt wrong"| FIX_PROMPT["Update ~/.kiro/agents/aws-samples-agent.json<br/>Use enhanced prompt from Action 1"]
+
+    Q2 -->|"lint"| LINT["Run: make lint<br/>Check ruff rules E/F/W<br/>Notebooks: ignore E402,E501,F403,F405"]
+    Q2 -->|"validate"| VALIDATE["Run: python scripts/validate_notebooks.py<br/>Check nbformat schema<br/>Excludes investigation/, kiro-*/"]
+    Q2 -->|"strip-check"| STRIP["Run: nbstripout --verify on notebooks<br/>Strip outputs: nbstripout notebook.ipynb<br/>Commit stripped notebook"]
+
+    Q3 -->|"AgentCore"| AC{"Docker running?"}
+    Q3 -->|"Terraform"| TF{"terraform init done?"}
+    Q3 -->|"SageMaker"| SM_Q{"ECR image pushed?"}
+
+    AC -->|"No"| AC_FIX["Start Docker Desktop<br/>Requires linux/arm64 platform"]
+    AC -->|"Yes"| AC2{"Account ID in .bedrock_agentcore.yaml?"}
+    AC2 -->|"Real ID"| SANITIZE["SANITIZE: Replace with placeholder<br/>Never commit real account IDs"]
+    AC2 -->|"Placeholder"| AC_DEPLOY["Run: agentcore deploy<br/>Check CodeBuild logs in AWS Console"]
+
+    TF -->|"No"| TF_INIT["Run: terraform init<br/>Then: terraform apply"]
+    TF -->|"Yes"| TF_APPLY["Run: terraform apply<br/>Check sagemaker/terraform/ for .tf files"]
+
+    SM_Q -->|"No"| SM_BUILD["Build: docker build -t ⟨IMAGE_NAME⟩ .<br/>Push: docker push ⟨ECR_URI⟩/⟨IMAGE_NAME⟩"]
+    SM_Q -->|"Yes"| SM_JOB["Submit SageMaker job via boto3<br/>Check CloudWatch logs for job output"]
+
+    Q4 -->|"Outputs not stripped"| STRIP
+    Q4 -->|"Kernel not found"| KERNEL["Glue notebooks: use glue_pyspark kernel<br/>SM notebooks: use Python 3 (ipykernel)"]
+    Q4 -->|"Import error"| DEPS["Check requirements.txt or requirements-ci.txt<br/>Install: pip install -r requirements.txt"]
+
+    style START fill:#2c3e50,color:#fff
+    style FIX_PROMPT fill:#27ae60,color:#fff
+    style SANITIZE fill:#e74c3c,color:#fff
+    style LINT fill:#3498db,color:#fff
+    style VALIDATE fill:#3498db,color:#fff
+    style STRIP fill:#f39c12,color:#fff
+    style AC_DEPLOY fill:#27ae60,color:#fff
+    style TF_APPLY fill:#27ae60,color:#fff
+</div>
+<hr />
+<h2 id="action-plan">Action Plan</h2>
+<h3 id="action-1-replace-agent-prompt-critical">Action 1 — Replace Agent
+Prompt (CRITICAL)</h3>
+<p>Replace the <code>prompt</code> field in
+<code>~/.kiro/agents/aws-samples-agent.json</code> with:</p>
+<pre><code>You are a specialized developer for the aws-samples project.
+
+Project: ~/work/github/aws-samples/
+Remote: https://github.com/virgilio-murillo/aws-samples.git
+Purpose: Personal AWS learning repo — Jupyter notebooks, Python scripts, and IaC for AWS service experiments.
+
+## Key Directories
+- bedrock/: Amazon Bedrock samples (agent-runtime, batch-inference, model-import, prompt-caching, stability-ai-upscale, miscellaneous, testing, common-errors, fine-tuning, bedrock-marketplace) — 19 notebooks
+- bedrock-agentcore/: Bedrock AgentCore samples (strands-agents with Docker+ECR+CodeBuild deployment, gateway-cedar-policies with Cognito OAuth + Cedar authorization)
+- bedrock-media-type-mismatch/: Bug reproduction scripts for Bedrock Converse API media type validation (boto3 + LangChain binary search scripts)
+- datazone/: Amazon DataZone samples (glossary creation with assumed IAM roles)
+- glue/: AWS Glue PySpark ETL tutorial + Apache Iceberg reference
+- opensearch/: Amazon OpenSearch Serverless (AOSS) resource creation
+- sagemaker/: SageMaker ML samples (processing-custom-container, inference-recommender, pipelines, serverless-inference, byoc-sm-jupyterlab, terraform IaC) — 13 notebooks, 16 .tf files
+- notebooks/: General-purpose Jupyter notebooks (SageMaker Unified Studio getting started, ML analysis)
+
+## Languages &amp; Frameworks
+- Python (primary): boto3, strands-agents, langchain-aws, sagemaker SDK, nbformat, pandas, numpy
+- PySpark: Glue ETL notebooks (glue_pyspark kernel)
+- HCL (Terraform): sagemaker/terraform/ — EC2 + SageMaker Studio IaC (16 .tf files)
+- Docker: bedrock-agentcore/ (ARM64) and sagemaker/ (processing, BYOC JupyterLab)
+- YAML: .bedrock_agentcore.yaml (AgentCore deployment config), GitHub Actions workflows
+
+## Deployment Patterns
+- Bedrock AgentCore: Docker build (linux/arm64) → ECR → CodeBuild → AgentCore Runtime (HTTP, OpenTelemetry). Config: .bedrock_agentcore.yaml
+- SageMaker Processing: Docker build → ECR push → SageMaker Processing job (custom container)
+- SageMaker BYOC JupyterLab: Docker build → ECR → SageMaker Spaces custom image
+- Terraform IaC: terraform init &amp;&amp; terraform apply — VPC, EC2, SageMaker Domain, NACLs, IAM
+- Direct API: Most bedrock/ notebooks — boto3 calls only, no deployment needed
+
+## Build &amp; CI
+- make lint — ruff check on .py and .ipynb (pyproject.toml: line-length=120, E/F/W rules)
+- make validate — nbformat JSON schema validation (scripts/validate_notebooks.py)
+- make strip-check — verify notebooks have no stored outputs (nbstripout --verify)
+- make test-mac — runs all three above (macOS local; this is the ONLY composite target)
+- CI: .github/workflows/ci.yml auto-runs on every push/PR (ubuntu-latest)
+- EC2 integration: .github/workflows/ec2-integration.yml (EC2 self-hosted, Ubuntu + Arch Linux)
+
+## Critical Rules
+- SANITIZE all AWS account IDs, ARNs, and credentials — .bedrock_agentcore.yaml contains real account/role ARNs; never commit without redacting
+- Do NOT modify existing notebooks — add new files only; CI validates all notebooks
+- Notebooks must have outputs stripped before commit (nbstripout enforced by CI)
+- make test does NOT exist — use make test-mac on macOS
+- investigation/ and kiro-*/ dirs are excluded from all CI checks and notebook operations
+- ruff per-file-ignores for notebooks: E402, E501, F403, F405, E722, F821, E741, F841 (pyproject.toml)
+- AgentCore containers require linux/arm64 platform and running Docker daemon
+- Terraform samples require terraform init before terraform apply
+- Verify factual claims against actual source files before asserting them</code></pre>
+<h3 id="action-2-update-steering-file">Action 2 — Update Steering
+File</h3>
+<p>Expand <code>~/.kiro/steering/tools/aws-samples-repo.md</code> to
+include all 8 service directories and the correct tech stack. Currently
+it only has the repo path and git remote.</p>
+<h3 id="action-3-sanitize-.bedrock_agentcore.yaml">Action 3 — Sanitize
+<code>.bedrock_agentcore.yaml</code></h3>
+<p>Replace hardcoded account ID and IAM role ARNs with placeholders:</p>
+<pre class="bash"><code>sed -i &#39;&#39; &#39;s/&lt;REAL_ACCOUNT_ID&gt;/&lt;ACCOUNT_ID&gt;/g&#39; bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml</code></pre>
+<blockquote>
+<p>Verify the file contains no real account IDs before any
+<code>git commit</code>.</p>
+</blockquote>
+<hr />
+<h2 id="common-cli-commands">Common CLI Commands</h2>
+<p>Run CI checks locally (macOS):</p>
+<pre class="bash"><code>make test-mac</code></pre>
+<p>Lint only:</p>
+<pre class="bash"><code>make lint</code></pre>
+<p>Validate notebooks:</p>
+<pre class="bash"><code>make validate</code></pre>
+<p>Strip notebook outputs:</p>
+<pre class="bash"><code>nbstripout &lt;NOTEBOOK_PATH&gt;</code></pre>
+<p>Deploy AgentCore (requires Docker running, linux/arm64):</p>
+<pre class="bash"><code>cd bedrock-agentcore/strands-agents &amp;&amp; agentcore deploy</code></pre>
+<p>Apply Terraform IaC:</p>
+<pre class="bash"><code>cd sagemaker/terraform &amp;&amp; terraform init &amp;&amp; terraform apply</code></pre>
+<p>Build and push SageMaker custom container:</p>
+<pre class="bash"><code>docker build --platform linux/amd64 -t &lt;IMAGE_NAME&gt; . &amp;&amp; docker tag &lt;IMAGE_NAME&gt; &lt;ECR_URI&gt;/&lt;IMAGE_NAME&gt;:latest &amp;&amp; docker push &lt;ECR_URI&gt;/&lt;IMAGE_NAME&gt;:latest</code></pre>
+<hr />
+<h2 id="prompt-enhancement-sequence">Prompt Enhancement Sequence</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant Dev as Developer
+    participant FS as Filesystem
+    participant Agent as aws-samples-agent
+    participant CI as GitHub Actions CI
+
+    Dev->>FS: Read current prompt (~1343 chars)
+    FS-->>Dev: 3 errors found, 4 dirs missing
+
+    Dev->>FS: Verify: find . -name "*.tf" | wc -l
+    FS-->>Dev: 16 Terraform files (sagemaker/terraform/)
+
+    Dev->>FS: Verify: cat Makefile
+    FS-->>Dev: test-mac target (not "make test")
+
+    Dev->>FS: Verify: find . -name "*.ipynb" | wc -l
+    FS-->>Dev: 40 notebooks (excl. investigation/, kiro-*)
+
+    Dev->>Agent: Replace prompt with enhanced version
+    Agent-->>Dev: Prompt updated (~2800 chars)
+
+    Dev->>FS: Edit new notebook (bedrock/ or sagemaker/)
+    Dev->>FS: Strip outputs: nbstripout notebook.ipynb
+    Dev->>FS: git add notebook.ipynb && git commit -m "add: ..."
+
+    FS->>CI: Push triggers ci.yml
+    CI->>CI: make lint (ruff E/F/W)
+    CI->>CI: make validate (nbformat schema)
+    CI->>CI: make strip-check (nbstripout --verify)
+    CI-->>Dev: All checks pass
+
+    Note over Dev,CI: AgentCore deployment path
+    Dev->>FS: docker build --platform linux/arm64 -t agent .
+    Dev->>FS: docker push ⟨ECR_URI⟩/agent:latest
+    FS->>CI: agentcore deploy (CodeBuild)
+    CI-->>Dev: AgentCore Runtime live
+</div>
+<hr />
+<h2 id="summary-table">Summary Table</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Severity</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong tech stack in prompt (SAM/CDK)</td>
+<td>HIGH</td>
+<td>Confirmed</td>
+<td>Replace prompt</td>
+</tr>
+<tr>
+<td>Wrong make target (<code>make test</code>)</td>
+<td>HIGH</td>
+<td>Confirmed</td>
+<td>Replace prompt</td>
+</tr>
+<tr>
+<td>4 directories missing from prompt</td>
+<td>HIGH</td>
+<td>Confirmed</td>
+<td>Replace prompt</td>
+</tr>
+<tr>
+<td>Real AWS account ID in <code>.bedrock_agentcore.yaml</code></td>
+<td>HIGH</td>
+<td>Confirmed</td>
+<td>Sanitize file</td>
+</tr>
+<tr>
+<td>Steering file incomplete</td>
+<td>MEDIUM</td>
+<td>Confirmed</td>
+<td>Expand steering file</td>
+</tr>
+<tr>
+<td>40 notebooks (not ~25)</td>
+<td>LOW</td>
+<td>Confirmed</td>
+<td>Replace prompt</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="references">References</h2>
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Source</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AgentCore Overview</td>
+<td>https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html</td>
+</tr>
+<tr>
+<td>AgentCore Quotas</td>
+<td>https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html</td>
+</tr>
+<tr>
+<td>Bedrock Converse API</td>
+<td>https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html</td>
+</tr>
+<tr>
+<td>Glue Limitations</td>
+<td>https://docs.aws.amazon.com/glue/latest/dg/limitations.html</td>
+</tr>
+<tr>
+<td>DataZone Quotas</td>
+<td>https://docs.aws.amazon.com/datazone/latest/userguide/datazone-limits.html</td>
+</tr>
+</tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({ startOnLoad: true, theme: 'default' });
+// Add copy buttons to ALL pre blocks
+document.querySelectorAll('pre').forEach(pre => {
+  if (pre.closest('.mermaid')) return;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'code-wrapper';
+  pre.parentNode.insertBefore(wrapper, pre);
+  wrapper.appendChild(pre);
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.onclick = function() {
+    const code = pre.querySelector('code') || pre;
+    navigator.clipboard.writeText(code.textContent).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  };
+  wrapper.appendChild(btn);
+});
+</script>
+</body>
+</html>

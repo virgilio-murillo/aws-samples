@@ -1,0 +1,512 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 23.58s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mmkdir -p /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs && printf '%s|Starting docs investigation\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.124s[0m
+[38;5;12m[1m [1.1][0m[0m
+[38;5;244m - Completed in 2.253s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "search_phrase": "Amazon Bedrock agents getting started samples",
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock agents, sample code, and deployment patterns",
+ ⋮    "limit": 10
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "search_phrase": "Amazon DataZone getting started deployment",
+ ⋮    "search_intent": "Find official AWS documentation about DataZone service, deployment patterns, and sample usage",
+ ⋮    "limit": 10
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "search_phrase": "AWS Glue ETL jobs Python deployment CDK",
+ ⋮    "search_intent": "Find official AWS documentation about Glue ETL jobs, Python scripts, and deployment patterns",
+ ⋮    "limit": 10
+ ⋮  }
+[0m[38;5;244m - Completed in 3.731s[0m
+[38;5;12m[1m [1.3][0m[0m
+[38;5;244m - Completed in 2.808s[0m
+[38;5;12m[1m [1.4][0m[0m
+[38;5;244m - Completed in 3.701s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Searching Bedrock AgentCore\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes && echo '{"from":"c4-docs","finding":"Found AWS docs for Glue (PySpark ETL, CDK constructs), DataZone (data catalog/governance), Bedrock Agents (action groups, knowledge bases, flows), and Bedrock AgentCore (datasets, schema validation)"}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.918s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock AgentCore service, what it is, deployment, and API",
+ ⋮    "search_phrase": "Amazon Bedrock AgentCore overview runtime tools"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock multimodal content types and media handling",
+ ⋮    "search_phrase": "Amazon Bedrock content types media multimodal images documents"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about AWS CDK deployment patterns for samples and best practices",
+ ⋮    "search_phrase": "AWS CDK deployment patterns best practices sample applications"
+ ⋮  }
+[0m[38;5;244m - Completed in 2.790s[0m
+[38;5;12m[1m [1.7][0m[0m
+[38;5;244m - Completed in 2.720s[0m
+[38;5;12m[1m [1.8][0m[0m
+[38;5;244m - Completed in 3.490s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading key docs detail\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.787s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
+ ⋮    "max_length": 8000
+ ⋮  }
+[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html",
+ ⋮    "max_length": 8000
+ ⋮  }
+[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/cdk/v2/guide/best-practices.html",
+ ⋮    "max_length": 8000
+ ⋮  }
+[0m[38;5;244m - Completed in 4.844s[0m
+[38;5;12m[1m [1.11][0m[0m
+[38;5;244m - Completed in 1.774s[0m
+[38;5;12m[1m [1.12][0m[0m
+[38;5;244m - Completed in 1.820s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho '{"from":"c4-docs","finding":"Bedrock AgentCore is a modular platform with 12 services: Runtime, Harness, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Payments, Evaluations, Policy, Registry. Supports MCP, A2A protocols, any framework (CrewAI, LangGraph, Strands)."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.752s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141mread_sections[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/kb-multimodal-choose-approach.html",
+ ⋮    "section_titles": [
+ ⋮      "Capabilities and limitations",
+ ⋮      "Supported file types and data sources"
+ ⋮    ]
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock Converse API content blocks and media type handling",
+ ⋮    "search_phrase": "Amazon Bedrock Converse API ContentBlock image document format"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.871s[0m
+[38;5;12m[1m [1.15][0m[0m
+[38;5;244m - Completed in 2.921s[0m
+[38;5;12m[1m [1.16][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading Converse API docs\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Running tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 8000,
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.456s[0m
+[38;5;12m[1m [1.17][0m[0m
+[38;5;244m - Completed in 1.920s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "start_index": 8000,
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Glue Data Catalog, crawlers, and schema management",
+ ⋮    "search_phrase": "AWS Glue Data Catalog crawlers schema detection limitations"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.948s[0m
+[38;5;12m[1m [1.19][0m[0m
+[38;5;244m - Completed in 2.971s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading Glue limitations\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes && echo '{"from":"c4-docs","finding":"Bedrock Converse API ContentBlock supports: text, image (ImageBlock with format+bytes/s3), document (DocumentBlock requires accompanying text), video, toolUse, toolResult, guardContent. Key media type mismatch risk: DocumentBlock REQUIRES text field alongside it."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.594s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141mread_sections[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "section_titles": [
+ ⋮      "Partitioning limitations",
+ ⋮      "Cross-account integration limitations",
+ ⋮      "Multiple integrations limitations"
+ ⋮    ],
+ ⋮    "url": "https://docs.aws.amazon.com/glue/latest/dg/limitations.html"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about DataZone API limitations, quotas, and known issues",
+ ⋮    "search_phrase": "Amazon DataZone quotas limits service limitations"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.897s[0m
+[38;5;12m[1m [1.22][0m[0m
+[38;5;244m - Completed in 2.690s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Checking directives\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 8.393s[0m
+[38;5;12m[1m [1.24][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/datazone/latest/userguide/datazone-limits.html"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock model invocation quotas and limitations",
+ ⋮    "search_phrase": "Amazon Bedrock model invocation quotas throttling limits"
+ ⋮  }
+[0m[38;5;244m - Completed in 10.303s[0m
+[38;5;12m[1m [1.25][0m[0m
+[38;5;244m - Completed in 3.78s[0m
+[38;5;12m[1m [1.26][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading Bedrock quotas\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Running tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html"
+ ⋮  }
+[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits.html"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.878s[0m
+[38;5;12m[1m [1.27][0m[0m
+[38;5;244m - Completed in 1.785s[0m
+[38;5;12m[1m [1.28][0m[0m
+[38;5;244m - Completed in 2.152s[0m
+[38;5;12m[1m [1.29][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Searching deployment patterns\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes && echo '{"from":"c4-docs","finding":"Key quotas: AgentCore Runtime 1000 active sessions/account (us-east-1/us-west-2), 2GB max Docker image, 250MB compressed deploy pkg, 15min sync timeout, 8hr async max. DataZone: 1M data assets, 25 data source runs/day, 1000 environments. Glue: 10 partition cols max, partition specs immutable post-creation."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.740s[0m
+[38;5;12m[1m [1.30][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Bedrock agent action groups, OpenAPI schema, and Lambda integration",
+ ⋮    "search_phrase": "Bedrock agent action groups OpenAPI schema Lambda function"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 5,
+ ⋮    "search_intent": "Find official AWS documentation about AWS SAM serverless deployment patterns",
+ ⋮    "search_phrase": "AWS SAM serverless application model deployment template"
+ ⋮  }
+[0m[38;5;244m - Completed in 5.260s[0m
+[38;5;12m[1m [1.31][0m[0m
+[38;5;244m - Completed in 3.112s[0m
+[38;5;12m[1m [1.32][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Writing findings file\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.915s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[38;5;141m> [0mNow I have enough information to write the comprehensive findings file.[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/findings.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mAWS Documentation Findings: aws-samples-agent Enhancement[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mInvestigation Summary[K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;192;197;206mInvestigated official AWS documentation for all services represented in the aws-samples project subdirectories: Bedrock, Bedrock AgentCore, Glue, and DataZone. Focused on deployment patterns, API references, known limitations, and best practices relevant to building an enhanced agent prompt.[K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m1. Service-by-Service Documentation Findings[K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mAmazon Bedrock (subdirs: [38;2;163;190;140m`[38;2;163;190;140mbedrock/[38;2;163;190;140m`[38;2;143;161;179m, [38;2;163;190;140m`[38;2;163;190;140mbedrock-media-type-mismatch/[38;2;163;190;140m`[38;2;143;161;179m)[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mWhat it is:[38;2;235;203;139m**[38;2;192;197;206m Managed service for building generative AI applications with foundation models. Agents orchestrate FM interactions, data sources, and APIs.[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mKey APIs [38;2;235;203;139m&[38;2;235;203;139m Patterns:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mConverse API[38;2;235;203;139m**[38;2;191;97;106m ([38;2;163;190;140m`[38;2;163;190;140mbedrock-runtime[38;2;163;190;140m`[38;2;191;97;106m endpoint): Unified multi-turn chat API supporting all Bedrock models[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m ContentBlock types: [38;2;163;190;140m`[38;2;163;190;140mtext[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mimage[38;2;163;190;140m`[38;2;191;97;106m (ImageBlock), [38;2;163;190;140m`[38;2;163;190;140mdocument[38;2;163;190;140m`[38;2;191;97;106m (DocumentBlock), [38;2;163;190;140m`[38;2;163;190;140mvideo[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mtoolUse[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mtoolResult[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mguardContent[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/conversation-inference[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mAgent Action Groups[38;2;235;203;139m**[38;2;191;97;106m: Defined via OpenAPI schemas or function schemas; backed by Lambda functions[K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/agents-api-schema[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mAgent Deployment[38;2;235;203;139m**[38;2;191;97;106m: Create → Configure (model + action groups + knowledge bases) → Test (TSTALIASID) → Create alias → Deploy[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/agents[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mKnown[38;2;191;97;106m Limitations (media type mismatch context):**[K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m DocumentBlock [38;2;235;203;139m**[38;2;235;203;139mREQUIRES[38;2;235;203;139m**[38;2;191;97;106m an accompanying [38;2;163;190;140m`[38;2;163;190;140mtext[38;2;163;190;140m`[38;2;191;97;106m ContentBlock in the same message — omitting it causes errors[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Image formats supported: png, jpeg, gif, webp (varies by model)[K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Document [38;2;163;190;140m`[38;2;163;190;140mname[38;2;163;190;140m`[38;2;191;97;106m field vulnerable to prompt injection; use neutral names[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m S3 URI alternative to base64 bytes for images/documents[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/conversation-inference[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mMultimodal[38;2;191;97;106m Knowledge Bases:**[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Nova Multimodal Embeddings: images (.png, .jpg, .jpeg, .gif, .webp), audio (.mp3, .ogg, .wav), video (.mp4, .mov, .mkv, .webm, .flv, .mpeg, .mpg, .wmv, .3gp)[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m BDA approach: images (.png, .jpg, .jpeg), audio (.amr, .flac, .m4a, .mp3, .ogg, .wav), video (.mp4, .mov), documents (.pdf)[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Limitation: Multimodal retrieval only available for S3 data sources[K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/kb-multimodal-choose-approach[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mQuotas[38;2;191;97;106m:[38;2;191;97;106m*[38;2;191;97;106m*[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Token-based quotas per model per region (varies by model)[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Provisioned Throughput available for higher capacity[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock/latest/userguide/quotas[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;191;97;106m---[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;191;97;106m###[38;2;191;97;106m Amazon Bedrock AgentCore (subdir: [38;2;163;190;140m`[38;2;163;190;140mbedrock-agentcore/[38;2;163;190;140m`[38;2;191;97;106m)[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mWhat it is:[38;2;235;203;139m**[38;2;192;197;206m Modular agentic platform for building, deploying, and operating AI agents at scale. Framework-agnostic (CrewAI, LangGraph, LlamaIndex, Strands Agents, Google ADK, OpenAI Agents SDK). Supports MCP and A2A protocols.[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mCore Services (12 total):[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mRuntime[38;2;235;203;139m**[38;2;191;97;106m — Serverless agent hosting with microVM isolation, fast cold starts[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mHarness[38;2;235;203;139m**[38;2;191;97;106m — Managed agent loop (single API call: model + prompt + tools)[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mMemory[38;2;235;203;139m**[38;2;191;97;106m — Short-term (multi-turn) and long-term (cross-session) memory[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mGateway[38;2;235;203;139m**[38;2;191;97;106m — Convert APIs/Lambda to MCP-compatible tools[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mIdentity[38;2;235;203;139m**[38;2;191;97;106m — OAuth 2.0, workload identities, JWT authorizers[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;191;97;106m6[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mCode Interpreter[38;2;235;203;139m**[38;2;191;97;106m — Sandboxed code execution (Python, JS, TS)[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;191;97;106m7[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mBrowser[38;2;235;203;139m**[38;2;191;97;106m — Cloud-based browser for web interaction (Playwright, BrowserUse)[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;191;97;106m8[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mObservability[38;2;235;203;139m**[38;2;191;97;106m — OpenTelemetry-compatible tracing and debugging[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;191;97;106m9[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mPayments[38;2;235;203;139m**[38;2;191;97;106m — Microtransactions via x402 protocol[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;191;97;106m10[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mEvaluations[38;2;235;203;139m**[38;2;191;97;106m — Automated agent quality assessment[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;191;97;106m11[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mPolicy[38;2;235;203;139m**[38;2;191;97;106m — Cedar-based deterministic control boundaries[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [38;2;191;97;106m12[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mRegistry[38;2;235;203;139m**[38;2;191;97;106m — Centralized catalog for agents, MCP servers, tools[K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;192;197;206mSource: [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore[38;2;192;197;206m.[38;2;192;197;206mhtml[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m*[38;2;192;197;206m*[38;2;192;197;206mDeployment[38;2;192;197;206m Pattern:**[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mDirect code deployment (ZIP ≤250MB compressed, ≤750MB uncompressed) OR Docker container (≤2GB)[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m CLI setup, TypeScript, containerized agents, WebSocket streaming tutorials available[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/bedrock-agentcore/latest/devguide/runtime-getting-started[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mKey[38;2;191;97;106m Quotas:**[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Limit | Value | Adjustable |[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;191;97;106m|-------|-------|-----------|[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Active sessions/account (us-east-1, us-west-2) | 1,000 | Yes |[K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Active sessions/account (other regions) | 500 | Yes |[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Total agents/account | 1,000 | Yes |[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Endpoints per agent | 10 | Yes |[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Max Docker image | 2 GB | No |[K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Max deploy package (compressed) | 250 MB | No |[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Sync request timeout | 15 min | No |[K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Async job max duration | 8 hours | No |[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Max payload size | 100 MB | No |[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Max hardware per session | 2vCPU/8GB | No |[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206mSource: [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;192;197;206m###[38;2;192;197;206m AWS Glue (subdir: [38;2;163;190;140m`[38;2;163;190;140mglue/[38;2;163;190;140m`[38;2;192;197;206m)[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mWhat it is:[38;2;235;203;139m**[38;2;192;197;206m Serverless ETL service with Data Catalog, crawlers, PySpark/Python Shell jobs, visual ETL canvas.[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mKey Patterns:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mPySpark ETL Jobs[38;2;235;203;139m**[38;2;191;97;106m: DynamicFrame classes, transforms, GlueContext[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m CDK: [38;2;163;190;140m`[38;2;163;190;140m@aws-cdk/aws-glue-alpha.PySparkEtlJob[38;2;163;190;140m`[38;2;191;97;106m construct[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/glue/latest/dg/aws-glue-programming-python[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mData Catalog[38;2;235;203;139m**[38;2;191;97;106m: Centralized metadata repository with schema versioning, lineage tracking[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Crawlers infer schemas via classifiers, create partitions[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m ETL jobs can update catalog directly via [38;2;163;190;140m`[38;2;163;190;140menableUpdateCatalog[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/glue/latest/dg/add-crawler[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mPython Libraries[38;2;235;203;139m**[38;2;191;97;106m: pip3 install, wheel files, zip artifacts supported in Glue 2.0+[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [38;2;191;97;106m  [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/glue/latest/dg/aws-glue-programming-python-libraries[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mKnown[38;2;191;97;106m Limitations:**[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Max 10 partition columns per integration[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Partition specs immutable after integration creation[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Cross-account: Console doesn't invoke CreateIntegrationTableProperty for target tables in other accounts (workaround: manual API call)[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Multiple integrations of same source require separate Glue databases[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/glue/latest/dg/limitations[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mDeployment[38;2;191;97;106m via CDK:**[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mPySparkEtlJob[38;2;163;190;140m`[38;2;191;97;106m, [38;2;163;190;140m`[38;2;163;190;140mPySparkFlexEtlJob[38;2;163;190;140m`[38;2;191;97;106m constructs (alpha module)[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/cdk/api/v2/docs/@aws-cdk[38;2;191;97;106m_[38;2;191;97;106maws-glue-alpha[38;2;191;97;106m.[38;2;191;97;106mPySparkEtlJob[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;191;97;106m---[K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;191;97;106m###[38;2;191;97;106m Amazon DataZone (subdir: [38;2;163;190;140m`[38;2;163;190;140mdatazone/[38;2;163;190;140m`[38;2;191;97;106m)[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mWhat it is:[38;2;235;203;139m**[38;2;192;197;206m Data management service for cataloging, discovering, governing, sharing, and analyzing data across accounts and regions. Integrates with Redshift, Athena, Glue, Lake Formation.[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mKey Concepts:[38;2;235;203;139m**[K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mDomains → Projects → Environments → Data Sources[K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Business glossaries for metadata governance[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Subscription-based data sharing model[K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/datazone/latest/userguide/what-is-datazone[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mDeployment[38;2;191;97;106m Pattern:**[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Domain creation via console or API (IAM roles, KMS, SSO)[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Environment profiles and blueprints[K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/datazone/latest/userguide/create-domain[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;191;97;106m*[38;2;191;97;106m*[38;2;191;97;106mKey[38;2;191;97;106m Quotas:**[K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Resource | Limit |[K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;191;97;106m|----------|-------|[K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Data assets per domain | 1,000,000 |[K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Data asset types | 1,000 |[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Environments per domain | 1,000 |[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Glossaries per domain | 1,000 |[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Glossary terms per domain | 10,000 |[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Domain units | 500 |[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Hierarchy levels | 5 |[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Data source runs/source/day | 25 |[K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [38;2;191;97;106m| Data products | 500,000 |[K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mAPI Rate Limits:[38;2;235;203;139m**[38;2;192;197;206m Most APIs 20 TPS; subscription APIs 3-8 TPS; CreateGlossary 5 TPS.[K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;192;197;206mSource: [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/datazone/latest/userguide/datazone-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;192;197;206m##[38;2;192;197;206m 2. Deployment Patterns (from AWS Docs)[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mCommon Patterns Across Samples:[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Pattern [38;2;192;197;206m|[38;2;192;197;206m Tool [38;2;192;197;206m|[38;2;192;197;206m Use Case [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mAWS CDK[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m TypeScript/Python [38;2;192;197;206m|[38;2;192;197;206m Complex infrastructure (Bedrock agents, Glue jobs, DataZone domains) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mAWS SAM[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m YAML templates [38;2;192;197;206m|[38;2;192;197;206m Serverless Lambda-based samples [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCloudFormation[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m YAML/JSON [38;2;192;197;206m|[38;2;192;197;206m Direct infrastructure templates [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mMakefile[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m GNU Make [38;2;192;197;206m|[38;2;192;197;206m Build orchestration, multi-target deployment [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mCDK Best Practices (from official docs):[K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mOrganize apps into logical constructs (API, database, monitoring)[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m One app per repository for CI/CD isolation[K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Start simple, add complexity only when needed[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Align with Well-Architected Framework[K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Use CDK Pipelines for automated deployment[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/cdk/v2/guide/best-practices[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [38;2;191;97;106m###[38;2;191;97;106m SAM Deployment Pattern:[K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140msam init[38;2;163;190;140m`[38;2;191;97;106m → [38;2;163;190;140m`[38;2;163;190;140msam build[38;2;163;190;140m`[38;2;191;97;106m → [38;2;163;190;140m`[38;2;163;190;140msam deploy --guided[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Transform: AWS::Serverless-2016-10-31[K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Source: [38;2;191;97;106mhttps://docs.aws.amazon.com[38;2;191;97;106m/serverless-application-model/latest/developerguide/what-is-sam[38;2;191;97;106m.[38;2;191;97;106mhtml[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [38;2;191;97;106m---[K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;191;97;106m##[38;2;191;97;106m 3. Languages [38;2;191;97;106m&[38;2;191;97;106m Frameworks (from AWS Docs)[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBased on the services in the project, expected languages/frameworks:[K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Service [38;2;192;197;206m|[38;2;192;197;206m Primary Language [38;2;192;197;206m|[38;2;192;197;206m Framework/SDK [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m---------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Agents [38;2;192;197;206m|[38;2;192;197;206m Python [38;2;192;197;206m|[38;2;192;197;206m Boto3, Powertools for Lambda [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock AgentCore [38;2;192;197;206m|[38;2;192;197;206m Python/TypeScript [38;2;192;197;206m|[38;2;192;197;206m Strands Agents, LangGraph, CrewAI [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue ETL [38;2;192;197;206m|[38;2;192;197;206m Python (PySpark) [38;2;192;197;206m|[38;2;192;197;206m GlueContext, DynamicFrame [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone [38;2;192;197;206m|[38;2;192;197;206m Python/TypeScript [38;2;192;197;206m|[38;2;192;197;206m Boto3, CDK [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Infrastructure [38;2;192;197;206m|[38;2;192;197;206m TypeScript/Python [38;2;192;197;206m|[38;2;192;197;206m AWS CDK v2, SAM [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    185[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    186[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    187[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    188[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m4. What the Enhanced Prompt Should Contain[K
+[0m[48;2;40;67;43m[39m+    189[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    190[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBased on documentation analysis, the agent prompt should include knowledge of:[K
+[0m[48;2;40;67;43m[39m+    191[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    192[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mCritical Rules (highest ROI per shared learnings):[K
+[0m[48;2;40;67;43m[39m+    193[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mSANITIZE AWS account IDs[38;2;235;203;139m**[38;2;191;97;106m — never expose real account IDs in outputs[K
+[0m[48;2;40;67;43m[39m+    194[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mVerify factual claims[38;2;235;203;139m**[38;2;191;97;106m — cross-reference against actual source code, not assumptions[K
+[0m[48;2;40;67;43m[39m+    195[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mService-specific constraints[38;2;235;203;139m**[38;2;191;97;106m — e.g., DocumentBlock requires text, Glue partition limits[K
+[0m[48;2;40;67;43m[39m+    196[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    197[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mService Knowledge:[K
+[0m[48;2;40;67;43m[39m+    198[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mBedrock Converse API ContentBlock types and their constraints[K
+[0m[48;2;40;67;43m[39m+    199[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m AgentCore's 12 modular services and when to use each[K
+[0m[48;2;40;67;43m[39m+    200[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Glue ETL patterns (PySpark DynamicFrame vs Spark DataFrame)[K
+[0m[48;2;40;67;43m[39m+    201[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m DataZone domain/project/environment hierarchy[K
+[0m[48;2;40;67;43m[39m+    202[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    203[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mDeployment Awareness:[K
+[0m[48;2;40;67;43m[39m+    204[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mCDK constructs available for each service (including alpha modules for Glue)[K
+[0m[48;2;40;67;43m[39m+    205[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m SAM for serverless Lambda patterns[K
+[0m[48;2;40;67;43m[39m+    206[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Makefile as build orchestrator[K
+[0m[48;2;40;67;43m[39m+    207[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    208[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKnown Pitfalls:[K
+[0m[48;2;40;67;43m[39m+    209[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mBedrock media type mismatches (DocumentBlock without text, wrong image format)[K
+[0m[48;2;40;67;43m[39m+    210[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m Glue partition immutability post-creation[K
+[0m[48;2;40;67;43m[39m+    211[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m DataZone 25 data source runs/day limit[K
+[0m[48;2;40;67;43m[39m+    212[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m AgentCore 2GB Docker image limit, 15min sync timeout[K
+[0m[48;2;40;67;43m[39m+    213[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    214[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    215[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    216[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m5. Key Documentation References[K
+[0m[48;2;40;67;43m[39m+    217[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    218[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Topic [38;2;192;197;206m|[38;2;192;197;206m URL [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    219[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m-----[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    220[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Agents Overview [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/agents[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    221[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Converse API [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/conversation-inference[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    222[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Action Groups [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/agents-api-schema[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    223[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Lambda Integration [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/agents-lambda[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    224[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Overview [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    225[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Runtime [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/agents-tools-runtime[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    226[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Quotas [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    227[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Gateway (OpenAPI) [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/gateway-schema-openapi[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    228[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue PySpark Programming [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/glue/latest/dg/aws-glue-programming-python[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    229[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue Crawlers [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/glue/latest/dg/add-crawler[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    230[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue Limitations [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/glue/latest/dg/limitations[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    231[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone Overview [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/datazone/latest/userguide/what-is-datazone[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    232[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone Quotas [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/datazone/latest/userguide/datazone-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    233[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m CDK Best Practices [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/cdk/v2/guide/best-practices[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    234[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m SAM Overview [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/serverless-application-model/latest/developerguide/what-is-sam[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    235[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Multimodal KB [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/kb-multimodal-choose-approach[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    236[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    237[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    238[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    239[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179m6. Confidence Assessment[K
+[0m[48;2;40;67;43m[39m+    240[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    241[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Finding [38;2;192;197;206m|[38;2;192;197;206m Confidence [38;2;192;197;206m|[38;2;192;197;206m Basis [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    242[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m-----------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    243[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore 12 services [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs read directly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    244[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Converse API ContentBlock types [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs read directly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    245[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DocumentBlock requires text [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs explicit statement [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    246[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue partition limitations [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs read directly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    247[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone quotas [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs read directly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    248[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore quotas [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Official docs read directly [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    249[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Project uses CDK/SAM [38;2;192;197;206m|[38;2;192;197;206m MEDIUM [38;2;192;197;206m|[38;2;192;197;206m Inferred from Makefile + service types (not verified against actual code) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    250[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Languages used [38;2;192;197;206m|[38;2;192;197;206m MEDIUM [38;2;192;197;206m|[38;2;192;197;206m Inferred from service documentation patterns (not verified against actual code) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    251[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    252[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    253[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    254[0m:[39m[48;2;24;38;30m [38;2;180;142;173m*[38;2;180;142;173mInvestigation completed: 2026-05-24. All findings sourced exclusively from docs.aws.amazon.com.[38;2;180;142;173m*[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/findings.md[0m
+[38;5;244m - Completed in 1.715s[0m
+[38;5;12m[1m [1.34][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Findings written complete\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes && echo '{"from":"c4-docs","finding":"COMPLETE: Wrote comprehensive findings covering all 4 services (Bedrock, AgentCore, Glue, DataZone) with API refs, deployment patterns (CDK/SAM/CFn), quotas, known limitations, and prompt enhancement recommendations. Key insight: AgentCore is a NEW 12-service modular platform supporting MCP/A2A protocols with any framework."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 3.986s[0m
+[38;5;12m[1m [1.35][0m[0m
+[?25l[0m[38;5;141m> [0mInvestigation complete. I've written comprehensive findings to [38;5;10m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/findings.md[0m covering:[0m[0m
+[0m[0m
+1. [1mAll 4 services[22m documented from official AWS docs: Bedrock (Converse API, Agents, media types), Bedrock AgentCore (12 modular services), Glue (PySpark ETL, crawlers, limitations), DataZone (governance, quotas)[0m[0m
+2. [1mDeployment patterns[22m: CDK, SAM, CloudFormation, Makefile orchestration[0m[0m
+3. [1mKnown limitations[22m: DocumentBlock requires text field, Glue partition immutability, AgentCore 2GB image limit, DataZone 25 runs/day[0m[0m
+4. [1mQuotas[22m for all services with specific numbers[0m[0m
+5. [1mPrompt enhancement recommendations[22m based on documentation ]9;Response completeanalysis[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 4.65 • Time: 4m 33s
+
+[0m[1G[0m[0m[?25h

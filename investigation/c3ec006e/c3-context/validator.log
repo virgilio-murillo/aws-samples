@@ -1,0 +1,848 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 21.64s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[0m[0mReading file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/findings.md[0m, all lines[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m9178 bytes[0m from /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/findings.md
+[38;5;244m - Completed in 5.67s[0m
+[38;5;12m[1m [1.1][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Reading findings file\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 3.730s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: I need to validate the claims in the findings. Let me break them down into testable categories:
+
+1. Directory structure claims (testable - check filesystem)
+2. Makefile structure claims (testable - read Makefile)
+3. Languages & frameworks claims (testable - check files)
+4. Deployment patterns claims (testable - check files)
+5. Agent prompt analysis claims (testable - read the agent file)
+6. File counts (testable - count files)
+
+Let me start validating each section systematically.
+[38;5;244m - Completed in 2.129s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Validating directory structure\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mls -la /Users/murivirg/work/github/aws-samples/ | grep -v "^\." | head -40[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -maxdepth 1 -type d | sort[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.107s[0m
+[38;5;12m[1m [1.4][0m[0m
+total 80
+drwxr-xr-x  27 murivirg  staff   864 Mar 27 21:19 .
+drwxr-xr-x  18 murivirg  staff   576 May 23 12:41 ..
+drwxr-xr-x  13 murivirg  staff   416 May 23 14:14 .git
+drwxr-xr-x@  3 murivirg  staff    96 Mar 27 21:17 .github
+-rw-r--r--   1 murivirg  staff   181 Mar  6 12:40 .gitignore
+drwxr-xr-x@ 12 murivirg  staff   384 Mar 27 21:18 .kiro-shadow
+-rw-r--r--   1 murivirg  staff   424 Mar  6 12:40 .libs.json
+drwxr-xr-x@  5 murivirg  staff   160 Mar 27 21:19 .ruff_cache
+drwxr-xr-x  13 murivirg  staff   416 Mar  6 12:40 bedrock
+drwxr-xr-x   5 murivirg  staff   160 Mar  6 12:40 bedrock-agentcore
+drwxr-xr-x   7 murivirg  staff   224 Mar  6 12:40 bedrock-media-type-mismatch
+drwxr-xr-x   4 murivirg  staff   128 Mar  6 12:40 datazone
+drwxr-xr-x   5 murivirg  staff   160 Mar  6 12:40 glue
+drwxr-xr-x@  4 murivirg  staff   128 May 24 21:52 investigation
+drwxr-xr-x@  6 murivirg  staff   192 Mar 27 21:19 kiro-notes
+drwxr-xr-x@  3 murivirg  staff    96 Mar 27 21:16 kiro-test
+-rw-r--r--   1 murivirg  staff  1073 Mar  6 12:40 LICENSE
+-rw-r--r--@  1 murivirg  staff   547 Mar 27 21:18 Makefile
+drwxr-xr-x   5 murivirg  staff   160 Mar  6 12:40 notebooks
+drwxr-xr-x   4 murivirg  staff   128 Mar  6 12:40 opensearch
+-rw-r--r--@  1 murivirg  staff   283 Mar 27 21:21 pyproject.toml
+-rw-r--r--   1 murivirg  staff  2231 Mar  6 12:40 README.md
+-rw-r--r--@  1 murivirg  staff    46 Mar 27 21:17 requirements-ci.txt
+drwxr-xr-x  10 murivirg  staff   320 Mar  6 12:40 sagemaker
+-rw-r--r--   1 murivirg  staff  8061 Mar  6 12:40 SAGEMAKER_UNIFIED_STUDIO_README.md
+drwxr-xr-x@  3 murivirg  staff    96 Mar 27 21:17 scripts
+-rw-r--r--@  1 murivirg  staff   568 Mar 27 20:27 TASK.md
+[38;5;244m - Completed in 2.316s[0m
+[38;5;12m[1m [1.5][0m[0m
+/Users/murivirg/work/github/aws-samples
+/Users/murivirg/work/github/aws-samples/.git
+/Users/murivirg/work/github/aws-samples/.github
+/Users/murivirg/work/github/aws-samples/.kiro-shadow
+/Users/murivirg/work/github/aws-samples/.ruff_cache
+/Users/murivirg/work/github/aws-samples/bedrock
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch
+/Users/murivirg/work/github/aws-samples/datazone
+/Users/murivirg/work/github/aws-samples/glue
+/Users/murivirg/work/github/aws-samples/investigation
+/Users/murivirg/work/github/aws-samples/kiro-notes
+/Users/murivirg/work/github/aws-samples/kiro-test
+/Users/murivirg/work/github/aws-samples/notebooks
+/Users/murivirg/work/github/aws-samples/opensearch
+/Users/murivirg/work/github/aws-samples/sagemaker
+/Users/murivirg/work/github/aws-samples/scripts
+[38;5;244m - Completed in 2.488s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate bedrock/ subdirectory count and structure
+find /Users/murivirg/work/github/aws-samples/bedrock -maxdepth 1 -type d | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Count notebooks and .py files in bedrock/
+echo "Notebooks in bedrock/:"
+find /Users/murivirg/work/github/aws-samples/bedrock -name "*.ipynb" | wc -l
+echo "Python files in bedrock/:"
+find /Users/murivirg/work/github/aws-samples/bedrock -name "*.py" | wc -l[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate bedrock-agentcore/ structure
+find /Users/murivirg/work/github/aws-samples/bedrock-agentcore -maxdepth 1 -type d | sort
+echo "---"
+find /Users/murivirg/work/github/aws-samples/bedrock-agentcore -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/bedrock
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime
+/Users/murivirg/work/github/aws-samples/bedrock/batch-inference
+/Users/murivirg/work/github/aws-samples/bedrock/bedrock-marketplace
+/Users/murivirg/work/github/aws-samples/bedrock/common-errors
+/Users/murivirg/work/github/aws-samples/bedrock/fine-tuning
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous
+/Users/murivirg/work/github/aws-samples/bedrock/model-import
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale
+/Users/murivirg/work/github/aws-samples/bedrock/testing
+[38;5;244m - Completed in 2.598s[0m
+[38;5;12m[1m [1.7][0m[0m
+Notebooks in bedrock/:
+      19
+Python files in bedrock/:
+       4
+[38;5;244m - Completed in 1.919s[0m
+[38;5;12m[1m [1.8][0m[0m
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents
+---
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/README.md
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.dockerignore
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/Dockerfile
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/requirements.txt
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+[38;5;244m - Completed in 2.441s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: The findings say bedrock/ has "11 subdirs, 14 notebooks + 4 .py files". Let me check:
+- Subdirs: I count 10 subdirs (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing). The findings say 11 but I see 10.
+- Notebooks: The findings say 14 but I count 19.
+- .py files: 4 matches.
+
+Let me verify the subdir count more carefully - bedrock-marketplace has a subdirectory inside it.
+[38;5;244m - Completed in 2.395s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Count bedrock subdirs at depth 1 only (excluding bedrock itself)
+find /Users/murivirg/work/github/aws-samples/bedrock -maxdepth 1 -type d | grep -v "^/Users/murivirg/work/github/aws-samples/bedrock$" | wc -l
+echo "---"
+# List all notebooks in bedrock
+find /Users/murivirg/work/github/aws-samples/bedrock -name "*.ipynb" | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate Makefile content
+cat /Users/murivirg/work/github/aws-samples/Makefile[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate sagemaker/ structure
+find /Users/murivirg/work/github/aws-samples/sagemaker -maxdepth 1 -type d | sort
+echo "---"
+echo "Notebooks in sagemaker/:"
+find /Users/murivirg/work/github/aws-samples/sagemaker -name "*.ipynb" | wc -l
+echo "Python files in sagemaker/:"
+find /Users/murivirg/work/github/aws-samples/sagemaker -name "*.py" | wc -l
+echo "Terraform files in sagemaker/:"
+find /Users/murivirg/work/github/aws-samples/sagemaker -name "*.tf" | wc -l[0m[38;5;244m (using tool: shell)[0m
+
+      10
+---
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent_stream.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/common-errors/RAG_with_query_decomposition.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/100_limit.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/csutom_data_source_2.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/custom_datasource.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/model-import/import_IBM_granite.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/testing/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+[38;5;244m - Completed in 2.617s[0m
+[38;5;12m[1m [1.11][0m[0m
+VENV := .venv
+PIP := $(VENV)/bin/pip
+PY := $(VENV)/bin/python
+FIND_NB := find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*"
+
+.PHONY: lint validate strip-check test-mac
+
+$(VENV):
+	python3 -m venv $(VENV) && $(PIP) install -q -r requirements-ci.txt
+
+lint: $(VENV)
+	$(VENV)/bin/ruff check .
+
+validate: $(VENV)
+	$(PY) scripts/validate_notebooks.py
+
+strip-check: $(VENV)
+	$(FIND_NB) -exec $(VENV)/bin/nbstripout --verify {} +
+
+test-mac: lint validate strip-check
+	@echo "All checks passed."
+[38;5;244m - Completed in 2.187s[0m
+[38;5;12m[1m [1.12][0m[0m
+/Users/murivirg/work/github/aws-samples/sagemaker
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender
+/Users/murivirg/work/github/aws-samples/sagemaker/pipelines-sagemaker
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container
+/Users/murivirg/work/github/aws-samples/sagemaker/serverless-inference
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform
+---
+Notebooks in sagemaker/:
+      13
+Python files in sagemaker/:
+       3
+Terraform files in sagemaker/:
+      16
+[38;5;244m - Completed in 2.14s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate total file counts across entire repo
+echo "Total notebooks:"
+find /Users/murivirg/work/github/aws-samples -name "*.ipynb" -not -path "*/investigation/*" -not -path "*/kiro-*" -not -path "*/.ipynb_checkpoints/*" | wc -l
+echo "Total .py files:"
+find /Users/murivirg/work/github/aws-samples -name "*.py" -not -path "*/investigation/*" -not -path "*/kiro-*" -not -path "*/.venv/*" -not -path "*/.ruff_cache/*" | wc -l
+echo "Total .tf files:"
+find /Users/murivirg/work/github/aws-samples -name "*.tf" | wc -l
+echo "Total Dockerfiles:"
+find /Users/murivirg/work/github/aws-samples -name "Dockerfile" | wc -l[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate agent prompt file
+cat /Users/murivirg/.kiro/agents/aws-samples-agent.json 2>/dev/null || echo "FILE NOT FOUND"[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate GitHub Actions workflows
+find /Users/murivirg/work/github/aws-samples/.github -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+Total notebooks:
+      40
+Total .py files:
+      13
+Total .tf files:
+      16
+Total Dockerfiles:
+       5
+[38;5;244m - Completed in 4.550s[0m
+[38;5;12m[1m [1.14][0m[0m
+{
+  "name": "aws-samples-agent",
+  "description": "Specialized agent for aws-samples — AWS code samples and reference implementations",
+  "prompt": "You are a specialized developer for the aws-samples project.\n\nProject: ~/work/github/aws-samples/\nLanguage: Python + Shell + CloudFormation/SAM\nPurpose: AWS code samples — reference implementations, tutorials, and example applications for AWS services.\n\n## Key Directories\n- bedrock/: Amazon Bedrock samples (model invocation, agents, guardrails)\n- bedrock-agentcore/: Bedrock AgentCore samples\n- bedrock-media-type-mismatch/: Media type handling samples\n- datazone/: Amazon DataZone samples\n- glue/: AWS Glue samples\n- Makefile: Build/test/lint targets\n\n## Architecture\n- Each subdirectory is an independent sample project\n- Samples should be self-contained with their own README\n- Use SAM/CloudFormation for infrastructure\n- Follow AWS best practices for sample code\n\n## Critical Rules\n- SANITIZE all AWS account IDs, ARNs, and credentials\n- Each sample must have a clear README with setup instructions\n- Use proper error handling for all AWS API calls\n- Samples must be runnable by anyone with appropriate AWS permissions\n- Follow AWS SDK best practices (retries, pagination, error handling)\n\n## Common Tasks\n- Adding a new sample: create subdirectory with README, code, and SAM template\n- Testing: make test\n- Linting: make lint\n\n## Build & Run\n- Lint: make lint\n- Test: make test\n- Each sample has its own setup instructions in its README",
+  "tools": ["read", "write", "glob", "grep", "code", "shell", "@kiro-checkpoint/*", "@aws-docs/*"],
+  "allowedTools": [
+    "read", "write", "glob", "grep", "code", "shell", "web_search", "web_fetch",
+    "checkpoint", "diff", "rollback", "list_checkpoints", "init", "branch", "switch_branch",
+    "search_documentation", "read_documentation", "read_sections", "use_aws"
+  ],
+  "includeMcpJson": false
+}
+[38;5;244m - Completed in 1.774s[0m
+[38;5;12m[1m [1.15][0m[0m
+/Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml
+/Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml
+[38;5;244m - Completed in 2.31s[0m
+[38;5;12m[1m [1.16][0m[0m
+[?25l[0m[?25l[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Validating file counts\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate bedrock-media-type-mismatch/ content
+find /Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate sagemaker subdirs claim (findings say 6 subdirs)
+find /Users/murivirg/work/github/aws-samples/sagemaker -maxdepth 1 -type d | grep -v "^/Users/murivirg/work/github/aws-samples/sagemaker$" | wc -l
+echo "---"
+# Check for retail_sales_prediction.ipynb
+find /Users/murivirg/work/github/aws-samples/sagemaker -maxdepth 1 -name "*.ipynb" | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate notebooks/ content
+find /Users/murivirg/work/github/aws-samples/notebooks -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 17.74s[0m
+[38;5;12m[1m [1.17][0m[0m
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_boto3.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_langchain.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/bug_reproduction_report.md
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_boto3_real_jpeg.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_langchain_mismatch.py
+[38;5;244m - Completed in 7.622s[0m
+[38;5;12m[1m [1.18][0m[0m
+       6
+---
+/Users/murivirg/work/github/aws-samples/sagemaker/retail_sales_prediction.ipynb
+[38;5;244m - Completed in 2.337s[0m
+[38;5;12m[1m [1.19][0m[0m
+/Users/murivirg/work/github/aws-samples/notebooks/getting_started.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/ml_analysis_with_tests.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/README.md
+[38;5;244m - Completed in 1.763s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate datazone/ structure
+find /Users/murivirg/work/github/aws-samples/datazone -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate glue/ content
+find /Users/murivirg/work/github/aws-samples/glue -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate opensearch/ structure
+find /Users/murivirg/work/github/aws-samples/opensearch -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/README.md
+[38;5;244m - Completed in 2.401s[0m
+[38;5;12m[1m [1.21][0m[0m
+/Users/murivirg/work/github/aws-samples/glue/apache-iceberg-johonny-chivers.md
+/Users/murivirg/work/github/aws-samples/glue/pyspark-tutorial-glue.ipynb
+/Users/murivirg/work/github/aws-samples/glue/README.md
+[38;5;244m - Completed in 1.987s[0m
+[38;5;12m[1m [1.22][0m[0m
+/Users/murivirg/work/github/aws-samples/opensearch/create-resources/AOSS_resource_creation.ipynb
+/Users/murivirg/work/github/aws-samples/opensearch/README.md
+[38;5;244m - Completed in 1.962s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate bedrock/miscellaneous content (findings claim 8 notebooks + 1 .py)
+find /Users/murivirg/work/github/aws-samples/bedrock/miscellaneous -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate stability-ai-upscale content (findings claim 3 .py files + README + images)
+find /Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate pyproject.toml exists and has ruff config
+cat /Users/murivirg/work/github/aws-samples/pyproject.toml[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/100_limit.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/6g_upload_test.py
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/csutom_data_source_2.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/custom_datasource.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+[38;5;244m - Completed in 6.177s[0m
+[38;5;12m[1m [1.24][0m[0m
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/complete_demo.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/create_test_image.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/demo_upscaled.png
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/README.md
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/requirements.txt
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/sample_input.jpg
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/stability_upscale.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/test_input.jpg
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/upscaled_output.png
+[38;5;244m - Completed in 3.422s[0m
+[38;5;12m[1m [1.25][0m[0m
+[tool.ruff]
+extend-include = ["*.ipynb"]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+"*.ipynb" = ["E402", "E501", "F403", "F405", "E722", "F821", "E741", "F841"]
+"bedrock/miscellaneous/6g_upload_test.py" = ["F403", "F405", "E722"]
+[38;5;244m - Completed in 2.406s[0m
+[38;5;12m[1m [1.26][0m[0m
+[?25l[0m[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;11m
+WARNING: [0mRetry #3, retrying within 10.0s..
+[?25l[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Validating agent prompt\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate requirements-ci.txt
+cat /Users/murivirg/work/github/aws-samples/requirements-ci.txt[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate getting_started.ipynb size
+ls -la /Users/murivirg/work/github/aws-samples/notebooks/getting_started.ipynb[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Check if SAM/CloudFormation templates exist anywhere
+find /Users/murivirg/work/github/aws-samples -name "template.yaml" -o -name "template.yml" -o -name "*.cfn.yaml" -o -name "samconfig.toml" 2>/dev/null | head -10
+echo "---"
+find /Users/murivirg/work/github/aws-samples -name "*.tf" | head -5[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.551s[0m
+[38;5;12m[1m [1.27][0m[0m
+nbstripout>=0.8.1
+ruff>=0.6.0
+nbformat>=5.9.0
+[38;5;244m - Completed in 2.616s[0m
+[38;5;12m[1m [1.28][0m[0m
+-rw-r--r--@ 1 murivirg  staff  78424 Mar 27 21:21 /Users/murivirg/work/github/aws-samples/notebooks/getting_started.ipynb
+[38;5;244m - Completed in 2.834s[0m
+[38;5;12m[1m [1.29][0m[0m
+---
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/iam.tf
+[38;5;244m - Completed in 6.633s[0m
+[38;5;12m[1m [1.30][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate sagemaker/terraform structure (findings claim 10+ .tf files + notebooks)
+find /Users/murivirg/work/github/aws-samples/sagemaker/terraform -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate sagemaker/byoc-sm-jupyterlab structure (findings claim 3 subdirs with Dockerfiles)
+find /Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab -type f | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate CI workflow content
+cat /Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml[0m[38;5;244m (using tool: shell)[0m
+
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/outputs.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/provider.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_spaces.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_user.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/LICENSE.txt
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled Folder/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/variables.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/vpc.tf
+[38;5;244m - Completed in 2.204s[0m
+[38;5;12m[1m [1.31][0m[0m
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/app-image-config-input.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/default-space-settings.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/Dockerfile
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/app-image-config-input.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/default-space-settings.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/Dockerfile
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/app-image-config-input.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/default-space-settings.json
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/Dockerfile
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+[38;5;244m - Completed in 2.840s[0m
+[38;5;12m[1m [1.32][0m[0m
+name: CI
+on: [push, pull_request]
+
+jobs:
+  lint-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-ci.txt
+
+      - name: Check notebook outputs stripped
+        run: find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*" -exec nbstripout --verify {} +
+
+      - name: Lint with ruff
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: "check --output-format=github ."
+
+      - name: Validate notebook JSON
+        run: python scripts/validate_notebooks.py
+[38;5;244m - Completed in 2.836s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Validating CI workflows\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.830s[0m
+[38;5;12m[1m [1.34][0m[0m
+name: EC2 Integration Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-west-2
+
+jobs:
+  start-runner:
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.start.outputs.label }}
+      ec2-instance-id: ${{ steps.start.outputs.ec2-instance-id }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_PAT }}
+          ec2-image-id: ${{ secrets.EC2_AMI_ID }}
+          ec2-instance-type: t3.medium
+          subnet-id: ${{ secrets.SUBNET_ID }}
+          security-group-id: ${{ secrets.SG_ID }}
+
+  test-ubuntu:
+    needs: start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          pip install -r requirements-ci.txt
+      - name: Validate notebooks load
+        run: python scripts/validate_notebooks.py
+
+  test-arch:
+    needs: start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    container:
+      image: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          pacman -Syu --noconfirm python python-pip
+          pip install --break-system-packages -r requirements-ci.txt
+      - name: Validate notebooks load
+        run: python scripts/validate_notebooks.py
+
+  stop-runner:
+    if: always()
+    needs: [start-runner, test-ubuntu, test-arch]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_PAT }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+[38;5;244m - Completed in 2.822s[0m
+[38;5;12m[1m [1.35][0m[0m
+[?25l[0m[?25l[?25l[?25l[0m[0mI will run the following command: [38;5;141m# Validate the agent prompt size claim (1343 chars)
+cat /Users/murivirg/.kiro/agents/aws-samples-agent.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d['prompt']))"[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate Dockerfiles base images
+grep -r "^FROM" /Users/murivirg/work/github/aws-samples --include="Dockerfile" | sort[0m[38;5;244m (using tool: shell)[0m
+
+I will run the following command: [38;5;141m# Validate bedrock/miscellaneous notebook count (findings claim 8 notebooks + 1 .py)
+find /Users/murivirg/work/github/aws-samples/bedrock/miscellaneous -name "*.ipynb" | wc -l
+echo "---"
+find /Users/murivirg/work/github/aws-samples/bedrock/miscellaneous -name "*.py" | wc -l[0m[38;5;244m (using tool: shell)[0m
+
+1343
+[38;5;244m - Completed in 3.958s[0m
+[38;5;12m[1m [1.36][0m[0m
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/Dockerfile:FROM public.ecr.aws/docker/library/python:3.13-slim
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/Dockerfile:FROM public.ecr.aws/amazonlinux/amazonlinux:2023
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/Dockerfile:FROM public.ecr.aws/amazonlinux/amazonlinux:2023
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/Dockerfile:FROM public.ecr.aws/sagemaker/sagemaker-distribution:latest-cpu
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/Dockerfile:FROM python:3.10-slim
+[38;5;244m - Completed in 2.849s[0m
+[38;5;12m[1m [1.37][0m[0m
+      10
+---
+       1
+[38;5;244m - Completed in 2.471s[0m
+[38;5;12m[1m [1.38][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: Now let me compile my validation results:
+
+## Section 1: bedrock/ directory
+- Claim: "11 subdirs" → ACTUAL: 10 subdirs (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing). The findings count bedrock-marketplace/autogluon-forecasting-chronos-bolt-base as a subdir of bedrock, but it's actually a sub-subdir. So the claim of 11 is WRONG - it's 10.
+- Claim: "14 notebooks + 4 .py files" → ACTUAL: 19 notebooks + 4 .py files. The notebook count is WRONG.
+- Claim: miscellaneous has "8 notebooks + 1 .py" → ACTUAL: 10 notebooks + 1 .py. WRONG.
+- Claim: stability-ai-upscale has "3 .py files + README + images" → ACTUAL: 3 .py files + README + requirements.txt + 3 images. Mostly correct but incomplete (missing requirements.txt).
+
+## Section 2: bedrock-agentcore/
+- Claim: "2 subdirs" → CONFIRMED (strands-agents, gateway-cedar-policies)
+- Claim: strands-agents has "strands_claude.py, Dockerfile, .bedrock_agentcore.yaml, requirements.txt, notebook" → CONFIRMED (also has .dockerignore)
+- Claim: gateway-cedar-policies has "gateway_cedar_policies_setup.ipynb" → CONFIRMED
+
+## Section 3: bedrock-media-type-mismatch/
+- Claim: "5 files" → CONFIRMED (binary_search_langchain.py, binary_search_boto3.py, bug_reproduction_report.md, test_boto3_real_jpeg.py, test_langchain_mismatch.py)
+
+## Section 4: datazone/
+- Claim: "1 subdir" with "2 notebooks" → CONFIRMED (error-creating-glossary-using-assumed-role/ with 2 notebooks)
+
+## Section 5: glue/
+- Claim: "2 files" → ACTUAL: 3 files (also has README.md). Minor omission.
+
+## Section 6: opensearch/
+- Claim: "1 subdir" with "AOSS_resource_creation.ipynb" → CONFIRMED (also has README.md)
+
+## Section 7: sagemaker/
+- Claim: "6 subdirs, 11 notebooks + 2 .py + 16 .tf" → ACTUAL: 6 subdirs CONFIRMED, 13 notebooks (not 11), 3 .py (not 2), 16 .tf CONFIRMED.
+- Claim: retail_sales_prediction.ipynb standalone → CONFIRMED
+
+## Section 8: notebooks/
+- Claim: "2 files" → ACTUAL: 3 files (also has README.md). Minor omission.
+- Claim: getting_started.ipynb is 78KB → CONFIRMED (78424 bytes ≈ 78KB)
+
+## Section 9: Makefile
+- Claim about VENV, PIP, PY, FIND_NB variables → CONFIRMED exactly
+- Claim about targets (lint, validate, strip-check, test-mac) → CONFIRMED
+- Claim about FIND_NB excluding investigation/ and kiro-* → CONFIRMED
+
+## Section 10: Languages & Frameworks
+- Claim: 40 notebooks → CONFIRMED
+- Claim: 13 .py files → CONFIRMED
+- Claim: 16 .tf files → CONFIRMED
+- Claim: 5 Dockerfiles → CONFIRMED
+- Claim: Docker base images (python:3.10-slim, python:3.13-slim, amazonlinux:2023) → CONFIRMED (also sagemaker-distribution:latest-cpu)
+
+## Section 11: Agent Prompt Analysis
+- Claim: prompt is ~1343 chars → CONFIRMED (exactly 1343)
+- Claim: says "CloudFormation/SAM" but repo uses Terraform → CONFIRMED (no SAM/CFN templates found, only .tf files)
+- Claim: says "make test" but actual target is "test-mac" → CONFIRMED (Makefile has test-mac, not test)
+- Claim: missing sagemaker/, opensearch/, notebooks/, scripts/ → CONFIRMED (agent prompt only lists bedrock/, bedrock-agentcore/, bedrock-media-type-mismatch/, datazone/, glue/)
+- Claim: GitHub Actions workflows exist (ci.yml, ec2-integration.yml) → CONFIRMED
+
+## Section 12: CI/CD
+- Claim: ci.yml does lint/validate/strip-check → CONFIRMED
+- Claim: ec2-integration.yml uses EC2 runner on Ubuntu+Arch → CONFIRMED (uses machulav/ec2-github-runner, tests on Ubuntu and Arch container)
+
+## Key Python Libraries
+- Claim: boto3, strands-agents, bedrock-agentcore, sagemaker SDK, langchain-aws, rrcf, nbformat, nbstripout, ruff, Pillow, PySpark → I can verify some from requirements files and imports but not all without reading every notebook. The CI tools (nbformat, nbstripout, ruff) are CONFIRMED from requirements-ci.txt.
+
+## Discrepancies found:
+1. bedrock/ subdirs: claimed 11, actual 10 → CONTRADICTED
+2. bedrock/ notebooks: claimed 14, actual 19 → CONTRADICTED
+3. bedrock/miscellaneous: claimed 8 notebooks, actual 10 → CONTRADICTED
+4. sagemaker/ notebooks: claimed 11, actual 13 → CONTRADICTED
+5. sagemaker/ .py files: claimed 2, actual 3 → CONTRADICTED
+6. Docker base images: missing sagemaker-distribution:latest-cpu → minor omission
+7. glue/ and notebooks/ and opensearch/ all have README.md files not mentioned → minor omissions
+
+[38;5;244m - Completed in 3.34s[0m
+[38;5;12m[1m [1.39][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Writing validated output\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.403s[0m
+[38;5;12m[1m [1.40][0m[0m
+[?25l[0m[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/validated.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mValidated Findings[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;192;197;206mValidation performed: 2026-05-24T21:59 MDT[38;2;192;197;206m  [K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;192;197;206mMethod: Direct filesystem inspection of ~/work/github/aws-samples/[K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 1: bedrock/ Directory Structure[K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 11 subdirs [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: 10 subdirs at depth 1 (agent-runtime, batch-inference, bedrock-marketplace, common-errors, fine-tuning, miscellaneous, model-import, prompt-caching, stability-ai-upscale, testing). Findings likely counted bedrock-marketplace/autogluon-forecasting-chronos-bolt-base as a separate subdir. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 14 notebooks + 4 .py files [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: [38;2;235;203;139m**[38;2;235;203;139m19 notebooks[38;2;235;203;139m**[38;2;192;197;206m + 4 .py files. [38;2;163;190;140m`[38;2;163;190;140mfind bedrock/ -name "*.ipynb" | wc -l[38;2;163;190;140m`[38;2;192;197;206m = 19. The miscellaneous/ dir alone has 10 notebooks, not 8 as claimed. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m agent-runtime/ has invoke_agent.ipynb, invoke_agent_stream.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Both files present. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m batch-inference/ has batch-inference-35-haiku-cache.ipynb + .jsonl [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (partial) [38;2;192;197;206m|[38;2;192;197;206m Notebook confirmed. .jsonl not separately verified but plausible. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/main.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m common-errors/RAG_with_query_decomposition.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m miscellaneous/ has "8 notebooks + 1 .py" [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: [38;2;235;203;139m**[38;2;235;203;139m10 notebooks[38;2;235;203;139m**[38;2;192;197;206m + 1 .py (6g_upload_test.py). Missing from findings: csutom_data_source_2.ipynb, bedrock_agent.ipynb. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m stability-ai-upscale/ has "3 .py files + README + images" [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (minor omission) [38;2;192;197;206m|[38;2;192;197;206m 3 .py + README + requirements.txt + 3 image files. Findings omitted requirements.txt. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m model-import/import_IBM_granite.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m prompt-caching/prompt-caching-sonnet-3.7.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 2: bedrock-agentcore/[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 subdirs (strands-agents, gateway-cedar-policies) [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Both present. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m strands-agents/ has strands_claude.py, Dockerfile, .bedrock_agentcore.yaml, requirements.txt, notebook [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All files present. Also has .dockerignore (not mentioned). [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m gateway-cedar-policies/ has gateway_cedar_policies_setup.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 3: bedrock-media-type-mismatch/[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 5 files: binary_search_langchain.py, binary_search_boto3.py, bug_reproduction_report.md, test scripts [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Exact files: binary_search_boto3.py, binary_search_langchain.py, bug_reproduction_report.md, test_boto3_real_jpeg.py, test_langchain_mismatch.py [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 4: datazone/[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 subdir with 2 notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m error-creating-glossary-using-assumed-role/ with create-glossary-assume-role-Copy1.ipynb and create-glossary.ipynb. Also has README.md at root. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 5: glue/[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 files: pyspark-tutorial-glue.ipynb + apache-iceberg-johonny-chivers.md [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (minor omission) [38;2;192;197;206m|[38;2;192;197;206m Both present. Also has README.md (not mentioned). [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 6: opensearch/[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 subdir: create-resources/AOSS_resource_creation.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m File exists. Also has README.md at root (not mentioned). [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 7: sagemaker/[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 6 subdirs [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m byoc-sm-jupyterlab, inference-recommender, pipelines-sagemaker, processing-custom-container, serverless-inference, terraform [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 11 notebooks + 2 .py + 16 .tf [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual: [38;2;235;203;139m**[38;2;235;203;139m13 notebooks[38;2;235;203;139m**[38;2;192;197;206m + [38;2;235;203;139m**[38;2;235;203;139m3 .py[38;2;235;203;139m**[38;2;192;197;206m + 16 .tf. Notebook and .py counts are wrong. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m retail_sales_prediction.ipynb standalone [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Present at sagemaker/ root level. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m terraform/ has 10+ .tf files + notebooks [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m 16 .tf files total (10 in main dir + 5 in "Untitled Folder" duplicate) + 3 notebooks. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m byoc-sm-jupyterlab/ has 3 subdirs with Dockerfiles [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m notebook-al2023, notebook-al2023-custom-congifs-for-lustre, sagemaker-distribution — each with Dockerfile + main.ipynb. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 8: notebooks/[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 files: getting_started.ipynb + ml_analysis_with_tests.ipynb [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (minor omission) [38;2;192;197;206m|[38;2;192;197;206m Both present. Also has README.md. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m getting_started.ipynb is 78KB [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Actual size: 78,424 bytes (≈78KB). [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 9: Makefile Structure[K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m VENV, PIP, PY, FIND_NB variables [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Exact match to actual Makefile content. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Targets: lint, validate, strip-check, test-mac [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All 4 targets present with correct commands. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m FIND_NB excludes investigation/ and kiro-* [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m-not -path "*/investigation/*" -not -path "*/kiro-*"[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m $(VENV) installs requirements-ci.txt [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mpython3 -m venv $(VENV) && $(PIP) install -q -r requirements-ci.txt[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m lint uses ruff check [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m$(VENV)/bin/ruff check .[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m validate uses scripts/validate_notebooks.py [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m$(PY) scripts/validate_notebooks.py[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 10: Languages [38;2;143;161;179m&[38;2;143;161;179m Frameworks[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 40 notebooks total [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "*.ipynb" (excluding investigation/kiro-*) | wc -l[38;2;163;190;140m`[38;2;192;197;206m = 40 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 13 .py files [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "*.py" (excluding investigation/kiro-*/venv) | wc -l[38;2;163;190;140m`[38;2;192;197;206m = 13 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 16 .tf files [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "*.tf" | wc -l[38;2;163;190;140m`[38;2;192;197;206m = 16 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 5 Dockerfiles [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mfind . -name "Dockerfile" | wc -l[38;2;163;190;140m`[38;2;192;197;206m = 5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker base images: python:3.10-slim, python:3.13-slim, amazonlinux:2023 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m (incomplete) [38;2;192;197;206m|[38;2;192;197;206m Also uses [38;2;163;190;140m`[38;2;163;190;140mpublic.ecr.aws/sagemaker/sagemaker-distribution:latest-cpu[38;2;163;190;140m`[38;2;192;197;206m (not mentioned in findings). [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Key libraries: nbformat, nbstripout, ruff [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m All in requirements-ci.txt: [38;2;163;190;140m`[38;2;163;190;140mnbstripout>=0.8.1[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mruff>=0.6.0[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mnbformat>=5.9.0[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Pillow used in stability-ai-upscale [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not checked in imports; plausible given image processing purpose. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m PySpark in Glue [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not checked in notebook cells; plausible given notebook name. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m strands-agents, bedrock-agentcore libraries [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Not checked in requirements.txt of that subdir. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 11: Deployment Patterns[K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → Bedrock AgentCore Runtime [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m bedrock-agentcore/strands-agents/ has Dockerfile + .bedrock_agentcore.yaml [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → SageMaker Processing [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/processing-custom-container/ has Dockerfile [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → SageMaker JupyterLab [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/byoc-sm-jupyterlab/ has 3 Dockerfiles [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Terraform IaC [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m sagemaker/terraform/ with 16 .tf files [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m GitHub Actions CI/CD (ci.yml + ec2-integration.yml) [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Both workflow files present and verified. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m ec2-integration.yml uses EC2 runner on Ubuntu+Arch [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Uses machulav/ec2-github-runner@v2, tests on Ubuntu natively and Arch via container. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSection 12: Agent Prompt Analysis[K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Claim [38;2;192;197;206m|[38;2;192;197;206m Verdict [38;2;192;197;206m|[38;2;192;197;206m Evidence [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Prompt is ~1343 chars [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Exactly 1343 characters measured via [38;2;163;190;140m`[38;2;163;190;140mlen(json['prompt'])[38;2;163;190;140m`[38;2;192;197;206m. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Says "CloudFormation/SAM" but repo uses Terraform [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m No SAM/CFN templates found anywhere. Only .tf files exist. Agent prompt says "CloudFormation/SAM" which is factually wrong. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Says "make test" but actual target is "test-mac" [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Makefile has [38;2;163;190;140m`[38;2;163;190;140mtest-mac[38;2;163;190;140m`[38;2;192;197;206m target, no [38;2;163;190;140m`[38;2;163;190;140mtest[38;2;163;190;140m`[38;2;192;197;206m target. Agent prompt says "make test". [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Missing directories: sagemaker/, opensearch/, notebooks/, scripts/ [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Agent prompt only lists bedrock/, bedrock-agentcore/, bedrock-media-type-mismatch/, datazone/, glue/. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No mention of GitHub Actions workflows [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Agent prompt has no CI/CD section. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No mention of Docker/ECR deployment patterns [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Agent prompt says "Use SAM/CloudFormation for infrastructure" instead. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m No mention of pyproject.toml ruff config [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m pyproject.toml exists with ruff config; not in agent prompt. [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSummary Statistics[K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Category [38;2;192;197;206m|[38;2;192;197;206m Count [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONFIRMED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m 38 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mCONTRADICTED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mUNVERIFIED[38;2;235;203;139m**[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mKey Contradictions (errors in findings):[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [38;2;191;97;106m1[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock/ subdir count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 11, actual 10[K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;191;97;106m2[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock/ notebook count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 14, actual 19[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;191;97;106m3[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139mbedrock/miscellaneous notebook count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 8, actual 10[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;191;97;106m4[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139msagemaker/ notebook count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 11, actual 13[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;191;97;106m5[38;2;191;97;106m.[38;2;191;97;106m [38;2;235;203;139m**[38;2;235;203;139msagemaker/ .py count[38;2;235;203;139m**[38;2;191;97;106m: Claimed 2, actual 3[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mPattern of Errors:[K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;192;197;206mAll contradictions are [38;2;235;203;139m**[38;2;235;203;139mundercounts[38;2;235;203;139m**[38;2;192;197;206m of files. The findings consistently missed notebooks and .py files, suggesting the original investigation may have used incomplete file listing commands or missed nested files. The structural claims (directory names, file names, Makefile content, agent prompt analysis) are all accurate.[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mOverall Assessment:[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe findings are [38;2;235;203;139m**[38;2;235;203;139msubstantially correct[38;2;235;203;139m**[38;2;192;197;206m in their structural analysis and qualitative claims. The agent prompt critique (Section 5) is fully validated — the current prompt genuinely has wrong language references, wrong make targets, and missing directories. The quantitative file counts have minor errors (all undercounts) but don't affect the conclusions or recommendations.[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/validated.md[0m
+[38;5;244m - Completed in 3.706s[0m
+[38;5;12m[1m [1.41][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Validation complete\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/val_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 2.193s[0m
+[38;5;12m[1m [1.42][0m[0m
+[?25l[0m[38;5;141m> [0mValidation complete. Written to [38;5;10m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/validated.md[0m.[0m[0m
+[0m[0m
+[1mSummary[22m: 38 claims CONFIRMED, 5 CONTRADICTED, 3 UNVERIFIED. All contradictions are file count undercounts (the findings missed some notebooks/py files). The structural analysis, Makefile content, agent prompt critique, and deployment pattern claims are all fully validated. The core conclusions and recommendations in the findings remain sound despite the minor counting errors.]9;Response complete[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 3.21 • Time: 5m 32s
+
+[0m[1G[0m[0m[?25h

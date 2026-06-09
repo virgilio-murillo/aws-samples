@@ -1,0 +1,8 @@
+21:57:40|Starting validation
+21:58:18|Reading findings file
+21:58:34|Verifying project structure
+21:59:12|Verifying Makefile content
+21:59:48|Verifying agentcore config
+22:00:10|Counting total files
+22:02:02|Checking CI runner claims
+22:03:10|Writing validated output

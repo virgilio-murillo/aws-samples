@@ -1,0 +1,20 @@
+{
+  "job_id": "c3ec006e",
+  "description": "## Investigation: Enhance aws-samples-agent\n\n### Project Facts\n- Path: ~/work/github/aws-samples/\n- Structure: bedrock/, bedrock-agentcore/, bedrock-media-type-mismatch/, datazone/, glue/, investigation/, kiro-notes/, kiro-test/, Makefile, LICENSE\n- Current agent prompt: ~1343 chars\n\n### Questions to Answer\n1. What samples exist in each subdirectory?\n2. What's the Makefile structure?\n3. What languages/frameworks are used?\n4. What's the deployment pattern for each sample?\n5. What should the enhanced prompt contain?\n\n### Shared Learnings\n- Critical Rules section has highest ROI [seen: 7]\n- Verify factual claims against actual source [seen: 6]\n- SANITIZE AWS account IDs [seen: 2]",
+  "total_seconds": 997,
+  "phases": {
+    "investigating": "21:52:39",
+    "orchestrating": "22:02:16",
+    "visualizing": "22:06:46",
+    "complete": "22:09:17"
+  },
+  "control_actions": [
+    {
+      "action": "finalize",
+      "target": null
+    }
+  ],
+  "findings_count": 27,
+  "has_report": true,
+  "has_pdf": true
+}

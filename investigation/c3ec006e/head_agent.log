@@ -1,0 +1,1779 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 20.59s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: The user wants me to act as the HEAD AGENT coordinating a parallel investigation about enhancing the aws-samples-agent. Let me start by:
+
+1. Reading the current state of the investigation directory
+2. Reading any existing findings
+3. Starting to monitor the shared_findings.jsonl file
+4. Writing initial directives and recommendations
+
+Let me first check what exists in the investigation directory and the project structure.
+[38;5;244m - Completed in 1.783s[0m
+[38;5;12m[1m [1.1][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/ 2>/dev/null && echo "---" && ls /Users/murivirg/work/github/aws-samples/ 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check investigation dir and project structure
+
+c1-internet
+c2-kb
+c3-context
+c4-docs
+c5-internal
+control_bus.jsonl
+dashboard.sh
+directives.jsonl
+head_agent.log
+head_nodes
+heartbeat.json
+recommendations.md
+shared_findings.jsonl
+status.json
+timeline.jsonl
+user_input.jsonl
+---
+bedrock
+bedrock-agentcore
+bedrock-media-type-mismatch
+datazone
+glue
+investigation
+kiro-notes
+kiro-test
+LICENSE
+Makefile
+notebooks
+opensearch
+pyproject.toml
+README.md
+requirements-ci.txt
+sagemaker
+SAGEMAKER_UNIFIED_STUDIO_README.md
+scripts
+TASK.md
+[38;5;244m - Completed in 1.717s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl 2>/dev/null | tail -50[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read current findings
+
+[38;5;244m - Completed in 2.288s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl 2>/dev/null && echo "==CONTROL==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/control_bus.jsonl 2>/dev/null && echo "==HEARTBEAT==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check existing directives, control bus, heartbeat
+
+==CONTROL==
+==HEARTBEAT==
+{"ts": 1779681210.054432, "time": "21:53:30", "phase": "investigating"}[38;5;244m - Completed in 2.134s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/Makefile && echo "==README==" && cat /Users/murivirg/work/github/aws-samples/README.md 2>/dev/null | head -60[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read Makefile and README
+
+VENV := .venv
+PIP := $(VENV)/bin/pip
+PY := $(VENV)/bin/python
+FIND_NB := find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*"
+
+.PHONY: lint validate strip-check test-mac
+
+$(VENV):
+	python3 -m venv $(VENV) && $(PIP) install -q -r requirements-ci.txt
+
+lint: $(VENV)
+	$(VENV)/bin/ruff check .
+
+validate: $(VENV)
+	$(PY) scripts/validate_notebooks.py
+
+strip-check: $(VENV)
+	$(FIND_NB) -exec $(VENV)/bin/nbstripout --verify {} +
+
+test-mac: lint validate strip-check
+	@echo "All checks passed."
+==README==
+# AWS Samples Collection
+
+## Overview
+
+This repository contains a comprehensive collection of AWS service samples, experiments, and learning materials. Each sample demonstrates practical implementations of AWS services through Jupyter notebooks, code examples, and configurations.
+
+## Repository Structure
+
+### 🤖 AI/ML Services
+- **[bedrock/](./bedrock/)** - Amazon Bedrock samples for generative AI
+- **[bedrock-agentcore/](./bedrock-agentcore/)** - Advanced Bedrock agent implementations
+- **[sagemaker/](./sagemaker/)** - Amazon SageMaker machine learning samples
+
+### 🔍 Analytics & Data
+- **[glue/](./glue/)** - AWS Glue and PySpark data processing examples
+- **[opensearch/](./opensearch/)** - Amazon OpenSearch Service samples
+- **[datazone/](./datazone/)** - Amazon DataZone data governance examples
+
+### 📓 General Resources
+- **[notebooks/](./notebooks/)** - General-purpose Jupyter notebooks and analysis tools
+
+## Getting Started
+
+1. **Prerequisites**: Ensure you have AWS CLI configured with appropriate permissions
+2. **Environment**: Most samples use Jupyter notebooks - set up your preferred notebook environment
+3. **Dependencies**: Check individual service directories for specific requirements
+
+## Usage
+
+Each service directory contains:
+- Sample code and notebooks
+- README with specific instructions
+- Configuration files and dependencies
+- Documentation and best practices
+
+Navigate to the specific service directory you're interested in and follow the README instructions.
+
+## Purpose
+
+This repository serves multiple purposes:
+
+1. **Learning Environment** - Hands-on exploration of AWS services
+2. **Reference Implementation** - Real-world examples and patterns
+3. **Experimentation** - Testing and validation of AWS service capabilities
+4. **Documentation** - Personal notes and findings from AWS service implementations
+
+## Contributing
+
+This is a personal learning repository. Feel free to explore the samples and adapt them for your own use cases.
+
+## Support
+
+⭐ **Found this helpful?** Please consider giving it a star on GitHub!
+
+💖 **Made with dedication** to help fellow developers learn AWS services. Your support means the world!
+
+## License
+
+See [LICENSE](./LICENSE) file for details.
+[38;5;244m - Completed in 2.195s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/bedrock -maxdepth 2 -name "*.ipynb" -o -name "*.py" -o -name "README.md" 2>/dev/null | head -40 && echo "==AGENTCORE==" && find /Users/murivirg/work/github/aws-samples/bedrock-agentcore -maxdepth 2 2>/dev/null | head -20[0m[38;5;244m (using tool: shell)[0m
+Purpose: Explore bedrock and agentcore directories
+
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/README.md
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/complete_demo.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/stability_upscale.py
+/Users/murivirg/work/github/aws-samples/bedrock/stability-ai-upscale/create_test_image.py
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/custom_datasource.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/multimodal_meta_llama32.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/conversation_examples-test-with-huggingface.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock-quickstart.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/100_limit.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/Knowledgebases_and_rag.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/bedrock_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/csutom_data_source_2.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/miscellaneous/6g_upload_test.py
+/Users/murivirg/work/github/aws-samples/bedrock/model-import/import_IBM_granite.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/batch-inference/batch-inference-35-haiku-cache.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/README.md
+/Users/murivirg/work/github/aws-samples/bedrock/testing/invoke_agent_stream_scape_new_lines.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/testing/cross-region-inference.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching/prompt-caching-sonnet-3.7.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent_stream.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime/invoke_agent.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock/common-errors/RAG_with_query_decomposition.ipynb
+==AGENTCORE==
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/gateway-cedar-policies/gateway_cedar_policies_setup.ipynb
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/README.md
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/requirements.txt
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/Dockerfile
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.dockerignore
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/runtime_with_strands_and_bedrock_models.sync.ipynb
+[38;5;244m - Completed in 1.964s[0m
+[38;5;12m[1m [1.6][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/glue /Users/murivirg/work/github/aws-samples/datazone /Users/murivirg/work/github/aws-samples/opensearch /Users/murivirg/work/github/aws-samples/sagemaker /Users/murivirg/work/github/aws-samples/notebooks -maxdepth 3 -name "*.ipynb" -o -name "*.py" -o -name "README.md" 2>/dev/null | head -50[0m[38;5;244m (using tool: shell)[0m
+Purpose: Explore other service directories
+
+/Users/murivirg/work/github/aws-samples/glue/README.md
+/Users/murivirg/work/github/aws-samples/glue/pyspark-tutorial-glue.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/README.md
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary-assume-role-Copy1.ipynb
+/Users/murivirg/work/github/aws-samples/datazone/error-creating-glossary-using-assumed-role/create-glossary.ipynb
+/Users/murivirg/work/github/aws-samples/opensearch/README.md
+/Users/murivirg/work/github/aws-samples/opensearch/create-resources/AOSS_resource_creation.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-only-commands.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/Untitled.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/terraform-step-by-step-construction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/anomaly-detection-processing.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/standalone_region_training_test.py
+/Users/murivirg/work/github/aws-samples/sagemaker/processing-custom-container/README.md
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/BYOC_serverless_inference.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/code/inference.py
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/inference_script.py
+/Users/murivirg/work/github/aws-samples/sagemaker/inference-recommender/inference_recommender.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/retail_sales_prediction.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/serverless-inference/SI_walkthrouhg/Serverless-Inference-Walkthrough.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/serverless-inference/SI_walkthrouhg/Untitled.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/README.md
+/Users/murivirg/work/github/aws-samples/sagemaker/pipelines-sagemaker/sagemaker-pipelines-preprocess-train-evaluate-batch-transform/sagemaker-pipelines-preprocess-train-evaluate-batch-transform.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/notebook-al2023-custom-congifs-for-lustre/main.ipynb
+/Users/murivirg/work/github/aws-samples/sagemaker/byoc-sm-jupyterlab/sagemaker-distribution/main.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/getting_started.ipynb
+/Users/murivirg/work/github/aws-samples/notebooks/README.md
+/Users/murivirg/work/github/aws-samples/notebooks/ml_analysis_with_tests.ipynb
+[38;5;244m - Completed in 1.499s[0m
+[38;5;12m[1m [1.7][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch -maxdepth 3 2>/dev/null | head -20 && echo "==KIRO-NOTES==" && ls /Users/murivirg/work/github/aws-samples/kiro-notes/ 2>/dev/null | head -10 && echo "==SCRIPTS==" && ls /Users/murivirg/work/github/aws-samples/scripts/ 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check remaining dirs
+
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/bug_reproduction_report.md
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_boto3_real_jpeg.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_langchain.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/binary_search_boto3.py
+/Users/murivirg/work/github/aws-samples/bedrock-media-type-mismatch/test_langchain_mismatch.py
+==KIRO-NOTES==
+001_notes_repo_baseline.md
+002_cmd_nbstripout_verify.txt
+003_cmd_ruff_check.txt
+INDEX.md
+==SCRIPTS==
+validate_notebooks.py
+[38;5;244m - Completed in 1.784s[0m
+[38;5;12m[1m [1.8][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md && echo "==TASK==" && cat /Users/murivirg/work/github/aws-samples/TASK.md 2>/dev/null | head -40[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read kiro-notes index and TASK.md
+
+# CI/CD Addition Notes — aws-samples
+
+## Index
+| # | File | Description |
+|---|------|-------------|
+| 001 | 001_notes_repo_baseline.md | Repo baseline: 40 notebooks, no CI/CD |
+==TASK==
+Do a profound investigation then help me ADD CI/CD to my EXISTING 'aws-samples' GitHub repo. This repo already exists here with Jupyter notebooks for AWS service experiments. GitHub: virgilio-murillo/aws-samples. CI/CD TO ADD: GitHub Actions on ubuntu-latest (nbstripout to strip outputs, ruff lint on .py cells, validate notebook JSON), EC2 integration tests on Ubuntu + Arch Linux (install deps, validate notebooks load), macOS local-only via make test-mac. Makefile: lint, validate, test-mac. Do NOT modify existing notebooks. Focus on ADDING CI/CD and validation.
+[38;5;244m - Completed in 1.692s[0m
+[38;5;12m[1m [1.9][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/kiro-notes/001_notes_repo_baseline.md[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read baseline notes
+
+# Repo Baseline
+
+- 40 Jupyter notebooks across 8 service dirs
+- 34/40 have stored outputs (85%)
+- All 40 valid JSON
+- No existing CI/CD infrastructure
+- Kernels: python3(17), conda_python3(10), conda_tensorflow2_p310(7), conda_pytorch_p310(4), glue_pyspark(1), none(1)
+- Code Defender flagged access keys in sagemaker/terraform notebooks (in outputs — will be stripped)
+[38;5;244m - Completed in 1.538s[0m
+[38;5;12m[1m [1.10][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/requirements-ci.txt && echo "==PYPROJECT==" && cat /Users/murivirg/work/github/aws-samples/pyproject.toml 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read CI requirements and pyproject
+
+nbstripout>=0.8.1
+ruff>=0.6.0
+nbformat>=5.9.0
+==PYPROJECT==
+[tool.ruff]
+extend-include = ["*.ipynb"]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+"*.ipynb" = ["E402", "E501", "F403", "F405", "E722", "F821", "E741", "F841"]
+"bedrock/miscellaneous/6g_upload_test.py" = ["F403", "F405", "E722"]
+[38;5;244m - Completed in 2.27s[0m
+[38;5;12m[1m [1.11][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/scripts/validate_notebooks.py[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read validate_notebooks script
+
+#!/usr/bin/env python3
+"""Validate all Jupyter notebooks have valid JSON and nbformat schema."""
+import sys
+import glob
+import nbformat
+
+EXCLUDE = {".ipynb_checkpoints", "investigation", "kiro-test", "kiro-notes"}
+
+notebooks = [
+    n for n in glob.glob("**/*.ipynb", recursive=True)
+    if not any(ex in n for ex in EXCLUDE)
+]
+
+errors = []
+for path in sorted(notebooks):
+    try:
+        with open(path) as f:
+            nb = nbformat.read(f, as_version=4)
+        nbformat.validate(nb)
+    except Exception as e:
+        errors.append(f"{path}: {e}")
+
+if errors:
+    for e in errors:
+        print(f"FAIL: {e}", file=sys.stderr)
+    sys.exit(1)
+print(f"OK: {len(notebooks)} notebooks valid")
+[38;5;244m - Completed in 1.464s[0m
+[38;5;12m[1m [1.12][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mls /Users/murivirg/work/github/aws-samples/.github/workflows/ 2>/dev/null || echo "NO_WORKFLOWS" && find /Users/murivirg/work/github/aws-samples -name "*.yml" -o -name "*.yaml" 2>/dev/null | grep -v investigation | grep -v kiro | head -20[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check for existing GitHub Actions workflows
+
+ci.yml
+ec2-integration.yml
+/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml
+/Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml
+/Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml
+[38;5;244m - Completed in 2.753s[0m
+[38;5;12m[1m [1.13][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/.github/workflows/ci.yml && echo "==EC2==" && cat /Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read existing workflow files
+
+name: CI
+on: [push, pull_request]
+
+jobs:
+  lint-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-ci.txt
+
+      - name: Check notebook outputs stripped
+        run: find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*" -exec nbstripout --verify {} +
+
+      - name: Lint with ruff
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: "check --output-format=github ."
+
+      - name: Validate notebook JSON
+        run: python scripts/validate_notebooks.py
+==EC2==
+name: EC2 Integration Tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-west-2
+
+jobs:
+  start-runner:
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.start.outputs.label }}
+      ec2-instance-id: ${{ steps.start.outputs.ec2-instance-id }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_PAT }}
+          ec2-image-id: ${{ secrets.EC2_AMI_ID }}
+          ec2-instance-type: t3.medium
+          subnet-id: ${{ secrets.SUBNET_ID }}
+          security-group-id: ${{ secrets.SG_ID }}
+
+  test-ubuntu:
+    needs: start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-pip
+          pip install -r requirements-ci.txt
+      - name: Validate notebooks load
+        run: python scripts/validate_notebooks.py
+
+  test-arch:
+    needs: start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    container:
+      image: archlinux:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          pacman -Syu --noconfirm python python-pip
+          pip install --break-system-packages -r requirements-ci.txt
+      - name: Validate notebooks load
+        run: python scripts/validate_notebooks.py
+
+  stop-runner:
+    if: always()
+    needs: [start-runner, test-ubuntu, test-arch]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_PAT }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+[38;5;244m - Completed in 1.787s[0m
+[38;5;12m[1m [1.14][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/recommendations.md 2>/dev/null | head -20 && echo "==STATUS==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/status.json 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check existing recommendations and status
+
+# Early Recommendations
+
+_Waiting for initial findings..._
+==STATUS==
+{
+  "phase": "investigating",
+  "children": {
+    "c1-internet": {
+      "inv_status": "running",
+      "exit_code": null,
+      "has_findings": false,
+      "val_status": "pending",
+      "has_validated": false
+    },
+    "c2-kb": {
+      "inv_status": "running",
+      "exit_code": null,
+      "has_findings": false,
+      "val_status": "pending",
+      "has_validated": false
+    },
+    "c3-context": {
+      "inv_status": "running",
+      "exit_code": null,
+      "has_findings": false,
+      "val_status": "pending",
+      "has_validated": false
+    },
+    "c4-docs": {
+      "inv_status": "running",
+      "exit_code": null,
+      "has_findings": false,
+      "val_status": "pending",
+      "has_validated": false
+    },
+    "c5-internal": {
+      "inv_status": "running",
+      "exit_code": null,
+      "has_findings": false,
+      "val_status": "pending",
+      "has_validated": false
+    }
+  },
+  "head_agent": "stale",
+  "has_error": false,
+  "findings_count": 8
+}[38;5;244m - Completed in 1.546s[0m
+[38;5;12m[1m [1.15][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: I have a good picture of the project now. Let me also check the existing agent prompt to understand what needs to be enhanced. Let me look for the agent prompt file.
+[38;5;244m - Completed in 1.607s[0m
+[38;5;12m[1m [1.16][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.md" -path "*/kiro*" 2>/dev/null | head -10 && find /Users/murivirg/work/github/aws-samples -name "agent*" -o -name "prompt*" 2>/dev/null | grep -v investigation | grep -v ".ipynb" | head -10[0m[38;5;244m (using tool: shell)[0m
+Purpose: Find agent prompt file
+
+/Users/murivirg/work/github/aws-samples/kiro-notes/001_notes_repo_baseline.md
+/Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md
+/Users/murivirg/work/github/aws-samples/kiro-test/.venv/lib/python3.12/site-packages/pip/_vendor/rich/__pycache__/prompt.cpython-312.pyc
+/Users/murivirg/work/github/aws-samples/kiro-test/.venv/lib/python3.12/site-packages/pip/_vendor/rich/prompt.py
+/Users/murivirg/work/github/aws-samples/bedrock/prompt-caching
+/Users/murivirg/work/github/aws-samples/bedrock/agent-runtime
+[38;5;244m - Completed in 2.574s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name ".kiro" -type d 2>/dev/null | head -5 && ls /Users/murivirg/work/github/aws-samples/.kiro/ 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check for .kiro directory with agent config
+
+[38;5;244m - Completed in 2.274s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples/investigation/c3ec006e -maxdepth 2 -type f 2>/dev/null | sort && echo "==CHILD DIRS==" && ls /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/ 2>/dev/null | head -10[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check all investigation files and child dirs
+
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/child.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c2-kb/child.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c2-kb/nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/child.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/child.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/child.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/control_bus.jsonl
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/dashboard.sh
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_agent.log
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/recommendations.md
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/status.json
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/timeline.jsonl
+/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/user_input.jsonl
+==CHILD DIRS==
+child.log
+nodes
+[38;5;244m - Completed in 1.793s[0m
+[38;5;12m[1m [1.19][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/child.log 2>/dev/null | tail -20 && echo "==C2==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c2-kb/child.log 2>/dev/null | tail -20 && echo "==C3==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/child.log 2>/dev/null | tail -20[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check child logs
+
+[38;5;12m[1m [1.15][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 2.810s[0m
+[38;5;12m[1m [1.16][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.507s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[?25l[?25l[0m[0mFetching content from: https://github.com/aws-samples/aws-cdk-project-structure-python/blob/main/REA... (searching for: Makefile make deploy test synth) [mode: selective][38;5;244m (using tool: web_fetch)[0m
+Searching the web for: enhanced AI agent prompt for AWS samples repository coding assistant deployment patterns[38;5;244m (using tool: web_search)[0m
+
+[38;5;10m ✓ [0mFetched 10838 bytes (selective) from URL
+[38;5;244m - Completed in 2.508s[0m
+[38;5;12m[1m [1.18][0m[0m
+
+[38;5;10m ✓ [0mFound 10 search results
+[38;5;244m - Completed in 3.789s[0m
+[38;5;12m[1m [1.19][0m[0m
+[?25l[0m[?25l==C2==
+[38;5;244m - Completed in 1.716s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[?25l[?25l[0m[0mI will run the following command: [38;5;141mprintf '%s|Scanning subdirectories\n' "$(date +%H:%M:%S)" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c2-kb/nodes[0m[38;5;244m (using tool: shell)[0m
+
+Batch fs_read operation with [38;5;141m2[0m operations[38;5;244m (using tool: read)[0m
+
+↱ Operation 1: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml[0m, all lines
+↱ Operation 2: Reading file: [38;5;141m/Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml[0m, all lines[38;5;244m - Completed in 1.682s[0m
+[38;5;12m[1m [1.22][0m[0m
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2695 bytes[0m from /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml
+
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m2451 bytes[0m from /Users/murivirg/work/github/aws-samples/.github/workflows/ec2-integration.yml
+
+ ⋮ 
+
+[38;5;244m- [0mSummary: 2 operations processed, 2 successful, 0 failed
+[38;5;244m - Completed in 1.555s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m==C3==
+cat /Users/murivirg/work/github/aws-samples/kiro-notes/INDEX.md[0m[38;5;244m (using tool: shell)[0m
+
+---
+total 584
+drwxr-xr-x@  6 murivirg  staff     192 Mar 27 21:19 .
+drwxr-xr-x  27 murivirg  staff     864 Mar 27 21:19 ..
+-rw-r--r--@  1 murivirg  staff     372 Mar 27 21:16 001_notes_repo_baseline.md
+-rw-r--r--@  1 murivirg  staff    6219 Mar 27 21:18 002_cmd_nbstripout_verify.txt
+-rw-r--r--@  1 murivirg  staff  279816 Mar 27 21:19 003_cmd_ruff_check.txt
+-rw-r--r--@  1 murivirg  staff     180 Mar 27 21:16 INDEX.md
+---
+# CI/CD Addition Notes — aws-samples
+
+## Index
+| # | File | Description |
+|---|------|-------------|
+| 001 | 001_notes_repo_baseline.md | Repo baseline: 40 notebooks, no CI/CD |
+[38;5;244m - Completed in 1.963s[0m
+[38;5;12m[1m [1.17][0m[0m
+[?25l[0m[38;5;244m - Completed in 1.398s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/child.log 2>/dev/null | tail -20 && echo "==C5==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/child.log 2>/dev/null | tail -20[0m[38;5;244m (using tool: shell)[0m
+Purpose: Check c4 and c5 child logs
+
+[38;5;12m[1m [1.17][0m[0m
+[38;5;244m - Completed in 1.920s[0m
+[38;5;12m[1m [1.18][0m[0m
+[?25l[0m[?25l[?25l[0m[0mRunning tool [38;5;141mread_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "max_length": 5000,
+ ⋮    "start_index": 8000,
+ ⋮    "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html"
+ ⋮  }
+[0mRunning tool [38;5;141msearch_documentation[0m with the param[38;5;244m (from mcp server: aws-docs)[0m
+ ⋮  {
+ ⋮    "limit": 10,
+ ⋮    "search_intent": "Find official AWS documentation about Glue Data Catalog, crawlers, and schema management",
+ ⋮    "search_phrase": "AWS Glue Data Catalog crawlers schema detection limitations"
+ ⋮  }
+[0m[38;5;244m - Completed in 1.948s[0m
+[38;5;12m[1m [1.19][0m[0m
+[38;5;244m - Completed in 2.971s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l==C5==
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/outputs.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_user.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/ec2.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/nacl.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/security_groups.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/sagemaker_spaces.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/variables.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/iam.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/provider.tf
+/Users/murivirg/work/github/aws-samples/sagemaker/terraform/connect-ec2-to-notebook-SMAI/vpc.tf
+[38;5;244m - Completed in 1.508s[0m
+[38;5;12m[1m [1.20][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho '{"from":"c5-internal","finding":"Project has 40 notebooks, 13 .py files across 8 service dirs. Languages: Python (boto3, strands-agents, langchain), Terraform (HCL), PySpark. Deploy patterns: Docker+ECR+AgentCore, SageMaker Processing, Terraform IaC, GitHub Actions CI/CD with EC2 runners."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.543s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[38;5;141m> [0mNow let me look at the existing agent prompt and the kiro-notes for context on what the enhanced prompt should contain:[0m[0m
+[?25l[0m[0m
+[?25l[38;5;244m - Completed in 1.693s[0m
+[38;5;12m[1m [1.21][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl 2>/dev/null[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read all current findings
+
+{"from":"c3-context","finding":"Project is Python-heavy: Jupyter notebooks + .py scripts. Makefile has lint/validate/strip-check/test-mac targets using ruff + nbstripout + venv"}
+{"from":"c1-internet","finding":"aws-samples/amazon-bedrock-samples is the main Bedrock samples repo; awslabs/amazon-bedrock-agentcore-samples for Agentcore; CDK patterns common for deployment"}
+{"from":"c2-kb","finding":"KB has lessons on bedrock/ (agent-runtime, batch, fine-tuning, model-import, prompt-caching, stability-upscaling) and bedrock-agentcore/ (gateway, Cedar, Strands, MCP)"}
+{"from":"c4-docs","finding":"Found AWS docs for Glue (PySpark ETL, CDK constructs), DataZone (data catalog/governance), Bedrock Agents (action groups, knowledge bases, flows), and Bedrock AgentCore (datasets, schema validation)"}
+{"from":"c1-internet","finding":"Bedrock Agentcore uses Python + AgentCore CLI/SDK, ARM64 arch, supports Strands/LangGraph/OpenAI Agents frameworks. Glue samples use PySpark ETL. DataZone uses CDK+CloudFormation for data mesh."}
+{"from":"c5-internal","finding":"Midway auth expired - cannot access Atlas/InternalSearch/SearchSoftwareRecommendations. Proceeding with local project analysis only."}
+{"from":"c3-context","finding":"bedrock-agentcore uses Strands SDK + Docker + BedrockAgentCoreApp for deployment to Bedrock AgentCore runtime. Has .bedrock_agentcore.yaml with ECR/CodeBuild/IAM config"}
+{"from":"c4-docs","finding":"Bedrock AgentCore is a modular platform with 12 services: Runtime, Harness, Memory, Gateway, Identity, Code Interpreter, Browser, Observability, Payments, Evaluations, Policy, Registry. Supports MCP, A2A protocols, any framework (CrewAI, LangGraph, Strands)."}
+{"from":"c2-kb","finding":"Makefile has 4 targets: lint (ruff), validate (notebook JSON), strip-check (nbstripout), test-mac (all). CI uses GitHub Actions with same checks. Python 3.11, ruff linter, nbstripout for notebook hygiene."}
+{"from":"c1-internet","finding":"Best agent prompt structure: 4 sections - role/scope, tools/schemas, decision rules, output format. Critical Rules section has highest ROI. Kiro uses .kiro/steering/ for persistent project context."}
+{"from":"c5-internal","finding":"Project has 40 notebooks, 13 .py files across 8 service dirs. Languages: Python (boto3, strands-agents, langchain), Terraform (HCL), PySpark. Deploy patterns: Docker+ECR+AgentCore, SageMaker Processing, Terraform IaC, GitHub Actions CI/CD with EC2 runners."}
+{"from":"c2-kb","finding":"bedrock-agentcore uses Docker+CodeBuild+ECR for deployment to AgentCore runtime. Strands agent pattern with .bedrock_agentcore.yaml config. Account 794038231401 us-east-1."}
+{"from":"c1-internet","finding":"CDK Python project pattern: scripts/install-deps.sh + scripts/run-tests.sh, npx cdk deploy, pip-compile for deps. AWS Startup Prompt Library has Full AWS Deployment Agent prompt template."}
+{"from":"c4-docs","finding":"Bedrock Converse API ContentBlock supports: text, image (ImageBlock with format+bytes/s3), document (DocumentBlock requires accompanying text), video, toolUse, toolResult, guardContent. Key media type mismatch risk: DocumentBlock REQUIRES text field alongside it."}
+[38;5;244m - Completed in 1.549s[0m
+[38;5;12m[1m [1.22][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read agentcore yaml config
+
+default_agent: strands_claude_getting_started_amazon_tools
+agents:
+  strands_claude_getting_started:
+    name: strands_claude_getting_started
+    entrypoint: /home/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::794038231401:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-8556fc4504
+      execution_role_auto_create: false
+      account: '794038231401'
+      region: us-east-1
+      ecr_repository: 794038231401.dkr.ecr.us-east-1.amazonaws.com/bedrock-agentcore-strands_claude_getting_started
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: null
+      agent_arn: null
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-strands_claude_getting_started-builder
+      execution_role: arn:aws:iam::794038231401:role/AmazonBedrockAgentCoreSDKCodeBuild-us-east-1-8556fc4504
+      source_bucket: bedrock-agentcore-codebuild-sources-794038231401-us-east-1
+    authorizer_configuration: null
+    oauth_configuration: null
+  strands_claude_getting_started_amazon_tools:
+    name: strands_claude_getting_started_amazon_tools
+    entrypoint: /home/murivirg/work/github/aws-samples/bedrock-agentcore/strands-agents/strands_claude.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::794038231401:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-4d0fb8fc25
+      execution_role_auto_create: false
+      account: '794038231401'
+      region: us-east-1
+      ecr_repository: 794038231401.dkr.ecr.us-east-1.amazonaws.com/bedrock-agentcore-strands_claude_getting_started_amazon_tools
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: strands_claude_getting_started_amazon_tools-kzqvDd9baF
+      agent_arn: arn:aws:bedrock-agentcore:us-east-1:794038231401:runtime/strands_claude_getting_started_amazon_tools-kzqvDd9baF
+      agent_session_id: 642eff7a-94c3-4524-bc3f-2ceb4834a821
+    codebuild:
+      project_name: bedrock-agentcore-strands_claude_getting_started_amazon_tools-builder
+      execution_role: arn:aws:iam::794038231401:role/AmazonBedrockAgentCoreSDKCodeBuild-us-east-1-4d0fb8fc25
+      source_bucket: bedrock-agentcore-codebuild-sources-794038231401-us-east-1
+    authorizer_configuration: null
+    oauth_configuration: null
+[38;5;244m - Completed in 1.770s[0m
+[38;5;12m[1m [1.23][0m[0m
+[?25l[0m[?25l[0m[0m[38;5;12mI'll share my reasoning process[0m[38;5;244m (using tool: thinking)[0m: I now have a comprehensive picture of the project. Let me note the AWS account ID that appeared in the .bedrock_agentcore.yaml - I need to sanitize it in the recommendations. The account ID is 794038231401.
+
+Now let me:
+1. Write initial directives to children
+2. Write early recommendations
+3. Track progress
+4. Start the polling loop
+
+Key findings so far:
+- 40 notebooks, 13 .py files across 8 service dirs (bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, opensearch, sagemaker, notebooks)
+- Languages: Python (boto3, strands-agents, langchain), Terraform (HCL), PySpark
+- Deploy patterns: Docker+ECR+AgentCore, SageMaker Processing, Terraform IaC, GitHub Actions CI/CD
+- Makefile: lint, validate, strip-check, test-mac targets
+- CI already exists: .github/workflows/ci.yml and ec2-integration.yml
+- pyproject.toml with ruff config
+- requirements-ci.txt: nbstripout, ruff, nbformat
+- scripts/validate_notebooks.py exists
+- bedrock-agentcore has .bedrock_agentcore.yaml with account ID (needs sanitizing)
+- kiro-notes has baseline notes
+
+The task says "Current agent prompt: ~1343 chars" - I need to find what the current agent prompt is. Let me check if there's a .kiro/agents directory or similar.
+
+Actually, looking at the task more carefully - this is about enhancing the "aws-samples-agent" which is a kiro agent for this project. The agent prompt would be in .kiro/agents/ or similar. Let me check.
+
+Wait - the investigation directory doesn't have a .kiro folder. Let me check the parent or look for agent config files.
+
+Actually, looking at the task description again: "Current agent prompt: ~1343 chars" - this is the current agent prompt for the aws-samples-agent. I need to find it. Let me check common locations.
+
+Let me now write the directives and recommendations based on what I've found, and start the polling loop.
+[38;5;244m - Completed in 14.296s[0m
+[38;5;12m[1m [1.24][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mfind /Users/murivirg/work/github/aws-samples -name "*.md" -path "*agents*" 2>/dev/null | grep -v investigation | grep -v ".ipynb" | head -10 && find ~/.kiro/agents -name "*aws*" 2>/dev/null | head -5[0m[38;5;244m (using tool: shell)[0m
+Purpose: Find agent prompt file
+
+/Users/murivirg/.kiro/agents/aws-samples-agent.json
+/Users/murivirg/.kiro/agents/aws-dva-c02-agent.json
+/Users/murivirg/.kiro/agents/aws-scripts-agent.json
+[38;5;244m - Completed in 2.873s[0m
+[38;5;12m[1m [1.25][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/.kiro/agents/aws-samples-agent.json[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read current agent prompt
+
+{
+  "name": "aws-samples-agent",
+  "description": "Specialized agent for aws-samples — AWS code samples and reference implementations",
+  "prompt": "You are a specialized developer for the aws-samples project.\n\nProject: ~/work/github/aws-samples/\nLanguage: Python + Shell + CloudFormation/SAM\nPurpose: AWS code samples — reference implementations, tutorials, and example applications for AWS services.\n\n## Key Directories\n- bedrock/: Amazon Bedrock samples (model invocation, agents, guardrails)\n- bedrock-agentcore/: Bedrock AgentCore samples\n- bedrock-media-type-mismatch/: Media type handling samples\n- datazone/: Amazon DataZone samples\n- glue/: AWS Glue samples\n- Makefile: Build/test/lint targets\n\n## Architecture\n- Each subdirectory is an independent sample project\n- Samples should be self-contained with their own README\n- Use SAM/CloudFormation for infrastructure\n- Follow AWS best practices for sample code\n\n## Critical Rules\n- SANITIZE all AWS account IDs, ARNs, and credentials\n- Each sample must have a clear README with setup instructions\n- Use proper error handling for all AWS API calls\n- Samples must be runnable by anyone with appropriate AWS permissions\n- Follow AWS SDK best practices (retries, pagination, error handling)\n\n## Common Tasks\n- Adding a new sample: create subdirectory with README, code, and SAM template\n- Testing: make test\n- Linting: make lint\n\n## Build & Run\n- Lint: make lint\n- Test: make test\n- Each sample has its own setup instructions in its README",
+  "tools": ["read", "write", "glob", "grep", "code", "shell", "@kiro-checkpoint/*", "@aws-docs/*"],
+  "allowedTools": [
+    "read", "write", "glob", "grep", "code", "shell", "web_search", "web_fetch",
+    "checkpoint", "diff", "rollback", "list_checkpoints", "init", "branch", "switch_branch",
+    "search_documentation", "read_documentation", "read_sections", "use_aws"
+  ],
+  "includeMcpJson": false
+}
+[38;5;244m - Completed in 2.30s[0m
+[38;5;12m[1m [1.26][0m[0m
+[?25l[0m[38;5;141m> [0mNow I have everything I need. Let me write directives, recommendations, and start the polling loop.[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Head agent started" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+
+# Write initial directives
+cat >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl << 'EOF'
+{"from":"head","to":"all","directive":"HEAD has read the full project. Key facts confirmed: 40 notebooks, 8 service dirs (bedrock, bedrock-agentcore, bedrock-media-type-mismatch, datazone, glue, opensearch, sagemaker, notebooks), CI already exists (.github/workflows/ci.yml + ec2-integration.yml). Agent prompt found at ~/.kiro/agents/aws-samples-agent.json (1343 chars). Focus remaining work on: (1) gaps in current prompt vs actual project, (2) missing dirs in prompt (opensearch, sagemaker, notebooks), (3) wrong tech stack claim (prompt says SAM/CloudFormation but project uses Jupyter notebooks + Terraform + Docker/ECR)."}
+{"from":"head","to":"c1-internet","directive":"Stop searching for generic agent prompt patterns. Focus: what are best practices for Jupyter notebook CI/CD agent prompts? What should an agent know about nbstripout, ruff on .ipynb, nbformat validation?"}
+{"from":"head","to":"c4-docs","directive":"Focus on: AWS Bedrock AgentCore deployment docs (bedrock_agentcore deploy CLI), SageMaker Terraform patterns, OpenSearch AOSS resource creation patterns. These are the actual deploy patterns in this repo."}
+{"from":"head","to":"c5-internal","directive":"REDIRECT: Current prompt has 3 factual errors: (1) says SAM/CloudFormation but project uses Jupyter+Terraform+Docker, (2) missing dirs: opensearch, sagemaker, notebooks, (3) make test does not exist — correct target is make test-mac. Draft the corrected Critical Rules and Key Directories sections."}
+EOF
+
+echo "Directives written"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Write initial directives
+
+Directives written
+[38;5;244m - Completed in 2.75s[0m
+[38;5;12m[1m [1.27][0m[0m
+[?25l[0m[?25l[0m[0mI'll create the following file: [38;5;141minvestigation/c3ec006e/recommendations.md[0m[38;5;244m (using tool: write)[0m
+Purpose: Write early recommendations with confirmed findings
+
+[48;2;79;40;40m[39m- 1     [0m:[39m[48;2;36;25;28m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179mEarly Recommendations[K
+[0m[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179maws-samples-agent Enhancement — Recommendations[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [38;2;180;142;173m_[38;2;180;142;173mLast updated: 21:54 | HEAD agent | Round 1[38;2;180;142;173m_[K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mExecutive Summary[K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe current [38;2;163;190;140m`[38;2;163;190;140maws-samples-agent[38;2;163;190;140m`[38;2;192;197;206m prompt (~1343 chars) has [38;2;235;203;139m**[38;2;235;203;139m3 confirmed factual errors[38;2;235;203;139m**[38;2;192;197;206m and [38;2;235;203;139m**[38;2;235;203;139m4 missing directories[38;2;235;203;139m**[38;2;192;197;206m. The enhanced prompt must reflect the actual project: Jupyter notebooks + Python scripts, Terraform IaC, Docker/ECR/AgentCore deployment — not SAM/CloudFormation. CI/CD already exists and is fully functional.[K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mConfirmed Errors in Current Prompt[K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Current (Wrong) [38;2;192;197;206m|[38;2;192;197;206m Correct [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m "Language: Python + Shell + CloudFormation/SAM" [38;2;192;197;206m|[38;2;192;197;206m Python + PySpark + HCL (Terraform) + Shell [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m "Use SAM/CloudFormation for infrastructure" [38;2;192;197;206m|[38;2;192;197;206m Uses Terraform (sagemaker/terraform/), Docker+ECR (bedrock-agentcore/), no SAM [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Correct target is [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;192;197;206m (macOS only) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mMissing Directories in Current Prompt[K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mopensearch/[38;2;163;190;140m`[38;2;191;97;106m — Amazon OpenSearch Service / AOSS resource creation[K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140msagemaker/[38;2;163;190;140m`[38;2;191;97;106m — SageMaker ML samples (processing, inference, pipelines, Terraform)[K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mnotebooks/[38;2;163;190;140m`[38;2;191;97;106m — General-purpose Jupyter notebooks[K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mbedrock-media-type-mismatch/[38;2;163;190;140m`[38;2;191;97;106m — Bug reproduction for Bedrock media type issues[K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mRecommended Enhanced Prompt[K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [38;2;192;197;206mYou are a specialized developer for the aws-samples project.[K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;192;197;206mProject: ~/work/github/aws-samples/[K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;192;197;206mPurpose: Personal AWS learning repo — Jupyter notebooks, scripts, and IaC for AWS service experiments.[K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Key Directories[K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock/: Amazon Bedrock samples (model invocation, agents, guardrails, prompt-caching, batch-inference, model-import, stability-ai)[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-agentcore/: Bedrock AgentCore samples (Strands SDK, Cedar policies, Docker+ECR deployment)[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-media-type-mismatch/: Bug reproduction for Bedrock Converse API media type mismatches[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- datazone/: Amazon DataZone data governance samples[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- glue/: AWS Glue PySpark ETL samples[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- opensearch/: Amazon OpenSearch Service / AOSS resource creation[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- sagemaker/: SageMaker ML samples (processing, inference-recommender, pipelines, serverless, Terraform IaC)[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- notebooks/: General-purpose Jupyter notebooks and analysis tools[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Languages & Frameworks[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Python: boto3, strands-agents, langchain, nbformat (primary)[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- PySpark: Glue ETL notebooks[K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- HCL (Terraform): sagemaker/terraform/ — EC2+SageMaker Studio IaC[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Shell: CI scripts[K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Docker: bedrock-agentcore/ container builds[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Deployment Patterns[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **Jupyter notebooks**: No deploy — run interactively in SageMaker Studio or local Jupyter[K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **bedrock-agentcore/strands-agents**: `bedrock_agentcore deploy` → CodeBuild → ECR → AgentCore Runtime (linux/arm64)[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **sagemaker/terraform**: `terraform init && terraform apply` — provisions EC2 + SageMaker Studio[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **sagemaker/processing-custom-container**: Docker build → ECR push → SageMaker Processing job[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **CI/CD**: GitHub Actions (ci.yml: lint+validate on every push; ec2-integration.yml: EC2 runner on main)[K
+[0m[48;2;43;48;59m[39m  2,  60[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m- 3     [0m:[39m[48;2;36;25;28m [38;2;180;142;173m_[38;2;180;142;173mWaiting for initial findings...[38;2;180;142;173m_[K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Build & CI[K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make lint` — ruff check on .py and .ipynb files[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make validate` — nbformat JSON validation on all notebooks[K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make strip-check` — verify notebooks have no stored outputs (nbstripout)[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make test-mac` — runs all three above (macOS local only)[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- CI: .github/workflows/ci.yml (ubuntu-latest, auto on push/PR)[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- EC2 integration: .github/workflows/ec2-integration.yml (manual + main branch)[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Critical Rules[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- SANITIZE all AWS account IDs, ARNs, and credentials before committing — bedrock-agentcore/.bedrock_agentcore.yaml contains real account/role ARNs[K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Do NOT modify existing notebooks — CI/CD was added without touching them[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Notebooks must have outputs stripped before commit (`nbstripout`)[K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make test` does NOT exist — use `make test-mac` on macOS[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- ruff ignores for notebooks: E402, E501, F403, F405, E722, F821, E741, F841 (see pyproject.toml)[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-agentcore deployment requires Docker daemon running + AWS credentials for ECR push[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Terraform samples require `terraform init` before `terraform apply`[K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- investigation/ and kiro-*/ dirs are excluded from all CI checks[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Common Tasks[K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Add new notebook: place in appropriate service dir, strip outputs before commit[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Run CI locally: `make test-mac`[K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Deploy AgentCore agent: `cd bedrock-agentcore/strands-agents && bedrock_agentcore deploy`[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Apply Terraform: `cd sagemaker/terraform/<sample> && terraform init && terraform apply`[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Check notebook validity: `make validate`[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mCLI Commands for Verification[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Verify no outputs in notebooks[K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206mfind . -name "*.ipynb" -not -path "*/investigation/*" -not -path "*/kiro-*" -exec nbstripout --verify {} +[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Run full local CI[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206mmake test-mac[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Check ruff on notebooks[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;192;197;206mruff check --output-format=github .[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Validate all notebooks[K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;192;197;206mpython scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mGaps Still Being Investigated[K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mc1-internet: Best practices for Jupyter notebook CI/CD agent prompts[K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m c4-docs: AgentCore deploy CLI docs, SageMaker Terraform patterns[K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m c5-internal: Drafting corrected Critical Rules section[K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;180;142;173m_[38;2;180;142;173mWill update as findings arrive.[38;2;180;142;173m_[K
+[0m[K
+Replacing: [38;5;141minvestigation/c3ec006e/recommendations.md[0m
+[38;5;244m - Completed in 1.977s[0m
+[38;5;12m[1m [1.28][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Recommendations written" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+
+# Update heartbeat
+python3 -c "import json,time; f=open('/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json','w'); json.dump({'ts':time.time(),'time':'$(date +%H:%M:%S)','phase':'monitoring'},f); f.close()"
+
+echo "Heartbeat updated"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Update heartbeat and progress
+
+Heartbeat updated
+[38;5;244m - Completed in 1.974s[0m
+[38;5;12m[1m [1.29][0m[0m
+[?25l[0m[38;5;141m> [0mNow I'll start the polling loop to monitor findings and user input:[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mFINDINGS=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/shared_findings.jsonl
+USER_INPUT=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/user_input.jsonl
+CONTROL=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/control_bus.jsonl
+DIRECTIVES=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/directives.jsonl
+HEAD_NODES=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+HEARTBEAT=/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json
+
+LAST_COUNT=$(wc -l < "$FINDINGS" 2>/dev/null || echo 0)
+START_TIME=$(date +%s)
+FINALIZED=0
+
+echo "Polling started. Current findings: $LAST_COUNT"
+
+for i in $(seq 1 20); do
+  sleep 15
+
+  # Update heartbeat
+  python3 -c "import json,time; f=open('$HEARTBEAT','w'); json.dump({'ts':time.time(),'time':'$(date +%H:%M:%S)','phase':'monitoring','poll_round':$i},f); f.close()"
+
+  # Check new findings
+  NEW_COUNT=$(wc -l < "$FINDINGS" 2>/dev/null || echo 0)
+  if [ "$NEW_COUNT" -gt "$LAST_COUNT" ]; then
+    NEW_FINDINGS=$(tail -n +$((LAST_COUNT+1)) "$FINDINGS" 2>/dev/null)
+    echo "=== Round $i: $((NEW_COUNT - LAST_COUNT)) new findings ==="
+    echo "$NEW_FINDINGS"
+    LAST_COUNT=$NEW_COUNT
+    echo "$(date +%H:%M:%S)|Round $i: $NEW_COUNT total findings" >> "$HEAD_NODES"
+  fi
+
+  # Check user input
+  if [ -s "$USER_INPUT" ]; then
+    echo "=== USER INPUT ==="
+    cat "$USER_INPUT"
+  fi
+
+  # Check for argue entries
+  ARGUES=$(grep '"type":"argue"' "$FINDINGS" 2>/dev/null)
+  if [ -n "$ARGUES" ]; then
+    echo "=== ARGUE ENTRIES ==="
+    echo "$ARGUES"
+  fi
+
+  # Check elapsed time and finding count for finalize decision
+  ELAPSED=$(( $(date +%s) - START_TIME ))
+  if [ "$ELAPSED" -ge 240 ] && [ "$NEW_COUNT" -ge 10 ] && [ "$FINALIZED" -eq 0 ]; then
+    echo "=== FINALIZE CHECK: elapsed=${ELAPSED}s findings=${NEW_COUNT} ==="
+    # Check all 5 children have contributed
+    C1=$(grep '"from":"c1-internet"' "$FINDINGS" | wc -l)
+    C2=$(grep '"from":"c2-kb"' "$FINDINGS" | wc -l)
+    C3=$(grep '"from":"c3-context"' "$FINDINGS" | wc -l)
+    C4=$(grep '"from":"c4-docs"' "$FINDINGS" | wc -l)
+    C5=$(grep '"from":"c5-internal"' "$FINDINGS" | wc -l)
+    echo "Child contributions: c1=$C1 c2=$C2 c3=$C3 c4=$C4 c5=$C5"
+    if [ "$C1" -ge 1 ] && [ "$C2" -ge 1 ] && [ "$C3" -ge 1 ] && [ "$C4" -ge 1 ] && [ "$C5" -ge 1 ]; then
+      echo "All children contributed. Ready to finalize."
+    fi
+  fi
+
+  echo "--- Poll $i done (${ELAPSED}s elapsed, $NEW_COUNT findings) ---"
+done
+
+echo "Polling loop complete"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Run 20-round polling loop (15s intervals = 5 minutes)
+
+Polling started. Current findings:       22
+=== Round 1: 1 new findings ===
+{"from":"c1-internet","finding":"Microsoft Jupyter Notebook Skill: keep cells focused on one step, add markdown explaining purpose, avoid large outputs, validate top-to-bottom. Ruff supports .ipynb natively with per-file-ignores for E402."}
+--- Poll 1 done (15s elapsed,       23 findings) ---
+=== Round 2: 1 new findings ===
+{"from":"c5-internal","finding":"COMPLETE: Wrote findings.md with full analysis of all 8 subdirs, Makefile structure, languages (Python/Terraform/PySpark/Docker), 7 deployment patterns, and 4-section enhanced prompt recommendation with 10 Critical Rules."}
+--- Poll 2 done (31s elapsed,       24 findings) ---
+--- Poll 3 done (46s elapsed,       24 findings) ---
+=== Round 4: 1 new findings ===
+{"from":"c4-docs","finding":"COMPLETE: Wrote comprehensive findings covering all 4 services (Bedrock, AgentCore, Glue, DataZone) with API refs, deployment patterns (CDK/SAM/CFn), quotas, known limitations, and prompt enhancement recommendations. Key insight: AgentCore is a NEW 12-service modular platform supporting MCP/A2A protocols with any framework."}
+--- Poll 4 done (61s elapsed,       25 findings) ---
+=== Round 5: 1 new findings ===
+{"from":"c1-internet","finding":"COMPLETE: Wrote findings.md covering all 5 questions. Key insight: enhanced prompt needs Jupyter notebook conventions, correct tech stack (Terraform not SAM), 8 service dirs, and ABCA-style CLAUDE.md structure with Build/Conventions/Architecture sections."}
+--- Poll 5 done (77s elapsed,       26 findings) ---
+--- Poll 6 done (92s elapsed,       26 findings) ---
+=== Round 7: 1 new findings ===
+{"from":"c3-context","finding":"FINAL: Current prompt has critical inaccuracies: says SAM/CloudFormation (repo uses Terraform), says make test (actual: make test-mac), missing sagemaker/opensearch/notebooks dirs. Enhanced prompt needs: correct dir map, 5 deployment patterns (Docker+ECR+AgentCore, Docker+ECR+SM Processing, Terraform, Direct API, GH Actions CI), correct Makefile targets, ruff/nbstripout tooling, .bedrock_agentcore.yaml awareness"}
+--- Poll 7 done (107s elapsed,       27 findings) ---
+--- Poll 8 done (123s elapsed,       27 findings) ---
+--- Poll 9 done (138s elapsed,       27 findings) ---
+--- Poll 10 done (153s elapsed,       27 findings) ---
+--- Poll 11 done (169s elapsed,       27 findings) ---
+--- Poll 12 done (184s elapsed,       27 findings) ---
+--- Poll 13 done (199s elapsed,       27 findings) ---
+--- Poll 14 done (214s elapsed,       27 findings) ---
+--- Poll 15 done (229s elapsed,       27 findings) ---
+=== FINALIZE CHECK: elapsed=245s findings=      27 ===
+Child contributions: c1=       9 c2=       5 c3=       5 c4=       5 c5=       3
+All children contributed. Ready to finalize.
+--- Poll 16 done (245s elapsed,       27 findings) ---
+=== FINALIZE CHECK: elapsed=261s findings=      27 ===
+Child contributions: c1=       9 c2=       5 c3=       5 c4=       5 c5=       3
+All children contributed. Ready to finalize.
+--- Poll 17 done (261s elapsed,       27 findings) ---
+=== FINALIZE CHECK: elapsed=277s findings=      27 ===
+Child contributions: c1=       9 c2=       5 c3=       5 c4=       5 c5=       3
+All children contributed. Ready to finalize.
+--- Poll 18 done (277s elapsed,       27 findings) ---
+=== FINALIZE CHECK: elapsed=292s findings=      27 ===
+Child contributions: c1=       9 c2=       5 c3=       5 c4=       5 c5=       3
+All children contributed. Ready to finalize.
+--- Poll 19 done (292s elapsed,       27 findings) ---
+=== FINALIZE CHECK: elapsed=307s findings=      27 ===
+Child contributions: c1=       9 c2=       5 c3=       5 c4=       5 c5=       3
+All children contributed. Ready to finalize.
+--- Poll 20 done (307s elapsed,       27 findings) ---
+Polling loop complete
+[38;5;244m - Completed in 309.500s[0m
+[38;5;12m[1m [1.30][0m[0m
+[?25l[0m[38;5;141m> [0mAll 5 children have contributed. 27 findings total, 4+ minutes elapsed. Issuing finalize and writing the final consolidated report.[0m[0m
+[?25l[0m[0mI will run the following command: [38;5;141mecho '{"action":"finalize","reason":"All 5 children contributed (c1=9, c2=5, c3=5, c4=5, c5=3). 27 findings. 307s elapsed. High confidence on all 5 investigation questions."}' >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/control_bus.jsonl
+
+# Read all child findings files for cross-reference
+echo "==C1==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c1-internet/findings.md 2>/dev/null | head -80
+echo "==C5==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/findings.md 2>/dev/null | head -80[0m[38;5;244m (using tool: shell)[0m
+Purpose: Issue finalize and read child findings files
+
+==C1==
+# Internet Research Findings: Enhance aws-samples-agent
+
+## 1. What Samples Exist in Each Subdirectory (from public repos)
+
+Based on web research of the aws-samples ecosystem:
+
+### bedrock/
+- **Source**: [aws-samples/amazon-bedrock-samples](https://github.com/aws-samples/amazon-bedrock-samples)
+- Contains examples for all foundational models on Amazon Bedrock
+- Typical structure: Jupyter notebooks organized by use case (agents, knowledge-bases, RAG, multimodal)
+- Categories: `agents-and-function-calling/`, `introduction-to-bedrock/`, `knowledge-bases/`
+
+### bedrock-agentcore/
+- **Source**: [awslabs/amazon-bedrock-agentcore-samples](https://github.com/awslabs/amazon-bedrock-agentcore-samples)
+- Python-based agent deployment to AgentCore Runtime
+- Uses AgentCore CLI or SDK for deployment
+- Supports frameworks: Strands Agents, LangGraph, Google ADK, OpenAI Agents
+- **Architecture**: ARM64 required, serverless environments, entrypoint.py pattern
+
+### bedrock-media-type-mismatch/
+- Likely demonstrates/troubleshoots the Bedrock Converse API media type validation issue
+- Common error: "The provided image does not match the specified image format"
+- Related to multimodal content handling where type must be explicitly specified (defaults to text)
+- Source: [AWS docs on multimodal KB troubleshooting](https://docs.aws.amazon.com/bedrock/latest/userguide/kb-multimodal-troubleshooting.html)
+
+### datazone/
+- **Source**: [aws-samples/data-mesh-datazone-cdk-cloudformation](https://github.com/aws-samples/data-mesh-datazone-cdk-cloudformation)
+- Enterprise data mesh with Amazon DataZone
+- Uses CDK and CloudFormation infrastructure
+
+### glue/
+- **Source**: [aws-samples/aws-glue-samples](https://github.com/aws-samples/aws-glue-samples)
+- PySpark ETL jobs, Python Shell jobs
+- Patterns: CDK-based CI/CD for Glue ([aws-glue-cdk-cicd](https://github.com/aws-samples/aws-glue-cdk-cicd))
+
+### opensearch/ (confirmed by head agent)
+- Likely Amazon OpenSearch Serverless (AOSS) samples
+- Common pattern: vector database for RAG, knowledge base backing store
+
+### sagemaker/ (confirmed by head agent)
+- Terraform-based deployment patterns (per head agent directive)
+- Training, inference, model deployment
+
+### notebooks/ (confirmed by head agent)
+- Standalone Jupyter notebooks (~40 total across project)
+
+---
+
+## 2. Makefile Structure (from web patterns)
+
+Common aws-samples Makefile patterns found:
+
+**CDK Python projects** (aws-samples/aws-cdk-project-structure-python):
+- `scripts/install-deps.sh` + `scripts/run-tests.sh`
+- `npx cdk deploy <StackName>`
+- `pip-compile` for dependency management
+
+**Head agent confirmed**: The actual project uses `make test-mac` (NOT `make test`).
+
+---
+
+## 3. Languages/Frameworks Used
+
+| Service | Primary Language | Framework/Tools |
+|---------|-----------------|-----------------|
+| Bedrock | Python | Jupyter notebooks, boto3, Bedrock SDK |
+| Bedrock AgentCore | Python | AgentCore CLI/SDK, Strands, LangGraph |
+| DataZone | Python/TypeScript | CDK, CloudFormation |
+| Glue | Python | PySpark, Glue ETL libraries |
+| OpenSearch | Python | OpenSearch client, AOSS |
+| SageMaker | Python | Terraform, SageMaker SDK |
+
+**Key correction from head agent**: Project uses Jupyter + Terraform + Docker/ECR, NOT SAM/CloudFormation as the current prompt claims.
+
+---
+
+## 4. Deployment Patterns
+
+| Sample | Deployment Method |
+|--------|------------------|
+==C5==
+# Internal Sources Investigation: Enhance aws-samples-agent
+
+**Date:** 2026-05-24  
+**Source:** Local project analysis (Midway auth expired — Atlas/InternalSearch/SearchSoftwareRecommendations unavailable)  
+**Confidence:** HIGH for project structure (direct filesystem), MEDIUM for best practices (derived from shared bus findings + prior investigation d1f13164)
+
+---
+
+## 1. Samples in Each Subdirectory
+
+### bedrock/ (19 notebooks, 4 .py files)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| agent-runtime/ | invoke_agent.ipynb, invoke_agent_stream.ipynb | Bedrock Agent invocation patterns |
+| batch-inference/ | batch-inference-35-haiku-cache.ipynb + batch-101-records.jsonl | Batch inference with caching |
+| bedrock-marketplace/ | autogluon-forecasting-chronos-bolt-base/main.ipynb | Marketplace model deployment |
+| common-errors/ | RAG_with_query_decomposition.ipynb | RAG troubleshooting patterns |
+| fine-tuning/ | finetunning-nova-micro.jsonl (data only) | Fine-tuning data prep |
+| miscellaneous/ | 10 notebooks: quickstart, cross-region-inference, conversation examples, custom datasource, knowledge bases, multimodal, 100_limit, 6g_upload_test.py | General Bedrock exploration |
+| model-import/ | import_IBM_granite.ipynb | Custom model import |
+| prompt-caching/ | prompt-caching-sonnet-3.7.ipynb | Prompt caching with Claude |
+| stability-ai-upscale/ | 3 .py files + README + images | Image upscaling with Stability AI |
+| testing/ | cross-region-inference.ipynb, invoke_agent_stream_scape_new_lines.ipynb | Testing/debugging |
+
+### bedrock-agentcore/ (2 notebooks, 1 .py file)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| gateway-cedar-policies/ | gateway_cedar_policies_setup.ipynb | Gateway + Cedar policy setup with Cognito OAuth |
+| strands-agents/ | strands_claude.py, runtime_with_strands_and_bedrock_models.sync.ipynb, Dockerfile, .bedrock_agentcore.yaml, requirements.txt | Strands SDK agent deployed to AgentCore runtime |
+
+### bedrock-media-type-mismatch/ (4 .py files)
+- binary_search_boto3.py, binary_search_langchain.py — Bug reproduction scripts
+- test_boto3_real_jpeg.py, test_langchain_mismatch.py — Test files
+- bug_reproduction_report.md — Documentation of media type mismatch issue
+
+### datazone/ (2 notebooks)
+- error-creating-glossary-using-assumed-role/ — Reproduces glossary creation bug with assumed roles
+
+### glue/ (1 notebook + 1 markdown)
+- pyspark-tutorial-glue.ipynb — PySpark ETL tutorial
+- apache-iceberg-johonny-chivers.md — Apache Iceberg on AWS tutorial (Athena + S3 + CloudFormation)
+
+### opensearch/ (1 notebook)
+- create-resources/AOSS_resource_creation.ipynb — Amazon OpenSearch Serverless resource creation
+
+### sagemaker/ (13 notebooks, 2 .py files, 16 .tf files)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| byoc-sm-jupyterlab/ | 3 notebooks (al2023, lustre, sagemaker-distribution) | BYOC JupyterLab images |
+| inference-recommender/ | 2 notebooks + inference scripts + payload | SageMaker Inference Recommender |
+| pipelines-sagemaker/ | 1 notebook | SageMaker Pipelines end-to-end |
+| processing-custom-container/ | 1 notebook + Dockerfile + standalone_region_training_test.py | Custom container for anomaly detection |
+| serverless-inference/ | 2 notebooks | Serverless inference walkthrough |
+| terraform/ | 2 notebooks + 10 .tf files | Terraform IaC for EC2-to-notebook connectivity |
+| (root) | retail_sales_prediction.ipynb | Retail ML prediction |
+
+### notebooks/ (2 notebooks)
+- getting_started.ipynb — SageMaker Unified Studio intro
+- ml_analysis_with_tests.ipynb — ML analysis patterns
+
+---
+
+## 2. Makefile Structure
+
+```makefile
+VENV := .venv
+PIP := $(VENV)/bin/pip
+PY := $(VENV)/bin/python
+FIND_NB := find . -name "*.ipynb" -not -path "*/.ipynb_checkpoints/*" -not -path "*/investigation/*" -not -path "*/kiro-*"
+
+.PHONY: lint validate strip-check test-mac
+
+$(VENV):                    # Auto-creates venv + installs requirements-ci.txt
+lint: $(VENV)               # ruff check .
+validate: $(VENV)           # python scripts/validate_notebooks.py
+strip-check: $(VENV)        # nbstripout --verify on all notebooks
+test-mac: lint validate strip-check  # Runs all checks locally
+```
+
+**Key design decisions:**
+[38;5;244m - Completed in 2.274s[0m
+[38;5;12m[1m [1.31][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c5-internal/findings.md 2>/dev/null | tail -100[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read rest of c5 findings
+
+
+---
+
+## 3. Languages & Frameworks
+
+| Language/Framework | Usage | Files |
+|---|---|---|
+| **Python (boto3)** | Primary — all notebooks + scripts | 40 .ipynb, 13 .py |
+| **Strands Agents SDK** | Bedrock AgentCore agent framework | strands_claude.py |
+| **LangChain** | Media type mismatch testing | binary_search_langchain.py |
+| **Terraform (HCL)** | SageMaker infrastructure | 16 .tf files |
+| **PySpark** | Glue ETL | 1 notebook |
+| **Docker** | Container builds for ECR | 2 Dockerfiles (agentcore, sagemaker) |
+| **YAML** | AgentCore config, GitHub Actions | .bedrock_agentcore.yaml, ci.yml, ec2-integration.yml |
+| **JSONL** | Batch inference data, fine-tuning data | 2 files |
+
+**Python dependencies (from various requirements.txt):**
+- Core: boto3, requests
+- AgentCore: strands-agents-tools, uv, bedrock-agentcore, bedrock-agentcore-starter-toolkit
+- SageMaker: pandas, joblib, numpy, rrcf, scipy, pyarrow, swifter
+- CI: nbstripout>=0.8.1, ruff>=0.6.0, nbformat>=5.9.0
+- Image: pillow (stability-ai-upscale)
+
+---
+
+## 4. Deployment Patterns
+
+| Pattern | Used By | Mechanism |
+|---|---|---|
+| **Bedrock AgentCore Runtime** | bedrock-agentcore/strands-agents | Docker → ECR → CodeBuild → AgentCore Runtime (ARM64, HTTP, OTel) |
+| **SageMaker Processing Jobs** | sagemaker/processing-custom-container | Docker → ECR → SageMaker Processing API |
+| **Terraform IaC** | sagemaker/terraform | terraform init/plan/apply for VPC, EC2, SageMaker Domain |
+| **Direct API calls** | Most bedrock/ notebooks | boto3 client calls (no deployment) |
+| **GitHub Actions CI/CD** | .github/workflows/ | ubuntu-latest + EC2 self-hosted runners (Ubuntu + Arch) |
+| **SageMaker Notebook execution** | sagemaker/byoc-sm-jupyterlab | BYOC images for JupyterLab spaces |
+| **CloudFormation** | glue/ (referenced) | Stack for S3 + Glue DB + Athena workgroup |
+
+**AgentCore deployment flow (most complex):**
+1. `bedrock-agentcore` CLI creates IAM roles, ECR repo, CodeBuild project
+2. Docker build (ARM64) with opentelemetry-instrument entrypoint
+3. Push to ECR
+4. CodeBuild triggers deployment to AgentCore Runtime
+5. Agent accessible via HTTP with OAuth (Cognito) + Cedar policies
+
+---
+
+## 5. Enhanced Prompt Recommendations
+
+Based on shared bus findings (c1-internet found AWS Startup Prompt Library structure, c2-kb found agent scoping best practices), the enhanced prompt should contain:
+
+### Recommended Structure (4 sections, per best practices):
+
+#### Section 1: Role & Scope
+- Identity: "You are an AWS samples development assistant for this repository"
+- Scope boundaries: Only operates within ~/work/github/aws-samples/
+- Services covered: Bedrock, Bedrock AgentCore, SageMaker, Glue, OpenSearch, DataZone
+- Languages: Python (primary), Terraform (IaC), PySpark (Glue)
+
+#### Section 2: Tools & Available Resources
+- Makefile targets: lint, validate, strip-check, test-mac
+- CI pipeline: GitHub Actions (ci.yml, ec2-integration.yml)
+- Linting: ruff (pyproject.toml config, E/F/W rules, notebook-specific ignores)
+- Notebook hygiene: nbstripout --verify
+- Validation: scripts/validate_notebooks.py (nbformat schema check)
+- Docker: Dockerfiles in bedrock-agentcore/ and sagemaker/processing-custom-container/
+- AgentCore CLI: .bedrock_agentcore.yaml for deployment config
+
+#### Section 3: Critical Rules (Highest ROI per shared learnings)
+1. **NEVER modify existing notebooks** — add new files only
+2. **SANITIZE AWS account IDs** before committing (seen: 2 in shared learnings)
+3. **Verify factual claims** against actual source code (seen: 6 in shared learnings)
+4. **Run `make test-mac`** before suggesting commits
+5. **Exclude investigation/ and kiro-* dirs** from notebook operations
+6. **Use inference profiles** for Bedrock models (not direct model IDs)
+7. **ARM64 architecture** for AgentCore containers
+8. **nbstripout --verify** (not --dry-run) for CI enforcement
+9. **ruff extend-include = ["*.ipynb"]** already configured in pyproject.toml
+10. **Per-file-ignores for notebooks**: E402, E501, F403, F405, E722, F821, E741, F841
+
+#### Section 4: Output Format & Conventions
+- Notebooks: nbformat v4.5, python3 kernel preferred
+- Python: 120 char line length, ruff E/F/W rules
+- READMEs: Each service dir has one
+- File organization: service-name/feature-name/files
+- Docker: python:3.13-slim base, non-root user, EXPOSE 8080/8000
+- Terraform: provider.tf, variables.tf, outputs.tf, resource-specific .tf files
+
+---
+
+## Limitations
+
+- **Midway auth expired**: Could not access Atlas, InternalSearch (wikis/Sage/broadcasts), SearchSoftwareRecommendations, or TicketingReadActions
+- **No internal best practices retrieved**: Recommendations derived from local project analysis + shared bus findings from other agents
+- **Account ID exposure**: .bedrock_agentcore.yaml contains account 794038231401 — this should be parameterized in the enhanced prompt's Critical Rules
+
+---
+
+## Summary
+
+The aws-samples repo is a **personal learning/experimentation repository** with 40 notebooks and 13 Python scripts spanning 8 AWS services. It uses a **Python-first approach** with boto3 as the primary SDK. The most sophisticated deployment pattern is **Bedrock AgentCore** (Docker → ECR → CodeBuild → Runtime). The CI/CD is already implemented via GitHub Actions + Makefile. The enhanced prompt should emphasize the Critical Rules section (highest ROI per shared learnings) and provide explicit tool/target references to avoid hallucination.
+[38;5;244m - Completed in 5.227s[0m
+[38;5;12m[1m [1.32][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mcat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c2-kb/findings.md 2>/dev/null | head -60 && echo "==C3==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c3-context/findings.md 2>/dev/null | head -60 && echo "==C4==" && cat /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/c4-docs/findings.md 2>/dev/null | head -60[0m[38;5;244m (using tool: shell)[0m
+Purpose: Read remaining child findings
+
+# Investigation Findings: Enhance aws-samples-agent
+
+## Sources
+- Knowledge Base: `search_lessons` (12+ relevant lessons)
+- Direct file inspection of project structure, Makefile, CI workflows, configs
+
+---
+
+## 1. Samples in Each Subdirectory
+
+### bedrock/ (11 subdirs)
+| Subdirectory | Content | Language |
+|---|---|---|
+| agent-runtime/ | invoke_agent.ipynb, invoke_agent_stream.ipynb | Python/Jupyter |
+| batch-inference/ | batch-inference-35-haiku-cache.ipynb, batch-101-records.jsonl | Python/Jupyter + JSONL data |
+| fine-tuning/ | finetunning-nova-micro.jsonl | JSONL training data |
+| model-import/ | import_IBM_granite.ipynb | Python/Jupyter |
+| prompt-caching/ | prompt-caching-sonnet-3.7.ipynb | Python/Jupyter |
+| stability-ai-upscale/ | complete_demo.py, stability_upscale.py, create_test_image.py | Python scripts |
+| bedrock-marketplace/ | autogluon-forecasting-chronos-bolt-base/ | (subdir) |
+| miscellaneous/ | 8 notebooks (quickstart, conversation, RAG, cross-region, multimodal, etc.) | Python/Jupyter |
+| testing/ | cross-region-inference.ipynb, invoke_agent_stream_scape_new_lines.ipynb | Python/Jupyter |
+| common-errors/ | RAG_with_query_decomposition.ipynb | Python/Jupyter |
+
+### bedrock-agentcore/ (2 subdirs)
+| Subdirectory | Content | Language |
+|---|---|---|
+| gateway-cedar-policies/ | gateway_cedar_policies_setup.ipynb (46KB) | Python/Jupyter |
+| strands-agents/ | strands_claude.py, runtime_with_strands_and_bedrock_models.sync.ipynb, Dockerfile, .bedrock_agentcore.yaml, requirements.txt | Python + Docker + YAML config |
+
+### bedrock-media-type-mismatch/ (standalone)
+- binary_search_langchain.py, binary_search_boto3.py, test_langchain_mismatch.py, test_boto3_real_jpeg.py
+- bug_reproduction_report.md
+- **Purpose**: Reproduce & diagnose LangChain Bedrock 400 media type mismatch errors
+
+### datazone/ (1 subdir)
+- error-creating-glossary-using-assumed-role/: 2 notebooks (create-glossary.ipynb, create-glossary-assume-role-Copy1.ipynb)
+
+### glue/ (flat)
+- pyspark-tutorial-glue.ipynb, apache-iceberg-johonny-chivers.md, README.md
+
+### opensearch/ (1 subdir)
+- create-resources/AOSS_resource_creation.ipynb
+
+### sagemaker/ (6 subdirs)
+| Subdirectory | Content |
+|---|---|
+| processing-custom-container/ | Dockerfile, requirements.txt, anomaly-detection-processing.ipynb, standalone_region_training_test.py |
+| inference-recommender/ | inference_recommender.ipynb, BYOC_serverless_inference.ipynb, inference_script.py |
+| terraform/connect-ec2-to-notebook-SMAI/ | Terraform configs (17 files) |
+| serverless-inference/ | SI_walkthrough subdir |
+| pipelines-sagemaker/ | sagemaker-pipelines-preprocess-train-evaluate-batch-transform/ |
+| byoc-sm-jupyterlab/ | 3 subdirs (notebook-al2023, custom-configs-for-lustre, sagemaker-distribution) |
+
+### notebooks/ (flat)
+- getting_started.ipynb (78KB), ml_analysis_with_tests.ipynb
+
+### kiro-test/ (empty except .venv)
+- Contains a Python virtual environment only
+
+==C3==
+# Investigation Findings: aws-samples Repository Context Analysis
+
+## 1. Samples in Each Subdirectory
+
+### bedrock/ (11 subdirs, 14 notebooks + 4 .py files)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| `agent-runtime/` | invoke_agent.ipynb, invoke_agent_stream.ipynb | Bedrock Agent invocation (sync + streaming) |
+| `batch-inference/` | batch-inference-35-haiku-cache.ipynb + .jsonl data | Batch inference with Claude 3.5 Haiku + caching |
+| `bedrock-marketplace/autogluon-forecasting-chronos-bolt-base/` | main.ipynb | AutoGluon forecasting from Bedrock Marketplace |
+| `common-errors/` | RAG_with_query_decomposition.ipynb | RAG patterns + common error handling |
+| `fine-tuning/` | finetunning-nova-micro.jsonl | Fine-tuning data for Nova Micro |
+| `miscellaneous/` | 8 notebooks + 1 .py | Cross-region inference, conversations, KB/RAG, custom datasources, multimodal Llama, quickstart, 100-limit testing, 6G upload test |
+| `model-import/` | import_IBM_granite.ipynb | Importing external models (IBM Granite) |
+| `prompt-caching/` | prompt-caching-sonnet-3.7.ipynb | Prompt caching with Claude Sonnet 3.7 |
+| `stability-ai-upscale/` | 3 .py files + README + images | Stability AI Conservative Upscale via inference profiles |
+| `testing/` | 2 notebooks | Cross-region inference testing, agent stream newline escaping |
+
+### bedrock-agentcore/ (2 subdirs)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| `strands-agents/` | strands_claude.py, Dockerfile, .bedrock_agentcore.yaml, requirements.txt, notebook | Strands SDK agent deployed to Bedrock AgentCore Runtime via Docker/ECR/CodeBuild |
+| `gateway-cedar-policies/` | gateway_cedar_policies_setup.ipynb | Gateway setup with Cedar policy-based authorization, Cognito OAuth, MCP protocol |
+
+### bedrock-media-type-mismatch/ (5 files)
+- Bug reproduction scripts for Bedrock Converse API media type validation change
+- `binary_search_langchain.py` / `binary_search_boto3.py` — version bisection scripts
+- `bug_reproduction_report.md` — detailed root cause analysis
+- Test scripts proving server-side validation change
+
+### datazone/ (1 subdir)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| `error-creating-glossary-using-assumed-role/` | 2 notebooks | Reproducing/fixing DataZone glossary creation with assumed IAM roles |
+
+### glue/ (2 files)
+- `pyspark-tutorial-glue.ipynb` — AWS Glue Studio PySpark interactive session tutorial
+- `apache-iceberg-johonny-chivers.md` — Apache Iceberg reference notes
+
+### opensearch/ (1 subdir)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| `create-resources/` | AOSS_resource_creation.ipynb | Amazon OpenSearch Serverless (AOSS) resource creation |
+
+### sagemaker/ (6 subdirs, 11 notebooks + 2 .py + 16 .tf)
+| Subdirectory | Content | Purpose |
+|---|---|---|
+| `processing-custom-container/` | notebook + Dockerfile + .py + README | Custom Docker container for SageMaker Processing (RRCF anomaly detection) |
+| `inference-recommender/` | 2 notebooks + inference scripts + payload | SageMaker Inference Recommender + BYOC serverless inference |
+| `terraform/connect-ec2-to-notebook-SMAI/` | 10+ .tf files + notebooks | Terraform IaC for EC2↔SageMaker Unified Studio connectivity |
+| `byoc-sm-jupyterlab/` | 3 subdirs with Dockerfiles + notebooks | BYOC JupyterLab images (AL2023, Lustre configs, SM Distribution) |
+| `serverless-inference/` | notebook + walkthrough | Serverless inference setup |
+| `pipelines-sagemaker/` | 1 notebook | SageMaker Pipelines: preprocess→train→evaluate→batch-transform |
+| `retail_sales_prediction.ipynb` | standalone notebook | Retail sales ML prediction |
+
+### notebooks/ (2 files)
+- `getting_started.ipynb` — SageMaker Unified Studio getting started (78KB, comprehensive)
+- `ml_analysis_with_tests.ipynb` — ML analysis with testing patterns
+
+---
+==C4==
+# AWS Documentation Findings: aws-samples-agent Enhancement
+
+## Investigation Summary
+
+Investigated official AWS documentation for all services represented in the aws-samples project subdirectories: Bedrock, Bedrock AgentCore, Glue, and DataZone. Focused on deployment patterns, API references, known limitations, and best practices relevant to building an enhanced agent prompt.
+
+---
+
+## 1. Service-by-Service Documentation Findings
+
+### Amazon Bedrock (subdirs: `bedrock/`, `bedrock-media-type-mismatch/`)
+
+**What it is:** Managed service for building generative AI applications with foundation models. Agents orchestrate FM interactions, data sources, and APIs.
+
+**Key APIs & Patterns:**
+- **Converse API** (`bedrock-runtime` endpoint): Unified multi-turn chat API supporting all Bedrock models
+  - ContentBlock types: `text`, `image` (ImageBlock), `document` (DocumentBlock), `video`, `toolUse`, `toolResult`, `guardContent`
+  - Source: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
+- **Agent Action Groups**: Defined via OpenAPI schemas or function schemas; backed by Lambda functions
+  - Source: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html
+- **Agent Deployment**: Create → Configure (model + action groups + knowledge bases) → Test (TSTALIASID) → Create alias → Deploy
+  - Source: https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html
+
+**Known Limitations (media type mismatch context):**
+- DocumentBlock **REQUIRES** an accompanying `text` ContentBlock in the same message — omitting it causes errors
+- Image formats supported: png, jpeg, gif, webp (varies by model)
+- Document `name` field vulnerable to prompt injection; use neutral names
+- S3 URI alternative to base64 bytes for images/documents
+- Source: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
+
+**Multimodal Knowledge Bases:**
+- Nova Multimodal Embeddings: images (.png, .jpg, .jpeg, .gif, .webp), audio (.mp3, .ogg, .wav), video (.mp4, .mov, .mkv, .webm, .flv, .mpeg, .mpg, .wmv, .3gp)
+- BDA approach: images (.png, .jpg, .jpeg), audio (.amr, .flac, .m4a, .mp3, .ogg, .wav), video (.mp4, .mov), documents (.pdf)
+- Limitation: Multimodal retrieval only available for S3 data sources
+- Source: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-multimodal-choose-approach.html
+
+**Quotas:**
+- Token-based quotas per model per region (varies by model)
+- Provisioned Throughput available for higher capacity
+- Source: https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html
+
+---
+
+### Amazon Bedrock AgentCore (subdir: `bedrock-agentcore/`)
+
+**What it is:** Modular agentic platform for building, deploying, and operating AI agents at scale. Framework-agnostic (CrewAI, LangGraph, LlamaIndex, Strands Agents, Google ADK, OpenAI Agents SDK). Supports MCP and A2A protocols.
+
+**Core Services (12 total):**
+1. **Runtime** — Serverless agent hosting with microVM isolation, fast cold starts
+2. **Harness** — Managed agent loop (single API call: model + prompt + tools)
+3. **Memory** — Short-term (multi-turn) and long-term (cross-session) memory
+4. **Gateway** — Convert APIs/Lambda to MCP-compatible tools
+5. **Identity** — OAuth 2.0, workload identities, JWT authorizers
+6. **Code Interpreter** — Sandboxed code execution (Python, JS, TS)
+7. **Browser** — Cloud-based browser for web interaction (Playwright, BrowserUse)
+8. **Observability** — OpenTelemetry-compatible tracing and debugging
+9. **Payments** — Microtransactions via x402 protocol
+10. **Evaluations** — Automated agent quality assessment
+11. **Policy** — Cedar-based deterministic control boundaries
+12. **Registry** — Centralized catalog for agents, MCP servers, tools
+[38;5;244m - Completed in 2.428s[0m
+[38;5;12m[1m [1.33][0m[0m
+[?25l[0m[38;5;141m> [0mI now have comprehensive findings from all 5 children. Let me write the final consolidated report and update the recommendations.[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141minvestigation/c3ec006e/recommendations.md[0m[38;5;244m (using tool: write)[0m
+Purpose: Write final consolidated recommendations
+
+[48;2;79;40;40m[39m-   1     [0m:[39m[48;2;36;25;28m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179maws-samples-agent Enhancement — Recommendations[K
+[0m[48;2;79;40;40m[39m-   2     [0m:[39m[48;2;36;25;28m [38;2;180;142;173m_[38;2;180;142;173mLast updated: 21:54 | HEAD agent | Round 1[38;2;180;142;173m_[K
+[0m[48;2;40;67;43m[39m+        1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179maws-samples-agent Enhancement — Final Recommendations[K
+[0m[48;2;40;67;43m[39m+        2[0m:[39m[48;2;24;38;30m [38;2;180;142;173m_[38;2;180;142;173mLast updated: 22:00 | HEAD agent | FINALIZED — all 5 children contributed, 27 findings[38;2;180;142;173m_[K
+[0m[48;2;43;48;59m[39m    3,   3[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m    4,   4[0m:[39m[48;2;43;48;59m [38;2;192;197;206m---[K
+[0m[48;2;43;48;59m[39m    5,   5[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m    6,   6[0m:[39m[48;2;43;48;59m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mExecutive Summary[K
+[0m[48;2;43;48;59m[39m    7,   7[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m-   8     [0m:[39m[48;2;36;25;28m [38;2;192;197;206mThe current [38;2;163;190;140m`[38;2;163;190;140maws-samples-agent[38;2;163;190;140m`[38;2;192;197;206m prompt (~1343 chars) has [38;2;235;203;139m**[38;2;235;203;139m3 confirmed factual errors[38;2;235;203;139m**[38;2;192;197;206m and [38;2;235;203;139m**[38;2;235;203;139m4 missing directories[38;2;235;203;139m**[38;2;192;197;206m. The enhanced prompt must reflect the actual project: Jupyter notebooks + Python scripts, Terraform IaC, Docker/ECR/AgentCore deployment — not SAM/CloudFormation. CI/CD already exists and is fully functional.[K
+[0m[48;2;40;67;43m[39m+        8[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe current [38;2;163;190;140m`[38;2;163;190;140maws-samples-agent[38;2;163;190;140m`[38;2;192;197;206m prompt (~1343 chars) has [38;2;235;203;139m**[38;2;235;203;139m3 confirmed factual errors[38;2;235;203;139m**[38;2;192;197;206m and [38;2;235;203;139m**[38;2;235;203;139m4 missing directories[38;2;235;203;139m**[38;2;192;197;206m. The enhanced prompt must reflect the actual project: Jupyter notebooks + Python scripts, Terraform IaC, Docker/ECR/AgentCore deployment — not SAM/CloudFormation. CI/CD already exists and is fully functional. The enhanced prompt below is ~3,200 chars and covers all 8 service directories with correct deployment patterns, Makefile targets, and Critical Rules.[K
+[0m[48;2;43;48;59m[39m    9,   9[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   10,  10[0m:[39m[48;2;43;48;59m [38;2;192;197;206m---[K
+[0m[48;2;43;48;59m[39m   11,  11[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   12,  12[0m:[39m[48;2;43;48;59m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mConfirmed Errors in Current Prompt[K
+[0m[48;2;43;48;59m[39m   13,  13[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m-  14     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Current (Wrong) [38;2;192;197;206m|[38;2;192;197;206m Correct [38;2;192;197;206m|[K
+[0m[48;2;79;40;40m[39m-  15     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[K
+[0m[48;2;79;40;40m[39m-  16     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m "Language: Python + Shell + CloudFormation/SAM" [38;2;192;197;206m|[38;2;192;197;206m Python + PySpark + HCL (Terraform) + Shell [38;2;192;197;206m|[K
+[0m[48;2;79;40;40m[39m-  17     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m "Use SAM/CloudFormation for infrastructure" [38;2;192;197;206m|[38;2;192;197;206m Uses Terraform (sagemaker/terraform/), Docker+ECR (bedrock-agentcore/), no SAM [38;2;192;197;206m|[K
+[0m[48;2;79;40;40m[39m-  18     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Correct target is [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;192;197;206m (macOS only) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+       14[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Current (Wrong) [38;2;192;197;206m|[38;2;192;197;206m Correct [38;2;192;197;206m|[38;2;192;197;206m Source [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+       15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m-----------------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+       16[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m "Language: Python + Shell + CloudFormation/SAM" [38;2;192;197;206m|[38;2;192;197;206m Python + PySpark + HCL (Terraform) + Shell [38;2;192;197;206m|[38;2;192;197;206m c3-context, c5-internal (filesystem) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+       17[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m "Use SAM/CloudFormation for infrastructure" [38;2;192;197;206m|[38;2;192;197;206m Terraform (sagemaker/terraform/), Docker+ECR (bedrock-agentcore/), no SAM [38;2;192;197;206m|[38;2;192;197;206m c3-context, c5-internal [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+       18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Correct target is [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;192;197;206m (macOS only) [38;2;192;197;206m|[38;2;192;197;206m c2-kb, c3-context [38;2;192;197;206m|[K
+[0m[48;2;43;48;59m[39m   19,  19[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   20,  20[0m:[39m[48;2;43;48;59m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mMissing Directories in Current Prompt[K
+[0m[48;2;43;48;59m[39m   21,  21[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m-  22     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mopensearch/[38;2;163;190;140m`[38;2;191;97;106m — Amazon OpenSearch Service / AOSS resource creation[K
+[0m[48;2;79;40;40m[39m-  23     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140msagemaker/[38;2;163;190;140m`[38;2;191;97;106m — SageMaker ML samples (processing, inference, pipelines, Terraform)[K
+[0m[48;2;79;40;40m[39m-  24     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mnotebooks/[38;2;163;190;140m`[38;2;191;97;106m — General-purpose Jupyter notebooks[K
+[0m[48;2;79;40;40m[39m-  25     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mbedrock-media-type-mismatch/[38;2;163;190;140m`[38;2;191;97;106m — Bug reproduction for Bedrock media type issues[K
+[0m[48;2;40;67;43m[39m+       22[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mopensearch/[38;2;163;190;140m`[38;2;191;97;106m — Amazon OpenSearch Serverless (AOSS) resource creation[K
+[0m[48;2;40;67;43m[39m+       23[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140msagemaker/[38;2;163;190;140m`[38;2;191;97;106m — SageMaker ML samples (processing, inference, pipelines, Terraform IaC)[K
+[0m[48;2;40;67;43m[39m+       24[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mnotebooks/[38;2;163;190;140m`[38;2;191;97;106m — General-purpose Jupyter notebooks (SageMaker Unified Studio)[K
+[0m[48;2;40;67;43m[39m+       25[0m:[39m[48;2;24;38;30m [38;2;191;97;106m-[38;2;191;97;106m [38;2;163;190;140m`[38;2;163;190;140mbedrock-media-type-mismatch/[38;2;163;190;140m`[38;2;191;97;106m — Bug reproduction for Bedrock Converse API media type issues[K
+[0m[48;2;43;48;59m[39m   26,  26[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   27,  27[0m:[39m[48;2;43;48;59m [38;2;192;197;206m---[K
+[0m[48;2;43;48;59m[39m   28,  28[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m-  29     [0m:[39m[48;2;36;25;28m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mRecommended Enhanced Prompt[K
+[0m[48;2;40;67;43m[39m+       29[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mEnhanced Prompt (Ready to Apply)[K
+[0m[48;2;43;48;59m[39m   30,  30[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   31,  31[0m:[39m[48;2;43;48;59m [38;2;192;197;206m```[K
+[0m[48;2;43;48;59m[39m   32,  32[0m:[39m[48;2;43;48;59m [38;2;192;197;206mYou are a specialized developer for the aws-samples project.[K
+[0m[48;2;43;48;59m[39m   33,  33[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   34,  34[0m:[39m[48;2;43;48;59m [38;2;192;197;206mProject: ~/work/github/aws-samples/[K
+[0m[48;2;43;48;59m[39m   35,  35[0m:[39m[48;2;43;48;59m [38;2;192;197;206mPurpose: Personal AWS learning repo — Jupyter notebooks, scripts, and IaC for AWS service experiments.[K
+[0m[48;2;43;48;59m[39m   36,  36[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   37,  37[0m:[39m[48;2;43;48;59m [38;2;192;197;206m## Key Directories[K
+[0m[48;2;79;40;40m[39m-  38     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- bedrock/: Amazon Bedrock samples (model invocation, agents, guardrails, prompt-caching, batch-inference, model-import, stability-ai)[K
+[0m[48;2;79;40;40m[39m-  39     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- bedrock-agentcore/: Bedrock AgentCore samples (Strands SDK, Cedar policies, Docker+ECR deployment)[K
+[0m[48;2;79;40;40m[39m-  40     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- bedrock-media-type-mismatch/: Bug reproduction for Bedrock Converse API media type mismatches[K
+[0m[48;2;79;40;40m[39m-  41     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- datazone/: Amazon DataZone data governance samples[K
+[0m[48;2;79;40;40m[39m-  42     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- glue/: AWS Glue PySpark ETL samples[K
+[0m[48;2;79;40;40m[39m-  43     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- opensearch/: Amazon OpenSearch Service / AOSS resource creation[K
+[0m[48;2;79;40;40m[39m-  44     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- sagemaker/: SageMaker ML samples (processing, inference-recommender, pipelines, serverless, Terraform IaC)[K
+[0m[48;2;79;40;40m[39m-  45     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- notebooks/: General-purpose Jupyter notebooks and analysis tools[K
+[0m[48;2;40;67;43m[39m+       38[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock/: Amazon Bedrock samples (agent-runtime, batch-inference, model-import, prompt-caching, stability-ai-upscale, miscellaneous, testing, common-errors, fine-tuning, bedrock-marketplace)[K
+[0m[48;2;40;67;43m[39m+       39[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-agentcore/: Bedrock AgentCore samples (strands-agents with Docker+ECR+CodeBuild deployment, gateway-cedar-policies with Cognito OAuth + Cedar)[K
+[0m[48;2;40;67;43m[39m+       40[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-media-type-mismatch/: Bug reproduction scripts for Bedrock Converse API media type validation (boto3 + LangChain binary search)[K
+[0m[48;2;40;67;43m[39m+       41[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- datazone/: Amazon DataZone data governance samples (glossary creation with assumed roles)[K
+[0m[48;2;40;67;43m[39m+       42[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- glue/: AWS Glue PySpark ETL samples + Apache Iceberg reference[K
+[0m[48;2;40;67;43m[39m+       43[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- opensearch/: Amazon OpenSearch Serverless (AOSS) resource creation[K
+[0m[48;2;40;67;43m[39m+       44[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- sagemaker/: SageMaker ML samples (processing-custom-container, inference-recommender, pipelines, serverless-inference, byoc-sm-jupyterlab, terraform IaC)[K
+[0m[48;2;40;67;43m[39m+       45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- notebooks/: General-purpose Jupyter notebooks (SageMaker Unified Studio getting started, ML analysis)[K
+[0m[48;2;43;48;59m[39m   46,  46[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   47,  47[0m:[39m[48;2;43;48;59m [38;2;192;197;206m## Languages & Frameworks[K
+[0m[48;2;79;40;40m[39m-  48     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Python: boto3, strands-agents, langchain, nbformat (primary)[K
+[0m[48;2;79;40;40m[39m-  49     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- PySpark: Glue ETL notebooks[K
+[0m[48;2;79;40;40m[39m-  50     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- HCL (Terraform): sagemaker/terraform/ — EC2+SageMaker Studio IaC[K
+[0m[48;2;79;40;40m[39m-  51     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Shell: CI scripts[K
+[0m[48;2;79;40;40m[39m-  52     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Docker: bedrock-agentcore/ container builds[K
+[0m[48;2;40;67;43m[39m+       48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Python (primary): boto3, strands-agents, langchain, nbformat, pandas, numpy[K
+[0m[48;2;40;67;43m[39m+       49[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- PySpark: Glue ETL notebooks (glue_pyspark kernel)[K
+[0m[48;2;40;67;43m[39m+       50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- HCL (Terraform): sagemaker/terraform/ — EC2 + SageMaker Studio IaC (16 .tf files)[K
+[0m[48;2;40;67;43m[39m+       51[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Docker: bedrock-agentcore/ (ARM64) and sagemaker/processing-custom-container/[K
+[0m[48;2;40;67;43m[39m+       52[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- YAML: .bedrock_agentcore.yaml (AgentCore deployment config), GitHub Actions workflows[K
+[0m[48;2;43;48;59m[39m   53,  53[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   54,  54[0m:[39m[48;2;43;48;59m [38;2;192;197;206m## Deployment Patterns[K
+[0m[48;2;79;40;40m[39m-  55     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- **Jupyter notebooks**: No deploy — run interactively in SageMaker Studio or local Jupyter[K
+[0m[48;2;79;40;40m[39m-  56     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- **bedrock-agentcore/strands-agents**: `bedrock_agentcore deploy` → CodeBuild → ECR → AgentCore Runtime (linux/arm64)[K
+[0m[48;2;79;40;40m[39m-  57     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- **sagemaker/terraform**: `terraform init && terraform apply` — provisions EC2 + SageMaker Studio[K
+[0m[48;2;79;40;40m[39m-  58     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- **sagemaker/processing-custom-container**: Docker build → ECR push → SageMaker Processing job[K
+[0m[48;2;79;40;40m[39m-  59     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- **CI/CD**: GitHub Actions (ci.yml: lint+validate on every push; ec2-integration.yml: EC2 runner on main)[K
+[0m[48;2;40;67;43m[39m+       55[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **Bedrock AgentCore**: `bedrock_agentcore deploy` → CodeBuild → ECR → AgentCore Runtime (linux/arm64, HTTP, OpenTelemetry)[K
+[0m[48;2;40;67;43m[39m+       56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **SageMaker Processing**: Docker build → ECR push → SageMaker Processing job (custom container)[K
+[0m[48;2;40;67;43m[39m+       57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **Terraform IaC**: `terraform init && terraform apply` — VPC, EC2, SageMaker Domain, NACLs, IAM[K
+[0m[48;2;40;67;43m[39m+       58[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **Direct API**: Most bedrock/ notebooks — boto3 calls only, no deployment needed[K
+[0m[48;2;40;67;43m[39m+       59[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- **GitHub Actions CI/CD**: ci.yml (ubuntu-latest, every push/PR) + ec2-integration.yml (EC2 self-hosted, main branch)[K
+[0m[48;2;43;48;59m[39m   60,  60[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   61,  61[0m:[39m[48;2;43;48;59m [38;2;192;197;206m## Build & CI[K
+[0m[48;2;79;40;40m[39m-  62     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- `make lint` — ruff check on .py and .ipynb files[K
+[0m[48;2;79;40;40m[39m-  63     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- `make validate` — nbformat JSON validation on all notebooks[K
+[0m[48;2;79;40;40m[39m-  64     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- `make strip-check` — verify notebooks have no stored outputs (nbstripout)[K
+[0m[48;2;79;40;40m[39m-  65     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- `make test-mac` — runs all three above (macOS local only)[K
+[0m[48;2;79;40;40m[39m-  66     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- CI: .github/workflows/ci.yml (ubuntu-latest, auto on push/PR)[K
+[0m[48;2;79;40;40m[39m-  67     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- EC2 integration: .github/workflows/ec2-integration.yml (manual + main branch)[K
+[0m[48;2;40;67;43m[39m+       62[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make lint` — ruff check on .py and .ipynb (pyproject.toml: line-length=120, E/F/W rules)[K
+[0m[48;2;40;67;43m[39m+       63[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make validate` — nbformat JSON schema validation (scripts/validate_notebooks.py)[K
+[0m[48;2;40;67;43m[39m+       64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make strip-check` — verify notebooks have no stored outputs (nbstripout --verify)[K
+[0m[48;2;40;67;43m[39m+       65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- `make test-mac` — runs all three above (macOS local only; no `make test`)[K
+[0m[48;2;40;67;43m[39m+       66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- CI: .github/workflows/ci.yml auto-runs on push/PR[K
+[0m[48;2;40;67;43m[39m+       67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- EC2 integration: .github/workflows/ec2-integration.yml (Ubuntu + Arch Linux containers)[K
+[0m[48;2;43;48;59m[39m   68,  68[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   69,  69[0m:[39m[48;2;43;48;59m [38;2;192;197;206m## Critical Rules[K
+[0m[48;2;79;40;40m[39m-  70     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- SANITIZE all AWS account IDs, ARNs, and credentials before committing — bedrock-agentcore/.bedrock_agentcore.yaml contains real account/role ARNs[K
+[0m[48;2;79;40;40m[39m-  71     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Do NOT modify existing notebooks — CI/CD was added without touching them[K
+[0m[48;2;79;40;40m[39m-  72     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Notebooks must have outputs stripped before commit (`nbstripout`)[K
+[0m[48;2;40;67;43m[39m+       70[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- SANITIZE all AWS account IDs, ARNs, and credentials — .bedrock_agentcore.yaml contains real account/role ARNs; never commit without redacting[K
+[0m[48;2;40;67;43m[39m+       71[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Do NOT modify existing notebooks — CI/CD was added without touching them; add new files only[K
+[0m[48;2;40;67;43m[39m+       72[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Notebooks must have outputs stripped before commit (`nbstripout`); CI enforces this[K
+[0m[48;2;43;48;59m[39m   73,  73[0m:[39m[48;2;43;48;59m [38;2;192;197;206m- `make test` does NOT exist — use `make test-mac` on macOS[K
+[0m[48;2;79;40;40m[39m-  74     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- ruff ignores for notebooks: E402, E501, F403, F405, E722, F821, E741, F841 (see pyproject.toml)[K
+[0m[48;2;79;40;40m[39m-  75     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- bedrock-agentcore deployment requires Docker daemon running + AWS credentials for ECR push[K
+[0m[48;2;40;67;43m[39m+       74[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- investigation/ and kiro-*/ dirs are excluded from all CI checks and notebook operations[K
+[0m[48;2;40;67;43m[39m+       75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- ruff per-file-ignores for notebooks: E402, E501, F403, F405, E722, F821, E741, F841 (already in pyproject.toml)[K
+[0m[48;2;40;67;43m[39m+       76[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- AgentCore containers require linux/arm64 platform and Docker daemon running[K
+[0m[48;2;43;48;59m[39m   76,  77[0m:[39m[48;2;43;48;59m [38;2;192;197;206m- Terraform samples require `terraform init` before `terraform apply`[K
+[0m[48;2;79;40;40m[39m-  77     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- investigation/ and kiro-*/ dirs are excluded from all CI checks[K
+[0m[48;2;79;40;40m[39m-  78     [0m:[39m[48;2;36;25;28m [K
+[0m[48;2;79;40;40m[39m-  79     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m## Common Tasks[K
+[0m[48;2;79;40;40m[39m-  80     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Add new notebook: place in appropriate service dir, strip outputs before commit[K
+[0m[48;2;79;40;40m[39m-  81     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Run CI locally: `make test-mac`[K
+[0m[48;2;79;40;40m[39m-  82     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Deploy AgentCore agent: `cd bedrock-agentcore/strands-agents && bedrock_agentcore deploy`[K
+[0m[48;2;79;40;40m[39m-  83     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Apply Terraform: `cd sagemaker/terraform/<sample> && terraform init && terraform apply`[K
+[0m[48;2;79;40;40m[39m-  84     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m- Check notebook validity: `make validate`[K
+[0m[48;2;40;67;43m[39m+       78[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Verify factual claims against actual source files before asserting[K
+[0m[48;2;43;48;59m[39m   85,  79[0m:[39m[48;2;43;48;59m [38;2;192;197;206m```[K
+[0m[48;2;43;48;59m[39m   86,  80[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   87,  81[0m:[39m[48;2;43;48;59m [38;2;192;197;206m---[K
+[0m[48;2;43;48;59m[39m   88,  82[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   89,  83[0m:[39m[48;2;43;48;59m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mCLI Commands for Verification[K
+[0m[48;2;43;48;59m[39m   90,  84[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m   91,  85[0m:[39m[48;2;43;48;59m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+       86[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Run full local CI[K
+[0m[48;2;40;67;43m[39m+       87[0m:[39m[48;2;24;38;30m [38;2;192;197;206mmake test-mac[K
+[0m[48;2;40;67;43m[39m+       88[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;43;48;59m[39m   92,  89[0m:[39m[48;2;43;48;59m [38;2;192;197;206m# Verify no outputs in notebooks[K
+[0m[48;2;43;48;59m[39m   93,  90[0m:[39m[48;2;43;48;59m [38;2;192;197;206mfind . -name "*.ipynb" -not -path "*/investigation/*" -not -path "*/kiro-*" -exec nbstripout --verify {} +[K
+[0m[48;2;43;48;59m[39m   94,  91[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m-  95     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m# Run full local CI[K
+[0m[48;2;79;40;40m[39m-  96     [0m:[39m[48;2;36;25;28m [38;2;192;197;206mmake test-mac[K
+[0m[48;2;79;40;40m[39m-  97     [0m:[39m[48;2;36;25;28m [K
+[0m[48;2;79;40;40m[39m-  98     [0m:[39m[48;2;36;25;28m [38;2;192;197;206m# Check ruff on notebooks[K
+[0m[48;2;40;67;43m[39m+       92[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Lint Python and notebooks[K
+[0m[48;2;43;48;59m[39m   99,  93[0m:[39m[48;2;43;48;59m [38;2;192;197;206mruff check --output-format=github .[K
+[0m[48;2;43;48;59m[39m  100,  94[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m  101,  95[0m:[39m[48;2;43;48;59m [38;2;192;197;206m# Validate all notebooks[K
+[0m[48;2;43;48;59m[39m  102,  96[0m:[39m[48;2;43;48;59m [38;2;192;197;206mpython scripts/validate_notebooks.py[K
+[0m[48;2;40;67;43m[39m+       97[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+       98[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Deploy AgentCore agent[K
+[0m[48;2;40;67;43m[39m+       99[0m:[39m[48;2;24;38;30m [38;2;192;197;206mcd bedrock-agentcore/strands-agents && bedrock_agentcore deploy[K
+[0m[48;2;40;67;43m[39m+      100[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      101[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Apply Terraform[K
+[0m[48;2;40;67;43m[39m+      102[0m:[39m[48;2;24;38;30m [38;2;192;197;206mcd sagemaker/terraform/connect-ec2-to-notebook-SMAI && terraform init && terraform apply[K
+[0m[48;2;43;48;59m[39m  103, 103[0m:[39m[48;2;43;48;59m [38;2;192;197;206m```[K
+[0m[48;2;43;48;59m[39m  104, 104[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;43;48;59m[39m  105, 105[0m:[39m[48;2;43;48;59m [38;2;192;197;206m---[K
+[0m[48;2;43;48;59m[39m  106, 106[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m- 107     [0m:[39m[48;2;36;25;28m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mGaps Still Being Investigated[K
+[0m[48;2;40;67;43m[39m+      107[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mHow to Apply[K
+[0m[48;2;43;48;59m[39m  108, 108[0m:[39m[48;2;43;48;59m [K
+[0m[48;2;79;40;40m[39m- 109     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m [38;2;191;97;106mc1-internet: Best practices for Jupyter notebook CI/CD agent prompts[K
+[0m[48;2;79;40;40m[39m- 110     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m c4-docs: AgentCore deploy CLI docs, SageMaker Terraform patterns[K
+[0m[48;2;79;40;40m[39m- 111     [0m:[39m[48;2;36;25;28m [38;2;191;97;106m-[38;2;191;97;106m c5-internal: Drafting corrected Critical Rules section[K
+[0m[48;2;79;40;40m[39m- 112     [0m:[39m[48;2;36;25;28m [K
+[0m[48;2;79;40;40m[39m- 113     [0m:[39m[48;2;36;25;28m [38;2;180;142;173m_[38;2;180;142;173mWill update as findings arrive.[38;2;180;142;173m_[K
+[0m[48;2;40;67;43m[39m+      109[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+      110[0m:[39m[48;2;24;38;30m [38;2;192;197;206m# Update the agent prompt[K
+[0m[48;2;40;67;43m[39m+      111[0m:[39m[48;2;24;38;30m [38;2;192;197;206mcat > ~/.kiro/agents/aws-samples-agent.json << 'AGENT_EOF'[K
+[0m[48;2;40;67;43m[39m+      112[0m:[39m[48;2;24;38;30m [38;2;192;197;206m{[K
+[0m[48;2;40;67;43m[39m+      113[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "name": "aws-samples-agent",[K
+[0m[48;2;40;67;43m[39m+      114[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "description": "Specialized agent for aws-samples — AWS code samples and reference implementations",[K
+[0m[48;2;40;67;43m[39m+      115[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "prompt": "<paste enhanced prompt above>",[K
+[0m[48;2;40;67;43m[39m+      116[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "tools": ["read", "write", "glob", "grep", "code", "shell", "@kiro-checkpoint/*", "@aws-docs/*"],[K
+[0m[48;2;40;67;43m[39m+      117[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "allowedTools": [[K
+[0m[48;2;40;67;43m[39m+      118[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    "read", "write", "glob", "grep", "code", "shell", "web_search", "web_fetch",[K
+[0m[48;2;40;67;43m[39m+      119[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    "checkpoint", "diff", "rollback", "list_checkpoints", "init", "branch", "switch_branch",[K
+[0m[48;2;40;67;43m[39m+      120[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    "search_documentation", "read_documentation", "read_sections", "use_aws"[K
+[0m[48;2;40;67;43m[39m+      121[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  ],[K
+[0m[48;2;40;67;43m[39m+      122[0m:[39m[48;2;24;38;30m [38;2;192;197;206m  "includeMcpJson": false[K
+[0m[48;2;40;67;43m[39m+      123[0m:[39m[48;2;24;38;30m [38;2;192;197;206m}[K
+[0m[48;2;40;67;43m[39m+      124[0m:[39m[48;2;24;38;30m [38;2;192;197;206mAGENT_EOF[K
+[0m[48;2;40;67;43m[39m+      125[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[K
+Replacing: [38;5;141minvestigation/c3ec006e/recommendations.md[0m
+[38;5;244m - Completed in 3.716s[0m
+[38;5;12m[1m [1.34][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Final recommendations written" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+
+# Update heartbeat
+python3 -c "import json,time; f=open('/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json','w'); json.dump({'ts':time.time(),'time':'$(date +%H:%M:%S)','phase':'finalized'},f); f.close()"
+
+# Write finalize to control bus (already done above, confirm)
+echo "Finalize issued. Watchdog starting."
+
+# Watchdog: monitor heartbeat for 60s post-finalize
+for i in 1 2 3; do
+  sleep 20
+  TS=$(python3 -c "import json; d=json.load(open('/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json')); print(d['ts'])")
+  NOW=$(python3 -c "import time; print(time.time())")
+  AGE=$(python3 -c "print(int($NOW - $TS))")
+  echo "Watchdog check $i: heartbeat age=${AGE}s"
+  if [ "$AGE" -gt 60 ]; then
+    echo "WATCHDOG: heartbeat stale >60s — possible crash" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/recommendations.md
+  fi
+  # Refresh heartbeat
+  python3 -c "import json,time; f=open('/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/heartbeat.json','w'); json.dump({'ts':time.time(),'time':'$(date +%H:%M:%S)','phase':'finalized'},f); f.close()"
+done
+
+echo "$(date +%H:%M:%S)|Watchdog complete" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/head_nodes
+echo "Done"[0m[38;5;244m (using tool: shell)[0m
+Purpose: Watchdog monitoring post-finalize
+
+Finalize issued. Watchdog starting.
+Watchdog check 1: heartbeat age=7s
+Watchdog check 2: heartbeat age=8s
+Watchdog check 3: heartbeat age=8s
+Done
+[38;5;244m - Completed in 64.430s[0m
+[38;5;12m[1m [1.35][0m[0m
+[?25l[0m[38;5;141m> [0mInvestigation complete. Here's the summary:[0m[0m
+[0m[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[0m
+[0m[0m
+[1mHEAD AGENT — FINALIZED[22m (22:00 | 27 findings | all 5 children contributed)[0m[0m
+[0m[0m
+[38;5;252m[1m## What was found[0m[0m
+[0m[0m
+[1m3 confirmed factual errors[22m in the current prompt:[0m[0m
+1. Claims "CloudFormation/SAM" — project uses [1mTerraform + Docker/ECR[22m, no SAM[0m[0m
+2. Says "Use SAM/CloudFormation for infrastructure" — same error[0m[0m
+3. Says [38;5;10mmake test[0m — correct target is [1m[38;5;10mmake test-mac[0m[22m[0m[0m
+[0m[0m
+[1m4 missing directories[22m: [38;5;10mopensearch/[0m, [38;5;10msagemaker/[0m, [38;5;10mnotebooks/[0m, [38;5;10mbedrock-media-type-mismatch/[0m[0m[0m
+[0m[0m
+[1mFull project map confirmed[22m (c5-internal did direct filesystem analysis):[0m[0m
+- 40 notebooks, 13 .py files, 16 .tf files across 8 service dirs[0m[0m
+- 7 distinct deployment patterns (AgentCore, SageMaker Processing, Terraform, Direct API, GitHub Actions, BYOC JupyterLab, CloudFormation in glue/)[0m[0m
+- CI already fully implemented — [38;5;10mci.yml[0m + [38;5;10mec2-integration.yml[0m both exist[0m[0m
+[0m[0m
+[38;5;252m[1m## Output[0m[0m
+[0m[0m
+The enhanced prompt (~3,200 chars) is in [1m[38;5;10mrecommendations.md[0m[22m — ready to paste into [38;5;10m~/.kiro/agents/aws-samples-agent.json[0m. It includes correct directory map, deployment patterns, Makefile targets, and a Critical Rules section with the account ID sanitization warning ([38;5;10m.bedrock_agentcore.yaml[0m contains real ARNs)]9;Response complete.[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 5.41 • Time: 11m 17s
+
+[0m[1G[0m[0m[?25h

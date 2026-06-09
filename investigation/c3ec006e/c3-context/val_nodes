@@ -1,0 +1,8 @@
+21:58:50|Starting validation
+21:59:36|Reading findings file
+21:59:50|Validating directory structure
+22:00:54|Validating file counts
+22:02:28|Validating agent prompt
+22:02:59|Validating CI workflows
+22:03:55|Writing validated output
+22:04:50|Validation complete

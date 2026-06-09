@@ -1,0 +1,408 @@
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;11mWARNING: [0mMCP server '[38;5;10mkiro-investigation[0m' is already configured in agent config. Skipping duplicate from legacy mcp.json.
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-prod.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 459 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/developer-agent.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 457 column 16
+[38;5;9mError: [0mJson supplied at /Users/murivirg/.kiro/agents/kiro-developer.json is invalid: unknown field `systemPrompt`, expected one of `$schema`, `name`, `description`, `prompt`, `mcpServers`, `tools`, `toolAliases`, `allowedTools`, `resources`, `hooks`, `toolsSettings`, `includeMcpJson`, `useLegacyMcpJson`, `model`, `keyboardShortcut`, `welcomeMessage` at line 455 column 16
+One or more mcp server did not load correctly. See $TMPDIR/kiro-log/kiro-chat.log for more details.
+------
+[32mAll tools are now trusted ([0m[31m![0m[32m). Kiro will execute tools without asking for confirmation.[0m
+Agents can sometimes do unexpected things so understand the risks.
+
+Learn more at [38;5;141mhttps://kiro.dev/docs/cli/chat/security/#using-tools-trust-all-safely[0m
+
+
+[38;5;12m[1m📷 Checkpoints are enabled! (took 14.60s)
+
+[0m
+[38;5;252m[0m[?25l[?25l[0m[0mReading file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/final_report.md[0m, all lines[38;5;244m (using tool: read)[0m
+[38;5;10m ✓ [0mSuccessfully read [38;5;244m14741 bytes[0m from /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/final_report.md
+[38;5;244m - Completed in 1.684s[0m
+[38;5;12m[1m [1.1][0m[0m
+[?25l[0m[38;5;11m
+WARNING: [0mRetry #2, retrying within 10.0s..
+[38;5;141m> [0mNow I'll write the visual report with 3 mermaid diagrams and compile the HTML.[0m[0m
+[?25l[0m[0mI'll create the following file: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.md[0m[38;5;244m (using tool: write)[0m
+
+[48;2;40;67;43m[39m+      1[0m:[39m[48;2;24;38;30m [38;2;143;161;179m#[38;2;192;197;206m [38;2;143;161;179maws-samples-agent Enhancement Report[K
+[0m[48;2;40;67;43m[39m+      2[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      3[0m:[39m[48;2;24;38;30m [38;2;235;203;139m**[38;2;235;203;139mDate:[38;2;235;203;139m**[38;2;192;197;206m 2026-05-24 [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mInvestigation ID:[38;2;235;203;139m**[38;2;192;197;206m c3ec006e [38;2;192;197;206m|[38;2;192;197;206m [38;2;235;203;139m**[38;2;235;203;139mConfidence:[38;2;235;203;139m**[38;2;192;197;206m HIGH[K
+[0m[48;2;40;67;43m[39m+      4[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      5[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+      6[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      7[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mExecutive Summary[K
+[0m[48;2;40;67;43m[39m+      8[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+      9[0m:[39m[48;2;24;38;30m [38;2;192;197;206mThe current [38;2;163;190;140m`[38;2;163;190;140maws-samples-agent[38;2;163;190;140m`[38;2;192;197;206m prompt (~1343 chars) contains [38;2;235;203;139m**[38;2;235;203;139m3 confirmed factual errors[38;2;235;203;139m**[38;2;192;197;206m and [38;2;235;203;139m**[38;2;235;203;139momits 4 of 8 service directories[38;2;235;203;139m**[38;2;192;197;206m. The project is a personal AWS learning repository with 40 Jupyter notebooks, 13 Python scripts, 16 Terraform files, and 5 Dockerfiles spanning 8 AWS service areas. It uses Python exclusively — no TypeScript, no CDK, no SAM. The enhanced prompt below corrects all errors, adds all missing directories, and adds a Critical Rules section (highest-ROI section per shared learnings). All findings were verified against actual source files.[K
+[0m[48;2;40;67;43m[39m+     10[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     11[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     12[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     13[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mRepository Architecture[K
+[0m[48;2;40;67;43m[39m+     14[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     15[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmermaid[K
+[0m[48;2;40;67;43m[39m+     16[0m:[39m[48;2;24;38;30m [38;2;192;197;206mgraph TD[K
+[0m[48;2;40;67;43m[39m+     17[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT["aws-samples/"] --> BEDROCK["bedrock/\n19 notebooks\nboto3 direct API"][K
+[0m[48;2;40;67;43m[39m+     18[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> BAC["bedrock-agentcore/\nstrands-agents\ngateway-cedar-policies"][K
+[0m[48;2;40;67;43m[39m+     19[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> BMM["bedrock-media-type-mismatch/\nbug reproduction\nboto3 + LangChain"][K
+[0m[48;2;40;67;43m[39m+     20[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> DZ["datazone/\nglossary creation\nassumed IAM roles"][K
+[0m[48;2;40;67;43m[39m+     21[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> GLUE["glue/\nPySpark ETL\nApache Iceberg"][K
+[0m[48;2;40;67;43m[39m+     22[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> OS["opensearch/\nAOSS resource\ncreation"][K
+[0m[48;2;40;67;43m[39m+     23[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> SM["sagemaker/\n13 notebooks\n16 Terraform files"][K
+[0m[48;2;40;67;43m[39m+     24[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> NB["notebooks/\nSageMaker Unified Studio\nML analysis"][K
+[0m[48;2;40;67;43m[39m+     25[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     26[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    BAC --> BAC1["Docker build linux/arm64\n→ ECR → CodeBuild\n→ AgentCore Runtime"][K
+[0m[48;2;40;67;43m[39m+     27[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    BAC --> BAC2["Cognito OAuth\n+ Cedar policies"][K
+[0m[48;2;40;67;43m[39m+     28[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     29[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    SM --> SM1["processing-custom-container\nDocker → ECR → SM Processing"][K
+[0m[48;2;40;67;43m[39m+     30[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    SM --> SM2["terraform/\nVPC + EC2 + SM Domain\nterraform init && apply"][K
+[0m[48;2;40;67;43m[39m+     31[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    SM --> SM3["byoc-sm-jupyterlab\nDocker → ECR → SM Spaces"][K
+[0m[48;2;40;67;43m[39m+     32[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     33[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    ROOT --> CI["CI/CD"][K
+[0m[48;2;40;67;43m[39m+     34[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI --> GHA[".github/workflows/ci.yml\nubuntu-latest\nlint + validate + strip-check"][K
+[0m[48;2;40;67;43m[39m+     35[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI --> EC2[".github/workflows/ec2-integration.yml\nEC2 self-hosted\nUbuntu + Arch Linux"][K
+[0m[48;2;40;67;43m[39m+     36[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI --> MK["Makefile\nmake test-mac\nlint + validate + strip-check"][K
+[0m[48;2;40;67;43m[39m+     37[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     38[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style ROOT fill:#2c3e50,color:#fff[K
+[0m[48;2;40;67;43m[39m+     39[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style BEDROCK fill:#3498db,color:#fff[K
+[0m[48;2;40;67;43m[39m+     40[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style BAC fill:#9b59b6,color:#fff[K
+[0m[48;2;40;67;43m[39m+     41[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style BMM fill:#e74c3c,color:#fff[K
+[0m[48;2;40;67;43m[39m+     42[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style DZ fill:#27ae60,color:#fff[K
+[0m[48;2;40;67;43m[39m+     43[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style GLUE fill:#f39c12,color:#fff[K
+[0m[48;2;40;67;43m[39m+     44[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style OS fill:#3498db,color:#fff[K
+[0m[48;2;40;67;43m[39m+     45[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style SM fill:#9b59b6,color:#fff[K
+[0m[48;2;40;67;43m[39m+     46[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style NB fill:#27ae60,color:#fff[K
+[0m[48;2;40;67;43m[39m+     47[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style CI fill:#2c3e50,color:#fff[K
+[0m[48;2;40;67;43m[39m+     48[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     49[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     50[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+     51[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     52[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mDetailed Findings[K
+[0m[48;2;40;67;43m[39m+     53[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     54[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mConfirmed Factual Errors in Current Prompt[K
+[0m[48;2;40;67;43m[39m+     55[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     56[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m # [38;2;192;197;206m|[38;2;192;197;206m Current Prompt (Wrong) [38;2;192;197;206m|[38;2;192;197;206m Correct Value [38;2;192;197;206m|[38;2;192;197;206m Verified By [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     57[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---[38;2;192;197;206m|[38;2;192;197;206m------------------------[38;2;192;197;206m|[38;2;192;197;206m---------------[38;2;192;197;206m|[38;2;192;197;206m-------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     58[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 1 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mPython + Shell + CloudFormation/SAM[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Python + PySpark + HCL (Terraform) + Shell [38;2;192;197;206m|[38;2;192;197;206m No [38;2;163;190;140m`[38;2;163;190;140mcdk.json[38;2;163;190;140m`[38;2;192;197;206m, no [38;2;163;190;140m`[38;2;163;190;140mtemplate.yaml[38;2;163;190;140m`[38;2;192;197;206m, 16 [38;2;163;190;140m`[38;2;163;190;140m.tf[38;2;163;190;140m`[38;2;192;197;206m files found [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     59[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 2 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mUse SAM/CloudFormation for infrastructure[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Terraform ([38;2;163;190;140m`[38;2;163;190;140msagemaker/terraform/[38;2;163;190;140m`[38;2;192;197;206m), Docker+ECR [38;2;192;197;206m|[38;2;192;197;206m Direct filesystem — no SAM/CDK anywhere [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     60[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 3 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;192;197;206m (macOS local target) [38;2;192;197;206m|[38;2;192;197;206m Direct Makefile read — [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m does not exist [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     61[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     62[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mOmitted Directories[K
+[0m[48;2;40;67;43m[39m+     63[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     64[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Directory [38;2;192;197;206m|[38;2;192;197;206m Contents [38;2;192;197;206m|[38;2;192;197;206m Why It Matters [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     65[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m-----------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[38;2;192;197;206m----------------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     66[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mopensearch/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Amazon OpenSearch Serverless (AOSS) resource creation [38;2;192;197;206m|[38;2;192;197;206m Entire service area missing [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     67[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140msagemaker/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m 6 subdirs, 13 notebooks, 16 Terraform files [38;2;192;197;206m|[38;2;192;197;206m Largest IaC section in repo [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     68[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mnotebooks/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m SageMaker Unified Studio getting started, ML analysis [38;2;192;197;206m|[38;2;192;197;206m General-purpose notebooks [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     69[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mbedrock-media-type-mismatch/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m Bug reproduction for Bedrock Converse API [38;2;192;197;206m|[38;2;192;197;206m Active debugging work [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     70[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     71[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mFile Counts (Verified)[K
+[0m[48;2;40;67;43m[39m+     72[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     73[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Type [38;2;192;197;206m|[38;2;192;197;206m Count [38;2;192;197;206m|[38;2;192;197;206m Notes [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     74[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[38;2;192;197;206m-------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     75[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Jupyter notebooks [38;2;192;197;206m|[38;2;192;197;206m 40 [38;2;192;197;206m|[38;2;192;197;206m Excludes [38;2;163;190;140m`[38;2;163;190;140minvestigation/[38;2;163;190;140m`[38;2;192;197;206m, [38;2;163;190;140m`[38;2;163;190;140mkiro-*[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     76[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Python scripts [38;2;192;197;206m|[38;2;192;197;206m 13 [38;2;192;197;206m|[38;2;192;197;206m Excludes [38;2;163;190;140m`[38;2;163;190;140m.venv/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     77[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Terraform files [38;2;192;197;206m|[38;2;192;197;206m 16 [38;2;192;197;206m|[38;2;192;197;206m All in [38;2;163;190;140m`[38;2;163;190;140msagemaker/terraform/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     78[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Dockerfiles [38;2;192;197;206m|[38;2;192;197;206m 5 [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mbedrock-agentcore/[38;2;163;190;140m`[38;2;192;197;206m (ARM64) + [38;2;163;190;140m`[38;2;163;190;140msagemaker/[38;2;163;190;140m`[38;2;192;197;206m (3 BYOC + 1 processing) [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     79[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     80[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mMakefile Targets (Verified)[K
+[0m[48;2;40;67;43m[39m+     81[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     82[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmakefile[K
+[0m[48;2;40;67;43m[39m+     83[0m:[39m[48;2;24;38;30m [38;2;192;197;206mlint        → ruff check .[K
+[0m[48;2;40;67;43m[39m+     84[0m:[39m[48;2;24;38;30m [38;2;192;197;206mvalidate    → python scripts/validate_notebooks.py (nbformat schema)[K
+[0m[48;2;40;67;43m[39m+     85[0m:[39m[48;2;24;38;30m [38;2;192;197;206mstrip-check → nbstripout --verify on all notebooks[K
+[0m[48;2;40;67;43m[39m+     86[0m:[39m[48;2;24;38;30m [38;2;192;197;206mtest-mac    → lint + validate + strip-check  ← ONLY composite target[K
+[0m[48;2;40;67;43m[39m+     87[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+     88[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     89[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m [38;2;235;203;139m**[38;2;235;203;139mCritical:[38;2;235;203;139m**[38;2;208;135;112m [38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;208;135;112m does [38;2;235;203;139m**[38;2;235;203;139mnot[38;2;235;203;139m**[38;2;208;135;112m exist. Always use [38;2;163;190;140m`[38;2;163;190;140mmake test-mac[38;2;163;190;140m`[38;2;208;135;112m on macOS.[K
+[0m[48;2;40;67;43m[39m+     90[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     91[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mDeployment Patterns[K
+[0m[48;2;40;67;43m[39m+     92[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+     93[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Pattern [38;2;192;197;206m|[38;2;192;197;206m Used By [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     94[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     95[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker (linux/arm64) → ECR → CodeBuild → AgentCore Runtime [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140mbedrock-agentcore/strands-agents/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     96[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → SageMaker Processing Job [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140msagemaker/processing-custom-container/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     97[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Docker → ECR → SageMaker JupyterLab BYOC [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140msagemaker/byoc-sm-jupyterlab/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     98[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Terraform IaC ([38;2;163;190;140m`[38;2;163;190;140mterraform init && terraform apply[38;2;163;190;140m`[38;2;192;197;206m) [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140msagemaker/terraform/[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+     99[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Direct boto3 API calls (no deployment) [38;2;192;197;206m|[38;2;192;197;206m Most [38;2;163;190;140m`[38;2;163;190;140mbedrock/[38;2;163;190;140m`[38;2;192;197;206m notebooks [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    100[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m GitHub Actions CI/CD [38;2;192;197;206m|[38;2;192;197;206m [38;2;163;190;140m`[38;2;163;190;140m.github/workflows/ci.yml[38;2;163;190;140m`[38;2;192;197;206m + [38;2;163;190;140m`[38;2;163;190;140mec2-integration.yml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    101[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    102[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mruff Configuration ([38;2;163;190;140m`[38;2;163;190;140mpyproject.toml[38;2;163;190;140m`[38;2;143;161;179m)[K
+[0m[48;2;40;67;43m[39m+    103[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    104[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mtoml[K
+[0m[48;2;40;67;43m[39m+    105[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff][K
+[0m[48;2;40;67;43m[39m+    106[0m:[39m[48;2;24;38;30m [38;2;192;197;206mextend-include = ["*.ipynb"][K
+[0m[48;2;40;67;43m[39m+    107[0m:[39m[48;2;24;38;30m [38;2;192;197;206mline-length = 120[K
+[0m[48;2;40;67;43m[39m+    108[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    109[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff.lint][K
+[0m[48;2;40;67;43m[39m+    110[0m:[39m[48;2;24;38;30m [38;2;192;197;206mselect = ["E", "F", "W"][K
+[0m[48;2;40;67;43m[39m+    111[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    112[0m:[39m[48;2;24;38;30m [38;2;192;197;206m[tool.ruff.lint.per-file-ignores][K
+[0m[48;2;40;67;43m[39m+    113[0m:[39m[48;2;24;38;30m [38;2;192;197;206m"*.ipynb" = ["E402", "E501", "F403", "F405", "E722", "F821", "E741", "F841"][K
+[0m[48;2;40;67;43m[39m+    114[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    115[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    116[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    117[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    118[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mTroubleshooting Decision Tree[K
+[0m[48;2;40;67;43m[39m+    119[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    120[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmermaid[K
+[0m[48;2;40;67;43m[39m+    121[0m:[39m[48;2;24;38;30m [38;2;192;197;206mflowchart TD[K
+[0m[48;2;40;67;43m[39m+    122[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    START["Issue with aws-samples project"] --> Q1{"Which area?"}[K
+[0m[48;2;40;67;43m[39m+    123[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    124[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q1 -->|"CI failing"| Q2{"Which check?"}[K
+[0m[48;2;40;67;43m[39m+    125[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q1 -->|"Deployment failing"| Q3{"Which pattern?"}[K
+[0m[48;2;40;67;43m[39m+    126[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q1 -->|"Notebook issue"| Q4{"What error?"}[K
+[0m[48;2;40;67;43m[39m+    127[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q1 -->|"Prompt wrong"| FIX_PROMPT["Update ~/.kiro/agents/aws-samples-agent.json\nUse enhanced prompt from Action 1"][K
+[0m[48;2;40;67;43m[39m+    128[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    129[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q2 -->|"lint"| LINT["Run: make lint\nCheck ruff rules E/F/W\nNotebooks: ignore E402,E501,F403,F405"][K
+[0m[48;2;40;67;43m[39m+    130[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q2 -->|"validate"| VALIDATE["Run: python scripts/validate_notebooks.py\nCheck nbformat schema\nExcludes investigation/, kiro-*/"][K
+[0m[48;2;40;67;43m[39m+    131[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q2 -->|"strip-check"| STRIP["Run: nbstripout --verify on notebooks\nStrip outputs: nbstripout notebook.ipynb\nCommit stripped notebook"][K
+[0m[48;2;40;67;43m[39m+    132[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    133[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q3 -->|"AgentCore"| AC{"Docker running?"}[K
+[0m[48;2;40;67;43m[39m+    134[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q3 -->|"Terraform"| TF{"terraform init done?"}[K
+[0m[48;2;40;67;43m[39m+    135[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q3 -->|"SageMaker"| SM_Q{"ECR image pushed?"}[K
+[0m[48;2;40;67;43m[39m+    136[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    137[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    AC -->|"No"| AC_FIX["Start Docker Desktop\nRequires linux/arm64 platform"][K
+[0m[48;2;40;67;43m[39m+    138[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    AC -->|"Yes"| AC2{"Account ID in .bedrock_agentcore.yaml?"}[K
+[0m[48;2;40;67;43m[39m+    139[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    AC2 -->|"Real ID"| SANITIZE["SANITIZE: Replace with placeholder\nNever commit real account IDs"][K
+[0m[48;2;40;67;43m[39m+    140[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    AC2 -->|"Placeholder"| AC_DEPLOY["Run: agentcore deploy\nCheck CodeBuild logs in AWS Console"][K
+[0m[48;2;40;67;43m[39m+    141[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    142[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    TF -->|"No"| TF_INIT["Run: terraform init\nThen: terraform apply"][K
+[0m[48;2;40;67;43m[39m+    143[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    TF -->|"Yes"| TF_APPLY["Run: terraform apply\nCheck sagemaker/terraform/ for .tf files"][K
+[0m[48;2;40;67;43m[39m+    144[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    145[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    SM_Q -->|"No"| SM_BUILD["Build: docker build -t <IMAGE_NAME> .\nPush: docker push <ECR_URI>/<IMAGE_NAME>"][K
+[0m[48;2;40;67;43m[39m+    146[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    SM_Q -->|"Yes"| SM_JOB["Submit SageMaker job via boto3\nCheck CloudWatch logs for job output"][K
+[0m[48;2;40;67;43m[39m+    147[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    148[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q4 -->|"Outputs not stripped"| STRIP[K
+[0m[48;2;40;67;43m[39m+    149[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q4 -->|"Kernel not found"| KERNEL["Glue notebooks: use glue_pyspark kernel\nSM notebooks: use Python 3 (ipykernel)"][K
+[0m[48;2;40;67;43m[39m+    150[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Q4 -->|"Import error"| DEPS["Check requirements.txt or requirements-ci.txt\nInstall: pip install -r requirements.txt"][K
+[0m[48;2;40;67;43m[39m+    151[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    152[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style START fill:#2c3e50,color:#fff[K
+[0m[48;2;40;67;43m[39m+    153[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style FIX_PROMPT fill:#27ae60,color:#fff[K
+[0m[48;2;40;67;43m[39m+    154[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style SANITIZE fill:#e74c3c,color:#fff[K
+[0m[48;2;40;67;43m[39m+    155[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style LINT fill:#3498db,color:#fff[K
+[0m[48;2;40;67;43m[39m+    156[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style VALIDATE fill:#3498db,color:#fff[K
+[0m[48;2;40;67;43m[39m+    157[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style STRIP fill:#f39c12,color:#fff[K
+[0m[48;2;40;67;43m[39m+    158[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style AC_DEPLOY fill:#27ae60,color:#fff[K
+[0m[48;2;40;67;43m[39m+    159[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    style TF_APPLY fill:#27ae60,color:#fff[K
+[0m[48;2;40;67;43m[39m+    160[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    161[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    162[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    163[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    164[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mAction Plan[K
+[0m[48;2;40;67;43m[39m+    165[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    166[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mAction 1 — Replace Agent Prompt (CRITICAL)[K
+[0m[48;2;40;67;43m[39m+    167[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    168[0m:[39m[48;2;24;38;30m [38;2;192;197;206mReplace the [38;2;163;190;140m`[38;2;163;190;140mprompt[38;2;163;190;140m`[38;2;192;197;206m field in [38;2;163;190;140m`[38;2;163;190;140m~/.kiro/agents/aws-samples-agent.json[38;2;163;190;140m`[38;2;192;197;206m with:[K
+[0m[48;2;40;67;43m[39m+    169[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    170[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    171[0m:[39m[48;2;24;38;30m [38;2;192;197;206mYou are a specialized developer for the aws-samples project.[K
+[0m[48;2;40;67;43m[39m+    172[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    173[0m:[39m[48;2;24;38;30m [38;2;192;197;206mProject: ~/work/github/aws-samples/[K
+[0m[48;2;40;67;43m[39m+    174[0m:[39m[48;2;24;38;30m [38;2;192;197;206mRemote: https://github.com/virgilio-murillo/aws-samples.git[K
+[0m[48;2;40;67;43m[39m+    175[0m:[39m[48;2;24;38;30m [38;2;192;197;206mPurpose: Personal AWS learning repo — Jupyter notebooks, Python scripts, and IaC for AWS service experiments.[K
+[0m[48;2;40;67;43m[39m+    176[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    177[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Key Directories[K
+[0m[48;2;40;67;43m[39m+    178[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock/: Amazon Bedrock samples (agent-runtime, batch-inference, model-import, prompt-caching, stability-ai-upscale, miscellaneous, testing, common-errors, fine-tuning, bedrock-marketplace) — 19 notebooks[K
+[0m[48;2;40;67;43m[39m+    179[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-agentcore/: Bedrock AgentCore samples (strands-agents with Docker+ECR+CodeBuild deployment, gateway-cedar-policies with Cognito OAuth + Cedar authorization)[K
+[0m[48;2;40;67;43m[39m+    180[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- bedrock-media-type-mismatch/: Bug reproduction scripts for Bedrock Converse API media type validation (boto3 + LangChain binary search scripts)[K
+[0m[48;2;40;67;43m[39m+    181[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- datazone/: Amazon DataZone samples (glossary creation with assumed IAM roles)[K
+[0m[48;2;40;67;43m[39m+    182[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- glue/: AWS Glue PySpark ETL tutorial + Apache Iceberg reference[K
+[0m[48;2;40;67;43m[39m+    183[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- opensearch/: Amazon OpenSearch Serverless (AOSS) resource creation[K
+[0m[48;2;40;67;43m[39m+    184[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- sagemaker/: SageMaker ML samples (processing-custom-container, inference-recommender, pipelines, serverless-inference, byoc-sm-jupyterlab, terraform IaC) — 13 notebooks, 16 .tf files[K
+[0m[48;2;40;67;43m[39m+    185[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- notebooks/: General-purpose Jupyter notebooks (SageMaker Unified Studio getting started, ML analysis)[K
+[0m[48;2;40;67;43m[39m+    186[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    187[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Languages & Frameworks[K
+[0m[48;2;40;67;43m[39m+    188[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Python (primary): boto3, strands-agents, langchain-aws, sagemaker SDK, nbformat, pandas, numpy[K
+[0m[48;2;40;67;43m[39m+    189[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- PySpark: Glue ETL notebooks (glue_pyspark kernel)[K
+[0m[48;2;40;67;43m[39m+    190[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- HCL (Terraform): sagemaker/terraform/ — EC2 + SageMaker Studio IaC (16 .tf files)[K
+[0m[48;2;40;67;43m[39m+    191[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Docker: bedrock-agentcore/ (ARM64) and sagemaker/ (processing, BYOC JupyterLab)[K
+[0m[48;2;40;67;43m[39m+    192[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- YAML: .bedrock_agentcore.yaml (AgentCore deployment config), GitHub Actions workflows[K
+[0m[48;2;40;67;43m[39m+    193[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    194[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Deployment Patterns[K
+[0m[48;2;40;67;43m[39m+    195[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Bedrock AgentCore: Docker build (linux/arm64) → ECR → CodeBuild → AgentCore Runtime (HTTP, OpenTelemetry). Config: .bedrock_agentcore.yaml[K
+[0m[48;2;40;67;43m[39m+    196[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- SageMaker Processing: Docker build → ECR push → SageMaker Processing job (custom container)[K
+[0m[48;2;40;67;43m[39m+    197[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- SageMaker BYOC JupyterLab: Docker build → ECR → SageMaker Spaces custom image[K
+[0m[48;2;40;67;43m[39m+    198[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Terraform IaC: terraform init && terraform apply — VPC, EC2, SageMaker Domain, NACLs, IAM[K
+[0m[48;2;40;67;43m[39m+    199[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Direct API: Most bedrock/ notebooks — boto3 calls only, no deployment needed[K
+[0m[48;2;40;67;43m[39m+    200[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    201[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Build & CI[K
+[0m[48;2;40;67;43m[39m+    202[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- make lint — ruff check on .py and .ipynb (pyproject.toml: line-length=120, E/F/W rules)[K
+[0m[48;2;40;67;43m[39m+    203[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- make validate — nbformat JSON schema validation (scripts/validate_notebooks.py)[K
+[0m[48;2;40;67;43m[39m+    204[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- make strip-check — verify notebooks have no stored outputs (nbstripout --verify)[K
+[0m[48;2;40;67;43m[39m+    205[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- make test-mac — runs all three above (macOS local; this is the ONLY composite target)[K
+[0m[48;2;40;67;43m[39m+    206[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- CI: .github/workflows/ci.yml auto-runs on every push/PR (ubuntu-latest)[K
+[0m[48;2;40;67;43m[39m+    207[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- EC2 integration: .github/workflows/ec2-integration.yml (EC2 self-hosted, Ubuntu + Arch Linux)[K
+[0m[48;2;40;67;43m[39m+    208[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    209[0m:[39m[48;2;24;38;30m [38;2;192;197;206m## Critical Rules[K
+[0m[48;2;40;67;43m[39m+    210[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- SANITIZE all AWS account IDs, ARNs, and credentials — .bedrock_agentcore.yaml contains real account/role ARNs; never commit without redacting[K
+[0m[48;2;40;67;43m[39m+    211[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Do NOT modify existing notebooks — add new files only; CI validates all notebooks[K
+[0m[48;2;40;67;43m[39m+    212[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Notebooks must have outputs stripped before commit (nbstripout enforced by CI)[K
+[0m[48;2;40;67;43m[39m+    213[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- make test does NOT exist — use make test-mac on macOS[K
+[0m[48;2;40;67;43m[39m+    214[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- investigation/ and kiro-*/ dirs are excluded from all CI checks and notebook operations[K
+[0m[48;2;40;67;43m[39m+    215[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- ruff per-file-ignores for notebooks: E402, E501, F403, F405, E722, F821, E741, F841 (pyproject.toml)[K
+[0m[48;2;40;67;43m[39m+    216[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- AgentCore containers require linux/arm64 platform and running Docker daemon[K
+[0m[48;2;40;67;43m[39m+    217[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Terraform samples require terraform init before terraform apply[K
+[0m[48;2;40;67;43m[39m+    218[0m:[39m[48;2;24;38;30m [38;2;192;197;206m- Verify factual claims against actual source files before asserting them[K
+[0m[48;2;40;67;43m[39m+    219[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    220[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    221[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mAction 2 — Update Steering File[K
+[0m[48;2;40;67;43m[39m+    222[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    223[0m:[39m[48;2;24;38;30m [38;2;192;197;206mExpand [38;2;163;190;140m`[38;2;163;190;140m~/.kiro/steering/tools/aws-samples-repo.md[38;2;163;190;140m`[38;2;192;197;206m to include all 8 service directories and the correct tech stack. Currently it only has the repo path and git remote.[K
+[0m[48;2;40;67;43m[39m+    224[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    225[0m:[39m[48;2;24;38;30m [38;2;143;161;179m###[38;2;192;197;206m [38;2;143;161;179mAction 3 — Sanitize [38;2;163;190;140m`[38;2;163;190;140m.bedrock_agentcore.yaml[38;2;163;190;140m`[K
+[0m[48;2;40;67;43m[39m+    226[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    227[0m:[39m[48;2;24;38;30m [38;2;192;197;206mReplace hardcoded account ID and IAM role ARNs with placeholders:[K
+[0m[48;2;40;67;43m[39m+    228[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    229[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    230[0m:[39m[48;2;24;38;30m [38;2;192;197;206msed -i '' 's/<REAL_ACCOUNT_ID>/<ACCOUNT_ID>/g' bedrock-agentcore/strands-agents/.bedrock_agentcore.yaml[K
+[0m[48;2;40;67;43m[39m+    231[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    232[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    233[0m:[39m[48;2;24;38;30m [38;2;208;135;112m>[38;2;208;135;112m Verify the file contains no real account IDs before any [38;2;163;190;140m`[38;2;163;190;140mgit commit[38;2;163;190;140m`[38;2;208;135;112m.[K
+[0m[48;2;40;67;43m[39m+    234[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    235[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    236[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    237[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mCommon CLI Commands[K
+[0m[48;2;40;67;43m[39m+    238[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    239[0m:[39m[48;2;24;38;30m [38;2;192;197;206mRun CI checks locally (macOS):[K
+[0m[48;2;40;67;43m[39m+    240[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    241[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    242[0m:[39m[48;2;24;38;30m [38;2;192;197;206mmake test-mac[K
+[0m[48;2;40;67;43m[39m+    243[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    244[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    245[0m:[39m[48;2;24;38;30m [38;2;192;197;206mLint only:[K
+[0m[48;2;40;67;43m[39m+    246[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    247[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    248[0m:[39m[48;2;24;38;30m [38;2;192;197;206mmake lint[K
+[0m[48;2;40;67;43m[39m+    249[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    250[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    251[0m:[39m[48;2;24;38;30m [38;2;192;197;206mValidate notebooks:[K
+[0m[48;2;40;67;43m[39m+    252[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    253[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    254[0m:[39m[48;2;24;38;30m [38;2;192;197;206mmake validate[K
+[0m[48;2;40;67;43m[39m+    255[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    256[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    257[0m:[39m[48;2;24;38;30m [38;2;192;197;206mStrip notebook outputs:[K
+[0m[48;2;40;67;43m[39m+    258[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    259[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    260[0m:[39m[48;2;24;38;30m [38;2;192;197;206mnbstripout <NOTEBOOK_PATH>[K
+[0m[48;2;40;67;43m[39m+    261[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    262[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    263[0m:[39m[48;2;24;38;30m [38;2;192;197;206mDeploy AgentCore (requires Docker running, linux/arm64):[K
+[0m[48;2;40;67;43m[39m+    264[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    265[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    266[0m:[39m[48;2;24;38;30m [38;2;192;197;206mcd bedrock-agentcore/strands-agents && agentcore deploy[K
+[0m[48;2;40;67;43m[39m+    267[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    268[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    269[0m:[39m[48;2;24;38;30m [38;2;192;197;206mApply Terraform IaC:[K
+[0m[48;2;40;67;43m[39m+    270[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    271[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    272[0m:[39m[48;2;24;38;30m [38;2;192;197;206mcd sagemaker/terraform && terraform init && terraform apply[K
+[0m[48;2;40;67;43m[39m+    273[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    274[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    275[0m:[39m[48;2;24;38;30m [38;2;192;197;206mBuild and push SageMaker custom container:[K
+[0m[48;2;40;67;43m[39m+    276[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    277[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mbash[K
+[0m[48;2;40;67;43m[39m+    278[0m:[39m[48;2;24;38;30m [38;2;192;197;206mdocker build --platform linux/amd64 -t <IMAGE_NAME> . && docker tag <IMAGE_NAME> <ECR_URI>/<IMAGE_NAME>:latest && docker push <ECR_URI>/<IMAGE_NAME>:latest[K
+[0m[48;2;40;67;43m[39m+    279[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    280[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    281[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    282[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    283[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mPrompt Enhancement Sequence[K
+[0m[48;2;40;67;43m[39m+    284[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    285[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[38;2;208;135;112mmermaid[K
+[0m[48;2;40;67;43m[39m+    286[0m:[39m[48;2;24;38;30m [38;2;192;197;206msequenceDiagram[K
+[0m[48;2;40;67;43m[39m+    287[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    participant Dev as Developer[K
+[0m[48;2;40;67;43m[39m+    288[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    participant FS as Filesystem[K
+[0m[48;2;40;67;43m[39m+    289[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    participant Agent as aws-samples-agent[K
+[0m[48;2;40;67;43m[39m+    290[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    participant CI as GitHub Actions CI[K
+[0m[48;2;40;67;43m[39m+    291[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    292[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Read current prompt (~1343 chars)[K
+[0m[48;2;40;67;43m[39m+    293[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS-->>Dev: 3 errors found, 4 dirs missing[K
+[0m[48;2;40;67;43m[39m+    294[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    295[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Verify: find . -name "*.tf" | wc -l[K
+[0m[48;2;40;67;43m[39m+    296[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS-->>Dev: 16 Terraform files (sagemaker/terraform/)[K
+[0m[48;2;40;67;43m[39m+    297[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    298[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Verify: cat Makefile[K
+[0m[48;2;40;67;43m[39m+    299[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS-->>Dev: test-mac target (not "make test")[K
+[0m[48;2;40;67;43m[39m+    300[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    301[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Verify: find . -name "*.ipynb" | wc -l[K
+[0m[48;2;40;67;43m[39m+    302[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS-->>Dev: 40 notebooks (excl. investigation/, kiro-*)[K
+[0m[48;2;40;67;43m[39m+    303[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    304[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>Agent: Replace prompt with enhanced version[K
+[0m[48;2;40;67;43m[39m+    305[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Agent-->>Dev: Prompt updated (~2800 chars)[K
+[0m[48;2;40;67;43m[39m+    306[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    307[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Edit new notebook (bedrock/ or sagemaker/)[K
+[0m[48;2;40;67;43m[39m+    308[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: Strip outputs: nbstripout notebook.ipynb[K
+[0m[48;2;40;67;43m[39m+    309[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: git add notebook.ipynb && git commit -m "add: ..."[K
+[0m[48;2;40;67;43m[39m+    310[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    311[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS->>CI: Push triggers ci.yml[K
+[0m[48;2;40;67;43m[39m+    312[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI->>CI: make lint (ruff E/F/W)[K
+[0m[48;2;40;67;43m[39m+    313[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI->>CI: make validate (nbformat schema)[K
+[0m[48;2;40;67;43m[39m+    314[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI->>CI: make strip-check (nbstripout --verify)[K
+[0m[48;2;40;67;43m[39m+    315[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI-->>Dev: All checks pass[K
+[0m[48;2;40;67;43m[39m+    316[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    317[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Note over Dev,CI: AgentCore deployment path[K
+[0m[48;2;40;67;43m[39m+    318[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: docker build --platform linux/arm64 -t agent .[K
+[0m[48;2;40;67;43m[39m+    319[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    Dev->>FS: docker push <ECR_URI>/agent:latest[K
+[0m[48;2;40;67;43m[39m+    320[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    FS->>CI: agentcore deploy (CodeBuild)[K
+[0m[48;2;40;67;43m[39m+    321[0m:[39m[48;2;24;38;30m [38;2;192;197;206m    CI-->>Dev: AgentCore Runtime live[K
+[0m[48;2;40;67;43m[39m+    322[0m:[39m[48;2;24;38;30m [38;2;192;197;206m```[K
+[0m[48;2;40;67;43m[39m+    323[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    324[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    325[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    326[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mSummary Table[K
+[0m[48;2;40;67;43m[39m+    327[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    328[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Finding [38;2;192;197;206m|[38;2;192;197;206m Severity [38;2;192;197;206m|[38;2;192;197;206m Status [38;2;192;197;206m|[38;2;192;197;206m Action [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    329[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m---------[38;2;192;197;206m|[38;2;192;197;206m----------[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    330[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Wrong tech stack in prompt (SAM/CDK) [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Replace prompt [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    331[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Wrong make target ([38;2;163;190;140m`[38;2;163;190;140mmake test[38;2;163;190;140m`[38;2;192;197;206m) [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Replace prompt [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    332[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 4 directories missing from prompt [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Replace prompt [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    333[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Real AWS account ID in [38;2;163;190;140m`[38;2;163;190;140m.bedrock_agentcore.yaml[38;2;163;190;140m`[38;2;192;197;206m [38;2;192;197;206m|[38;2;192;197;206m HIGH [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Sanitize file [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    334[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Steering file incomplete [38;2;192;197;206m|[38;2;192;197;206m MEDIUM [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Expand steering file [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    335[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m 40 notebooks (not ~25) [38;2;192;197;206m|[38;2;192;197;206m LOW [38;2;192;197;206m|[38;2;192;197;206m Confirmed [38;2;192;197;206m|[38;2;192;197;206m Replace prompt [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    336[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    337[0m:[39m[48;2;24;38;30m [38;2;192;197;206m---[K
+[0m[48;2;40;67;43m[39m+    338[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    339[0m:[39m[48;2;24;38;30m [38;2;143;161;179m##[38;2;192;197;206m [38;2;143;161;179mReferences[K
+[0m[48;2;40;67;43m[39m+    340[0m:[39m[48;2;24;38;30m [K
+[0m[48;2;40;67;43m[39m+    341[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Source [38;2;192;197;206m|[38;2;192;197;206m URL [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    342[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m--------[38;2;192;197;206m|[38;2;192;197;206m-----[38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    343[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Overview [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    344[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m AgentCore Quotas [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock-agentcore/latest/devguide/bedrock-agentcore-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    345[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Bedrock Converse API [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/bedrock/latest/userguide/conversation-inference[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    346[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m Glue Limitations [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/glue/latest/dg/limitations[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[48;2;40;67;43m[39m+    347[0m:[39m[48;2;24;38;30m [38;2;192;197;206m|[38;2;192;197;206m DataZone Quotas [38;2;192;197;206m|[38;2;192;197;206m [38;2;192;197;206mhttps://docs.aws.amazon.com[38;2;192;197;206m/datazone/latest/userguide/datazone-limits[38;2;192;197;206m.[38;2;192;197;206mhtml[38;2;192;197;206m [38;2;192;197;206m|[K
+[0m[K
+Creating: [38;5;141m/Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.md[0m
+[38;5;244m - Completed in 1.442s[0m
+[38;5;12m[1m [1.2][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mecho "$(date +%H:%M:%S)|Report Written Successfully" >> /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_nodes[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.567s[0m
+[38;5;12m[1m [1.3][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mpython3 ~/work/courses/aws-developer-associate-dva-c02/tools/md_to_html.py /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.md /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.html 2>&1[0m[38;5;244m (using tool: shell)[0m
+
+Written: /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.html (20KB)
+[38;5;244m - Completed in 1.750s[0m
+[38;5;12m[1m [1.4][0m[0m
+[?25l[0m[?25l[0m[0mI will run the following command: [38;5;141mopen /Users/murivirg/work/github/aws-samples/investigation/c3ec006e/visual_report.html[0m[38;5;244m (using tool: shell)[0m
+
+[38;5;244m - Completed in 1.762s[0m
+[38;5;12m[1m [1.5][0m[0m
+[?25l[0m[38;5;141m> [0mDone. The report is at [38;5;10minvestigation/c3ec006e/visual_report.html[0m (20KB, opened in browser).[0m[0m
+[0m[0m
+[1mWhat's in it:[22m[0m[0m
+[0m[0m
+1. [1mArchitecture diagram[22m — all 8 service directories with their deployment patterns and CI/CD layer[0m[0m
+2. [1mTroubleshooting decision tree[22m — branches for CI failures, deployment issues, notebook errors, and prompt problems[0m[0m
+3. [1mSequence diagram[22m — the full workflow from reading the broken prompt → verifying facts → updating the prompt → CI passing → AgentCore deployment[0m[0m
+[0m[0m
+[1mKey findings surfaced:[22m[0m[0m
+- 3 factual errors in the current prompt (SAM/CDK, [38;5;10mmake test[0m, tech stack)[0m[0m
+- 4 missing directories ([38;5;10mopensearch/[0m, [38;5;10msagemaker/[0m, [38;5;10mnotebooks/[0m, [38;5;10mbedrock-media-type-mismatch/[0m)[0m[0m
+- Real AWS account ID in [38;5;10m.bedrock_agentcore.yaml[0m needs sanitizing[0m[0m
+- The enhanced prompt (~2800 chars) with a Critical Rules section is ready to copy-paste into [38;5;10m~/.kiro/agents/aws-samples-agent.json[0m]9;Response complete[0m[0m[38;5;12m[1m✓ Created checkpoint 1
+
+[0m[0m
+[38;5;8m
+ ▸ Credits: 1.70 • Time: 1m 45s
+
+[0m[1G[0m[0m[?25h
